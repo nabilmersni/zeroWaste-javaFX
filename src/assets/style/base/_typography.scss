@@ -1,0 +1,14 @@
+@font-face {
+    font-family: primaryFont;
+    src: url("../fonts/Nunito-VariableFont_wght.ttf") format('truetype');
+}
+
+
+@font-face {
+    font-family: displayFont;
+    src: url("../fonts/AdigianaExtreme.ttf") format('truetype');
+}
+
+.root {
+    -fx-font-family: displayFont; 
+}

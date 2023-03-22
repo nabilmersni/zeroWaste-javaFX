@@ -1,0 +1,94 @@
+@font-face {
+  font-family: primaryFont;
+  src: url("../fonts/Nunito-VariableFont_wght.ttf") format("truetype");
+}
+@font-face {
+  font-family: displayFont;
+  src: url("../fonts/AdigianaExtreme.ttf") format("truetype");
+}
+.root {
+  -fx-font-family: displayFont;
+}
+
+.signUp__container {
+  -fx-background-color: #DEFEE6;
+}
+
+.left {
+  -fx-background-image: url("../img/signUpBG.png");
+  -fx-background-repeat: no-repeat;
+}
+
+.signUp__title {
+  -fx-font-size: 40px;
+  -fx-font-family: primaryFont;
+  -fx-font-weight: 800;
+  -fx-fill: #97D158;
+}
+
+.signUp__from__container {
+  -fx-spacing: 20px;
+}
+
+.SignUp__input__group {
+  -fx-spacing: 5px;
+}
+
+.SignUp__input__label {
+  -fx-font-size: 12px;
+  -fx-font-weight: 600;
+  -fx-text-fill: #43882B;
+}
+
+.SignUp__input {
+  -fx-background-image: url("../img/fullnameIcon.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left center;
+  -fx-background-size: 18px 14px;
+  -fx-pref-height: 40px;
+  -fx-background-color: rgba(151, 209, 88, 0.178);
+  -fx-alignment: CENTER-LEFT;
+  -fx-padding: 0 0 0 25px;
+  -fx-text-fill: #10036A;
+  -fx-text-fill: #43882B;
+  -fx-font-weight: 600;
+  -fx-font-size: 14px;
+  -fx-prompt-text-fill: rgba(91, 168, 144, 0.51);
+}
+.SignUp__input--email {
+  -fx-background-image: url("../img/emailIcon.png");
+  -fx-background-size: 18px 13px;
+}
+.SignUp__input--tel {
+  -fx-background-image: url("../img/telIcon.png");
+  -fx-background-size: 18px 13px;
+}
+.SignUp__input--pass {
+  -fx-background-image: url("../img/passIcon.png");
+  -fx-background-size: 18px 13px;
+}
+
+.SignUp__btn {
+  -fx-font-size: 15px;
+  -fx-background-color: rgba(151, 209, 88, 0.178);
+  -fx-padding: 10px 20px;
+  -fx-text-fill: #43882B;
+  -fx-font-weight: 800;
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+  -fx-transition: all 2s ease;
+  -fx-cursor: hand;
+}
+.SignUp__btn:hover {
+  -fx-background-color: #43882B;
+  -fx-text-fill: #DEFEE6;
+}
+
+.form__member {
+  -fx-text-fill: #43882B;
+  -fx-font-weight: 600;
+}
+.form__member__link {
+  -fx-text-fill: #43882B;
+  -fx-font-weight: 800;
+}/*# sourceMappingURL=nabilStyle.css.map */
