@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -7,12 +8,16 @@ import java.util.ResourceBundle;
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import services.UserService;
 import tray.animations.AnimationType;
@@ -47,6 +52,8 @@ public class ConfirmEmailController implements Initializable {
 
                 TrayNotificationAlert.notif("sign Up", "email verified successfully.",
                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+                System.out.println("to the DASHBOARD");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -58,9 +65,14 @@ public class ConfirmEmailController implements Initializable {
     }
 
     @FXML
-    void logOut(MouseEvent event) {
-        System.out.println("yohohoho");
+    void logOut(MouseEvent event) throws IOException {
         UserSession.getInstance().cleanUserSession();
+
+        Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

@@ -132,8 +132,7 @@ public class SignUpController {
 
     @FXML
     void toLogin(ActionEvent event) throws IOException {
-        UserSession.getInstance().setEmail("java@gmail.com");
-        Parent root = FXMLLoader.load(getClass().getResource("ConfirmEmail.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
