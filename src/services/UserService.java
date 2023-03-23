@@ -21,7 +21,7 @@ public class UserService implements IUserService {
 
     @Override
     public void ajouter(User user) throws SQLException {
-        String req = "INSERT INTO `user`(`full_name`, `email`, `tel`, `token`,`img_url`, `roles`, `password`, `point`) VALUES (?,?,?,?,?,?,?,?)";
+        String req = "INSERT INTO `user`(`full_name`, `email`, `tel`, `token`,`img_url`, `roles`, `password`, `point`, `verification_code`) VALUES (?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement ps = conx.prepareStatement(req);
         ps.setString(1, user.getFullname());
@@ -32,6 +32,7 @@ public class UserService implements IUserService {
         ps.setString(6, user.getRoles());
         ps.setString(7, user.getPassword());
         ps.setInt(8, user.getPoint());
+        ps.setInt(9, user.getVerificationCode());
         ps.executeUpdate();
         System.out.println("User added successfully");
         ps.close();

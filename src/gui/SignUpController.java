@@ -1,7 +1,13 @@
 package gui;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+
+import javax.mail.MessagingException;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import entities.User;
@@ -15,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import services.UserService;
+import utils.SendMail;
 import utils.UserInputValidation;
 
 public class SignUpController {
@@ -56,24 +63,40 @@ public class SignUpController {
     void signUp(ActionEvent event) {
         String token = UUID.randomUUID().toString();
         String role = ((RadioButton) roles.getSelectedToggle()).getText();
-        if (role == "Individual") {
+        int code = new Random().nextInt(900000) + 100000;
+        if (role.equals("Individual")) {
             role = "[\"ROLE_USER\"]";
         } else {
             role = "[\"ROLE_ASSOCIATION\"]";
         }
+
         User user = new User(fullnameField.getText(), emailField.getText(),
                 phoneField.getText(), token,
                 "defaultPic.jpg", role, passField.getText(), 0);
+        user.setVerificationCode(code);
 
         UserService userService = new UserService();
-        if (UserInputValidation.signUpValidator(user, repassField.getText(), userService)) {
+        if (UserInputValidation.signUpValidator(user, repassField.getText(),
+                userService)) {
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 
             try {
                 userService.ajouter(user);
+
+                Map<String, String> data = new HashMap<>();
+                data.put("emailSubject", "Confirm your email address for zeroWaste");
+                data.put("titlePlaceholder", "Confirm Your Email Address");
+                data.put("msgPlaceholder", "Here's the code to confirm your email address:");
+
+                SendMail.send(user, data);
+
+                System.out.println("sent");
+
             } catch (SQLException e) {
                 e.getMessage();
                 System.out.println("error: " + e.getMessage());
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
         } else {
 

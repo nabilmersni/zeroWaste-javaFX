@@ -16,6 +16,7 @@ public class User {
     private String instaLink;
     private String imgUrl;
     private int point;
+    private int verificationCode;
     private String roles;
 
     public User() {
@@ -97,6 +98,14 @@ public class User {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public int getVerificationCode() {
+        return this.verificationCode;
+    }
+
+    public void setVerificationCode(int verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public void setRoles(String roles) {
