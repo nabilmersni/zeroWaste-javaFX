@@ -173,7 +173,8 @@ public class User {
         return "User{" + "id=" + id + ", fullname=" + fullname + ", email=" + email + ", password=" + password
                 + ", tel=" + tel + ", token=" + token + ", isVerified=" + isVerified + ", state=" + state
                 + ", description=" + description + ", fbLink=" + fbLink + ", twitterLink=" + twitterLink
-                + ", instaLink=" + instaLink + ", imgUrl=" + imgUrl + ", point=" + point + ", roles=" + roles + '}';
+                + ", instaLink=" + instaLink + ", imgUrl=" + imgUrl + ", point=" + point + ", roles=" + roles
+                + ", code_verification=" + verificationCode + '}';
     }
 
 }

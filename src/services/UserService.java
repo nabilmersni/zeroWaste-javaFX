@@ -38,6 +38,30 @@ public class UserService implements IUserService {
         ps.close();
     }
 
+    public void update(User user) throws SQLException {
+        String req = "UPDATE `user` SET `full_name`=?,`tel`=?,`token`=?,`is_verified`=?,`state`=?,`description`=?,`fb_link`=?,`twitter_link`=?,`insta_link`=?,`img_url`=?,`password`=?,`point`=?,`verification_code`=? WHERE email=?";
+
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, user.getFullname());
+        ps.setString(2, user.getTel());
+        ps.setString(3, user.getToken());
+        ps.setBoolean(4, user.getIsVerified());
+        ps.setBoolean(5, user.getState());
+        ps.setString(6, user.getDescription());
+        ps.setString(7, user.getFbLink());
+        ps.setString(8, user.getTwitterLink());
+        ps.setString(9, user.getInstaLink());
+        ps.setString(10, user.getImgUrl());
+        ps.setString(11, user.getPassword());
+        ps.setInt(12, user.getPoint());
+        ps.setInt(13, user.getVerificationCode());
+        ps.setString(14, user.getEmail());
+
+        ps.executeUpdate();
+        System.out.println("User updated successfully");
+        ps.close();
+    }
+
     public User getOneUser(String email) throws SQLException {
         String req = "SELECT * FROM `user` where email = ?";
         PreparedStatement ps = conx.prepareStatement(req);
@@ -63,6 +87,7 @@ public class UserService implements IUserService {
             user.setRoles(rs.getString("roles"));
             user.setPassword(rs.getString("password"));
             user.setPoint(rs.getInt("point"));
+            user.setVerificationCode(rs.getInt("verification_code"));
         }
         ps.close();
         return user;
