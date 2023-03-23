@@ -4,13 +4,10 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import entities.User;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 import services.UserService;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 
 public class UserInputValidation {
 
@@ -24,12 +21,9 @@ public class UserInputValidation {
             // alert.setContentText("Please fill out all required fields.");
 
             // alert.showAndWait();
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("Please fill out all required fields.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+
+            TrayNotificationAlert.notif("sign Up", "Please fill out all required fields.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -43,12 +37,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("Your name cannot contain a number.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "Your name cannot contain a number.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -61,12 +51,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("not a valid fullname.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "not a valid fullname.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -81,12 +67,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("The email " + user.getEmail() + " is not a valid email.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "The email " + user.getEmail() + " is not a valid email.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -100,12 +82,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("not a valid phone number.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "not a valid phone number.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -118,12 +96,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("Hello little hacker 🐱‍💻👩‍💻");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "Hello little hacker 🐱‍💻👩‍💻",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -136,12 +110,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("Your password must be at least 8 characters long.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "Your password must be at least 8 characters long.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -154,12 +124,8 @@ public class UserInputValidation {
 
             // alert.showAndWait();
 
-            TrayNotification tray = new TrayNotification();
-            tray.setTitle("sign Up");
-            tray.setMessage("Passwords do NOT match.");
-            tray.setNotificationType(NotificationType.WARNING);
-            tray.setAnimationType(AnimationType.POPUP);
-            tray.showAndDismiss(Duration.millis(2500));
+            TrayNotificationAlert.notif("sign Up", "Passwords do NOT match.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             return false;
         }
@@ -172,12 +138,8 @@ public class UserInputValidation {
                 // alert.setContentText("email already in use.");
                 // alert.showAndWait();
 
-                TrayNotification tray = new TrayNotification();
-                tray.setTitle("sign Up");
-                tray.setMessage("email already in use.");
-                tray.setNotificationType(NotificationType.WARNING);
-                tray.setAnimationType(AnimationType.POPUP);
-                tray.showAndDismiss(Duration.millis(2500));
+                TrayNotificationAlert.notif("sign Up", "email already in use.",
+                        NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
                 return false;
             }

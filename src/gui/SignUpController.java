@@ -21,7 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import services.UserService;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
+import javafx.util.Duration;
 import utils.SendMail;
+import utils.TrayNotificationAlert;
 import utils.UserInputValidation;
 
 public class SignUpController {
@@ -91,6 +96,9 @@ public class SignUpController {
                 SendMail.send(user, data);
 
                 System.out.println("sent");
+
+                TrayNotificationAlert.notif("sign Up", "account created successfully, Please confirm your email.",
+                        NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
             } catch (SQLException e) {
                 e.getMessage();
