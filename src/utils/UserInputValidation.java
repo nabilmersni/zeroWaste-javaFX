@@ -150,4 +150,62 @@ public class UserInputValidation {
 
         return true;
     }
+
+    public static boolean forgetPasswordValidator(String email, User user) {
+        if (email.equals("")) {
+
+            TrayNotificationAlert.notif("Forgot password", "Please fill out all required fields.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        Pattern emailPattern = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
+        if (!emailPattern.matcher(email).matches()) {
+
+            TrayNotificationAlert.notif("sign Up", "The email " + email + " is not a valid email.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (user.getId() == -999) {
+            TrayNotificationAlert.notif("Forgot password", "email not associated with zeroWaste account",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean forgetPasswordValidator2(String password, String rePassword) {
+
+        if (password.equals("") || rePassword.equals("")) {
+
+            TrayNotificationAlert.notif("Forgot password", "Please fill out all required fields.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (password.length() < 8) {
+
+            TrayNotificationAlert.notif("Forgot password", "Your password must be at least 8 characters long.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (!password.equals(rePassword)) {
+
+            TrayNotificationAlert.notif("Forgot password", "Passwords do NOT match.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        return true;
+    }
+
 }
