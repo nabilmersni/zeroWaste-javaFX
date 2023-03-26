@@ -26,6 +26,7 @@ public class ZeroWaste extends Application {
     }
 
     public static void main(String[] args) {
+        // System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
         launch(args);
     }
 }

@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,15 @@ import tray.notification.NotificationType;
 import utils.SendMail;
 import utils.TrayNotificationAlert;
 import utils.UserSession;
+import java.awt.*;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import javafx.scene.input.MouseEvent;
 
 public class LogInController {
 
@@ -49,6 +60,9 @@ public class LogInController {
 
     @FXML
     private Hyperlink forgotPasswordLink;
+
+    @FXML
+    private AnchorPane googleBTN;
 
     @FXML
     void logIn(ActionEvent event) throws IOException {
@@ -131,6 +145,59 @@ public class LogInController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void google(MouseEvent event) throws IOException, URISyntaxException {
+        // Desktop.getDesktop().browse(new URI("http://www.google.com"));
+        // Parent root = FXMLLoader.load(getClass().getResource("GoogleAuth.fxml"));
+        // Scene scene = new Scene(root);
+        // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // stage.setScene(scene);
+        // stage.show();
+
+        String myVariable = "undefined"; // replace with your variable value
+
+        try {
+            URL url = new URL("http://localhost:5000/my-variable"); // replace with your URL
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // set request method and headers
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            // create JSON payload
+            String payload = "{\"myVariable\": \"" + myVariable + "\"}";
+
+            // send payload
+            OutputStream os = connection.getOutputStream();
+            os.write(payload.getBytes(StandardCharsets.UTF_8));
+            os.flush();
+            os.close();
+
+            // read response
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            br.close();
+
+            // System.out.println(response.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Desktop.getDesktop().browse(new URI("http://localhost/zeroWateSignIn/"));
+        Parent root = FXMLLoader.load(getClass().getResource("GoogleAuth.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 }
