@@ -81,7 +81,7 @@ public class LogInController {
                         NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
             } else {
                 // System.out.println(user);
-                if (BCrypt.checkpw(password, user.getPassword())) {
+                if (BCrypt.checkpw(password, user.getPassword().replace("$2y$", "$2a$"))) {
 
                     if (!user.getState()) {
                         TrayNotificationAlert.notif("Login", "Your account is blocked.",
