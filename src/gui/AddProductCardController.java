@@ -108,6 +108,7 @@ public class AddProductCardController implements Initializable {
             pointsInput.setText(String.valueOf(p.getPrix_point_produit()));
             Image image = new Image(getClass().getResource("/assets/ProductUploads/" + p.getImage()).toExternalForm());
             imageInput.setImage(image);
+            imageName = p.getImage();
 
             categoryInput.setValue(produitService.getCategory(p.getCategorie_produit_id()));
 
@@ -210,11 +211,7 @@ public class AddProductCardController implements Initializable {
         produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
         produit.setQuantite(Integer.parseInt(numberInput.getText()));
         
-        if(imageName == ""){
-            produit.setImage(produit.getImage());
-        }else{
             produit.setImage(imageName);
-        }
         
 
          // Instancier le service de produit
