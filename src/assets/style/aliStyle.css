@@ -89,13 +89,13 @@
   -fx-background-color: #defee6;
   -fx-border-color: #fff;
   -fx-background-radius: 30px;
-  -fx-pref-width: 34px;
+  -fx-pref-width: 24px;
 }
 
 .scroll-bar:vertical .thumb {
   -fx-background-color: #43882b;
   -fx-background-radius: 30px;
-  -fx-pref-width: 34px;
+  -fx-pref-width: 24px;
 }
 
 .scroll-bar:vertical *.increment-button,
@@ -309,4 +309,97 @@
 .product-price-text {
   -fx-font-weight: 700;
   -fx-font-size: 16px;
+}
+
+.categoriesModel {
+  -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+
+.categoriesModel-card {
+  -fx-background-color: #fff;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+}
+
+.categoriesModel-card-title {
+  -fx-font-weight: 700;
+  -fx-font-size: 20px;
+}
+
+.categoriesModel-card-exitBtn {
+  -fx-background-color: #43882b;
+  -fx-background-radius: 50%;
+  -fx-border-radius: 50%;
+  -fx-cursor: hand;
+}
+
+.categoriesModel-card-exitBtn:hover {
+  -fx-background-color: #397425;
+}
+
+.one-categoryCard {
+  -fx-background-color: #fff;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+}
+
+.one-categoryCard-imgContainer {
+  -fx-border-color: transparent #defee6 transparent transparent;
+  -fx-border-width: 1px;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+}
+
+.one-categoryCard-btns {
+  -fx-background-color: #fff;
+  -fx-background-radius: 50%;
+  -fx-border-radius: 50%;
+  -fx-cursor: hand;
+}
+
+.one-categoryCard-btns:hover {
+  -fx-background-color: #defee6;
+}
+
+.one-categoryCard-Name {
+  -fx-font-weight: 700;
+  -fx-font-size: 14px;
+}
+
+.add-categoryCard-btn {
+  -fx-background-color: #43882b;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-cursor: hand;
+}
+
+.add-categoryCard-btn:hover {
+  -fx-background-color: #397425;
+}
+
+.add-categoryCard-btn-text {
+  -fx-font-weight: 700;
+  -fx-font-size: 16px;
+}
+
+.category__add-input-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+}
+
+.category__add-btn-icon {
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+  -fx-transition: all 2s ease;
+}
+
+.category__add-btn-icon:hover {
+  -fx-text-fill: #397425;
+  -fx-fill: #397425;
+  -fx-cursor: hand;
+}
+
+.categoriesList-title {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
 }

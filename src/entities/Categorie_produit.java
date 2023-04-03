@@ -6,8 +6,20 @@ public class Categorie_produit {
     private String nom_categorie;
     private String image_categorie;
     private int order_categ;
+
+    private static int idCategory;
+
+    public static int actionTest = 0; //0: ajouter *** 1: modifier
     
     
+    public static int getIdCategory() {
+        return idCategory;
+    }
+
+    public static void setIdCategory(int idCategory) {
+        Categorie_produit.idCategory = idCategory;
+    }
+
     public Categorie_produit(int id, String nom_categorie, String image_categorie) {
       this.id = id;
       this.nom_categorie = nom_categorie;

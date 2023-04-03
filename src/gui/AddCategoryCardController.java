@@ -30,6 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
@@ -45,123 +46,72 @@ import javafx.scene.Node;
  *
  * @author ALI
  */
-public class AddProductCardController implements Initializable {
+public class AddCategoryCardController implements Initializable {
 
     @FXML
-    private TextField nameInput;
+    private Text add_iconBtn;
 
     @FXML
-    private ComboBox<String> categoryInput;
-
-    @FXML
-    private TextArea descriptionInput;
-
-    @FXML
-    private TextField numberInput;
-
-    @FXML
-    private TextField priceInput;
-
-    @FXML
-    private TextField pointsInput;
-
-    @FXML
-    private Button add_new_productBtn;
-
-    @FXML
-    private Button update_productBtn;
+    private HBox add_new_categoryBtn;
 
     @FXML
     private ImageView imageInput;
 
     @FXML
-    private HBox choose_photoBtn;
+    private TextField nameInput;
+
+    @FXML
+    private HBox update_categoryBtn;
     
-    private int categId;
     private File selectedImageFile;
     private String imageName;
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(Produit.actionTest);
-        if(Produit.actionTest == 0){ //add product
-            update_productBtn.setVisible(false);
+        System.out.println(Categorie_produit.actionTest);
+        if(Categorie_produit.actionTest == 0){ //add product
+            update_categoryBtn.setVisible(false);
 
         }else{ // update product
-            add_new_productBtn.setVisible(false);
+            add_new_categoryBtn.setVisible(false);
 
-            // Instancier le service de produit
-            IProduitService produitService = new ProduitService();
-            Produit p = new Produit();
+            // Instancier le service de categorie
+            ICategorie_produitService categoryService = new Categorie_produitService() ;
+            Categorie_produit c = new Categorie_produit();
             try {
-                p = produitService.getOneProduct(Produit.getIdProduit());
+                c = categoryService.getOneCategory(Categorie_produit.getIdCategory());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            nameInput.setText(p.getNom_produit());
-            descriptionInput.setText(p.getDescription());
-            numberInput.setText(String.valueOf(p.getQuantite()));
-            priceInput.setText(String.valueOf(p.getPrix_produit()));
-            pointsInput.setText(String.valueOf(p.getPrix_point_produit()));
-            Image image = new Image(getClass().getResource("/assets/ProductUploads/" + p.getImage()).toExternalForm());
+            nameInput.setText(c.getNom_categorie());
+            Image image = new Image(getClass().getResource("/assets/ProductUploads/" + c.getImage_categorie()).toExternalForm());
             imageInput.setImage(image);
-            imageName = p.getImage();
+            imageName = c.getImage_categorie();
 
-            categoryInput.setValue(produitService.getCategory(p.getCategorie_produit_id()));
 
         }
-    
-        // Ajouter la liste des categories au combobox-----------------
-        // Instancier le service de categorie
-        ICategorie_produitService categoryService = new Categorie_produitService();
-
-        // Récupérer tous les categories
-        List<Categorie_produit> categories = categoryService.getAllCategories();
-        
-        // Afficher les categories dans la console (juste pour tester)
-        /*System.out.println("Liste des produits:");
-        for (Categorie_produit categorie : categories) {
-            System.out.println(categorie);
-        }*/
-
-        Map<String, Integer> valuesMap = new HashMap<>();
-        for (Categorie_produit categorie : categories) {
-            categoryInput.getItems().add(categorie.getNom_categorie());
-            valuesMap.put(categorie.getNom_categorie(), categorie.getId());
-        }
-        
-        categoryInput.setOnAction(event -> {
-            String selectedOption = categoryInput.getValue();
-            int selectedValue = valuesMap.get(selectedOption);
-            categId = selectedValue;
-            //System.out.println("Selected option: " + selectedOption);
-            //System.out.println("Selected value: " + selectedValue);
-        });
         
     
     }    
 
     @FXML
-    void addNewProduct(MouseEvent event) throws SQLException {
+    void addNewCategory(MouseEvent event) throws SQLException {
      
-        Produit produit = new Produit();
-        produit.setNom_produit(nameInput.getText());
-        produit.setDescription(descriptionInput.getText());
-        produit.setCategorie_produit_id(categId);
-        produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
-        produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
-        produit.setQuantite(Integer.parseInt(numberInput.getText()));
+        Categorie_produit categorie = new Categorie_produit();
+        categorie.setNom_categorie(nameInput.getText());
         
-        produit.setImage(imageName);
+        categorie.setImage_categorie(imageName);
 
-         // Instancier le service de produit
-         IProduitService produitService = new ProduitService();
+         // Instancier le service de categorie
+         ICategorie_produitService categoryService = new Categorie_produitService();
 
-         produitService.ajouter(produit);
+         categoryService.ajouter(categorie);
 
+         ProductsListController.setCategoryModelShow(1);
          FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
                 Parent root = loader.load();
@@ -200,24 +150,21 @@ public class AddProductCardController implements Initializable {
     
 
     @FXML
-    void updateProduct(MouseEvent event) {
+    void updateCategory(MouseEvent event) {
         
-        Produit produit = new Produit();
-        produit.setId(Produit.getIdProduit());
-        produit.setNom_produit(nameInput.getText());
-        produit.setDescription(descriptionInput.getText());
-        produit.setCategorie_produit_id(categId);
-        produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
-        produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
-        produit.setQuantite(Integer.parseInt(numberInput.getText()));
+        Categorie_produit category = new Categorie_produit();
+        category.setId(Categorie_produit.getIdCategory());
+        category.setNom_categorie(nameInput.getText());
         
-            produit.setImage(imageName);
-        
+        category.setImage_categorie(imageName);
 
-         // Instancier le service de produit
-         IProduitService produitService = new ProduitService();
+         // Instancier le service de category
+         ICategorie_produitService categoryService = new Categorie_produitService();
 
-         produitService.updateProduct(produit);
+         categoryService.updateCategory(category);
+         
+         ProductsListController.setCategoryModelShow(1);
+         Categorie_produit.actionTest = 0;  // pour afficher le bouton ajouter et cacher le bouton modifier
          
          FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {

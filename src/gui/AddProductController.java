@@ -39,18 +39,14 @@ public class AddProductController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         try {
-            //scrollPane.setFitToHeight(true);
-            //scrollPane.setPrefHeight(577);
-           // scrollPane.setPrefHeight(1000);
-
-         
-// Ajouter productContainer à la deuxième ligne de AddproductContainer
-FXMLLoader fxmlLoader1 = new FXMLLoader();
-fxmlLoader1.setLocation(getClass().getResource("AddProductCard.fxml"));
-VBox productContainer1 = fxmlLoader1.load();
-AddproductContainer.add(productContainer1, 0, 1);
-GridPane.setMargin(productContainer1, new Insets(0, 10, 25, 10));
-productContainer1.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
+          
+            // Ajouter productContainer à la première ligne de AddproductContainer
+            FXMLLoader fxmlLoader1 = new FXMLLoader();
+            fxmlLoader1.setLocation(getClass().getResource("AddProductCard.fxml"));
+            VBox productContainer1 = fxmlLoader1.load();
+            AddproductContainer.add(productContainer1, 0, 1);
+            GridPane.setMargin(productContainer1, new Insets(0, 10, 25, 10));
+            productContainer1.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import entities.Categorie_produit;
 import entities.Produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import services.Categorie_produitService;
+import services.ICategorie_produitService;
 import services.IProduitService;
 import services.ProduitService;
 import zerowaste.ZeroWaste;
@@ -32,13 +36,37 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private Pane content_area;
+
+    @FXML
+    private HBox categoriesModel;
+
+    @FXML
+    private GridPane categoriesListContainer;
+
+    private static int categoryModelShow = 0;
     
     
+    public static int getCategoryModelShow() {
+        return categoryModelShow;
+    }
+
+
+    public static void setCategoryModelShow(int categoryModelShow) {
+        ProductsListController.categoryModelShow = categoryModelShow;
+    }
+
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        if(ProductsListController.getCategoryModelShow() == 0){
+            categoriesModel.setVisible(false);
+        }else if(ProductsListController.getCategoryModelShow() == 1){
+            categoriesModel.setVisible(true);
+        }
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
         
@@ -51,6 +79,7 @@ public class ProductsListController implements Initializable {
             System.out.println(produit);
         }*/
 
+        //product list ------------------------------------------------
         int column = 0;
         int row = 1;
         try {
@@ -73,9 +102,52 @@ public class ProductsListController implements Initializable {
                 
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        //categories list ---------------------------------------------------------
+        // Ajouter AddCategoryCard (forum) au debut de la liste 
+        FXMLLoader fxmlLoader1 = new FXMLLoader();
+        fxmlLoader1.setLocation(getClass().getResource("AddCategoryCard.fxml"));
+        VBox CategoryAddCard;
+        try {
+            CategoryAddCard = fxmlLoader1.load();
+            categoriesListContainer.add(CategoryAddCard, 0, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Instancier le service de categorie
+        ICategorie_produitService categoryService = new Categorie_produitService();
+        
+        // Récupérer toutes les categories
+        List<Categorie_produit> categories = categoryService.getAllCategories();
+                
+        int CategColumn = 0;
+        int CategRow = 2;
+        try {
+            for(int i=0 ; i<categories.size(); i++){
+    
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("OneCategoriesListCard.fxml"));
+                HBox oneCategoryCard = fxmlLoader.load();
+                OneCategoriesListCardController categorieCardController = fxmlLoader.getController();
+                categorieCardController.setCategoryData(categories.get(i));
+                
+                if(CategColumn == 1){
+                    CategColumn=0;
+                    ++CategRow;
+                }
+                categoriesListContainer.add(oneCategoryCard, CategColumn++, CategRow);
+                GridPane.setMargin(oneCategoryCard, new Insets(0, 10, 25, 10));
+                oneCategoryCard.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     
     }    
 
@@ -86,8 +158,18 @@ public class ProductsListController implements Initializable {
         Parent fxml = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
+   
+    }
 
-        
+    @FXML
+    void open_CategoriesModel(MouseEvent event) {
+        categoriesModel.setVisible(true);
+    }
+
+    @FXML
+    void close_CategoriesModel(MouseEvent event) {
+        categoriesModel.setVisible(false);
+        ProductsListController.setCategoryModelShow(0);
     }
 
    

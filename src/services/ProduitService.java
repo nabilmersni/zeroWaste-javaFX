@@ -81,7 +81,7 @@ public class ProduitService implements IProduitService {
         System.out.println("Product added successfully");
         ps.close();
     }catch (SQLException e) {
-      System.out.println("Une erreur s'est produite lors de la récupération de la catégorie : " + e.getMessage());
+      System.out.println("Une erreur s'est produite lors de la récupération du produit : " + e.getMessage());
     }
     
   }
@@ -98,7 +98,7 @@ public class ProduitService implements IProduitService {
         categoryName = rs.getString("nom_categorie"); 
         ps.close();
     } catch (SQLException e) {
-        System.out.println("Une erreur s'est produite lors de la récupération de la catégorie : " + e.getMessage());
+        System.out.println("Une erreur s'est produite lors de la récupération du produit : " + e.getMessage());
     }
 
     return categoryName;
