@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -43,13 +46,14 @@ public class ProductsListController implements Initializable {
     @FXML
     private GridPane categoriesListContainer;
 
+    @FXML
+    private TextField productSearchInput;
+
     private static int categoryModelShow = 0;
-    
     
     public static int getCategoryModelShow() {
         return categoryModelShow;
     }
-
 
     public static void setCategoryModelShow(int categoryModelShow) {
         ProductsListController.categoryModelShow = categoryModelShow;
@@ -67,11 +71,6 @@ public class ProductsListController implements Initializable {
         }else if(ProductsListController.getCategoryModelShow() == 1){
             categoriesModel.setVisible(true);
         }
-        // Instancier le service de produit
-        IProduitService produitService = new ProduitService();
-        
-        // Récupérer tous les produits
-        List<Produit> produits = produitService.getAllProducts();
         
         // Afficher les produits dans la console (juste pour tester)
       /*   System.out.println("Liste des produits:");
@@ -79,31 +78,8 @@ public class ProductsListController implements Initializable {
             System.out.println(produit);
         }*/
 
-        //product list ------------------------------------------------
-        int column = 0;
-        int row = 1;
-        try {
-            for(int i=0 ; i<produits.size(); i++){
-    
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("OneProductListCard.fxml"));
-                HBox oneProductCard = fxmlLoader.load();
-                OneProductListCardController productCardController = fxmlLoader.getController();
-                productCardController.setProductData(produits.get(i));
-                
-                if(column == 1){
-                    column=0;
-                    ++row;
-                }
-                productsListContainer.add(oneProductCard, column++, row);
-                //GridPane.setMargin(oneProductCard, new Insets(10));
-                GridPane.setMargin(oneProductCard, new Insets(0, 10, 25, 10));
-                oneProductCard.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //set the product list in the grid pane***************************************
+        this.setProductGridPaneList();
 
         //categories list ---------------------------------------------------------
         // Ajouter AddCategoryCard (forum) au debut de la liste 
@@ -172,7 +148,56 @@ public class ProductsListController implements Initializable {
         ProductsListController.setCategoryModelShow(0);
     }
 
+    @FXML
+    void searchProduct(KeyEvent event) throws IOException {
+        Produit.setSearchValue(((TextField) event.getSource()).getText());
+        System.out.println("Recherche en cours: " + Produit.getSearchValue());
+        
+        Parent fxml = FXMLLoader.load(getClass().getResource("ProductsList.fxml"));
+        GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
+        productsListContainer.getChildren().clear();
+        this.setProductGridPaneList();
+}
    
 
+    private void setProductGridPaneList(  ){
+        // Instancier le service de produit
+        IProduitService produitService = new ProduitService();
+        
+        List<Produit> produits = null;
+        System.out.println("searchValue" + Produit.getSearchValue());
+        if(Produit.getSearchValue() == null){
+            // Récupérer tous les produits
+            produits = produitService.getAllProducts();
+        }else{
+            produits = produitService.searchProducts(Produit.getSearchValue());
+        }
+        
+        //product list ------------------------------------------------
+        int column = 0;
+        int row = 1;
+        try {
+            for(int i=0 ; i<produits.size(); i++){
+    
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("OneProductListCard.fxml"));
+                HBox oneProductCard = fxmlLoader.load();
+                OneProductListCardController productCardController = fxmlLoader.getController();
+                productCardController.setProductData(produits.get(i));
+                
+                if(column == 1){
+                    column=0;
+                    ++row;
+                }
+                productsListContainer.add(oneProductCard, column++, row);
+                //GridPane.setMargin(oneProductCard, new Insets(10));
+                GridPane.setMargin(oneProductCard, new Insets(0, 10, 25, 10));
+                oneProductCard.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

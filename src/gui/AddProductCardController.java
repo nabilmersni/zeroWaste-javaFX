@@ -111,6 +111,8 @@ public class AddProductCardController implements Initializable {
             imageName = p.getImage();
 
             categoryInput.setValue(produitService.getCategory(p.getCategorie_produit_id()));
+            categId = p.getCategorie_produit_id();
+           // System.out.println("catgevalueeeee : " + produitService.getCategory(p.getCategorie_produit_id()));
 
         }
     
@@ -154,6 +156,7 @@ public class AddProductCardController implements Initializable {
         produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
         produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
         produit.setQuantite(Integer.parseInt(numberInput.getText()));
+        produit.setCategorie_produit_id(categId);
         
         produit.setImage(imageName);
 

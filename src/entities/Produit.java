@@ -17,15 +17,8 @@ public class Produit {
     public static int actionTest = 0;
 
     private static int idProduit;
+    private static String searchValue;
    
-
-    public static int getIdProduit() {
-        return idProduit;
-    }
-
-    public static void setIdProduit(int idProduit) {
-        Produit.idProduit = idProduit;
-    }
 
     public Produit() {
     }
@@ -134,6 +127,23 @@ public class Produit {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    
+    public static String getSearchValue() {
+        return searchValue;
+    }
+
+    public static void setSearchValue(String searchValue) {
+        Produit.searchValue = searchValue;
+    }
+
+    public static int getIdProduit() {
+        return idProduit;
+    }
+
+    public static void setIdProduit(int idProduit) {
+        Produit.idProduit = idProduit;
     }
 
     

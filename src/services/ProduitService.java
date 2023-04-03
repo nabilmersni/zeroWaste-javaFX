@@ -148,6 +148,38 @@ public class ProduitService implements IProduitService {
     
   }
 
+  public List<Produit> searchProducts(String search) {
+    List<Produit> productList = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM produit WHERE nom_produit LIKE ?";
+        PreparedStatement preparedStatement = conx.prepareStatement(query);
+        preparedStatement.setString(1, "%" + search + "%");
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Parcours du résultat de la requête
+        while (resultSet.next()) {
+            Produit produit = new Produit();
+            produit.setId(resultSet.getInt("id"));
+            produit.setNom_produit(resultSet.getString("nom_produit"));
+            produit.setDescription(resultSet.getString("description"));
+            produit.setQuantite(resultSet.getInt("quantite"));
+            produit.setPrix_produit(resultSet.getFloat("prix_produit"));
+            produit.setImage(resultSet.getString("image"));
+            produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+            produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+
+            productList.add(produit);
+        }
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return productList;
+}
+
+
   
 }
 

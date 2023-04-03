@@ -403,3 +403,24 @@
   -fx-font-size: 16px;
   -fx-font-weight: 700;
 }
+
+.product__list-searchInput {
+  -fx-background-color: #defee633;
+  /*-fx-border: 1px solid #defee6;*/
+  -fx-border-color: #defee6;
+  -fx-border-width: 1px;
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
+  -fx-font-size: 16px;
+  -fx-font-weight: 600;
+  -fx-pref-height: 40px;
+  -fx-text-fill: #397425;
+  -fx-fill: #397425;
+
+  /*-fx-prompt-text-fill: hsla(157, 28%, 27%, 0.671);*/
+  -fx-transition: border 0.5s;
+}
+
+.product__list-searchInput:focused {
+  -fx-border-color: #43882b;
+}

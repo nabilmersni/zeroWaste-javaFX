@@ -18,4 +18,6 @@ public interface IProduitService {
   public Produit getOneProduct(int idProduct) throws SQLException;
   
   public void updateProduct(Produit produit) ;
+
+  public List<Produit> searchProducts(String search);
 }
