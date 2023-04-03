@@ -53,7 +53,7 @@ public class OneProductListCardController {
          // Instancier le service de produit
          IProduitService produitService = new ProduitService();
          
-        Image image = new Image(getClass().getResource("/assets/img/" + produit.getImage()).toExternalForm());
+        Image image = new Image(getClass().getResource("/assets/ProductUploads/" + produit.getImage()).toExternalForm());
         img.setImage(image);
 
         productName.setText(produit.getNom_produit());

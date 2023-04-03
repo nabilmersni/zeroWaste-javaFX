@@ -179,7 +179,7 @@
   -fx-pref-height: 40px;
   -fx-text-fill: #32594a;
 
-  -fx-prompt-text-fill: hsla(157, 28%, 27%, 0.671);
+  /*-fx-prompt-text-fill: hsla(157, 28%, 27%, 0.671);*/
   -fx-transition: border 0.5s;
 }
 
@@ -200,7 +200,7 @@
   -fx-text-fill: #32594a;
   -fx-font-weight: 600;
   -fx-font-size: 14px;
-  -fx-prompt-text-fill: hsla(157, 28%, 27%, 0.671);
+  /*-fx-prompt-text-fill: hsla(157, 28%, 27%, 0.671);*/
   -fx-transition: border 0.5s;
   -fx-caret-color: transparent; /* Masquer le caret */
 }
@@ -220,6 +220,29 @@
 
 .product__add-comboBox {
   -fx-background-color: #defee633;
+  -fx-border-color: #defee6;
+  -fx-border-width: 1px;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-pref-height: 40px;
+  -fx-text-fill: #32594a;
+  -fx-cursor: hand;
+}
+
+.product__add-comboBox .list-cell {
+  -fx-background-color: #defee633;
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-text-fill: #32594a;
+}
+
+.combo-box .list-cell:hover {
+  -fx-background-color: #97d158;
+  -fx-pref-height: 40px;
+  -fx-text-fill: #fff;
+  -fx-cursor: hand;
 }
 
 .product__add-img-container {

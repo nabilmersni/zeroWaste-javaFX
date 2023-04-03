@@ -125,7 +125,7 @@
                         <Insets bottom="10.0" />
                      </padding>
                   </HBox>
-                  <ComboBox fx:id="categoryInput" prefHeight="40.0" prefWidth="299.0" styleClass="product__add-comboBox" />
+                  <ComboBox fx:id="categoryInput" prefHeight="40.0" prefWidth="299.0" promptText="category" styleClass="product__add-comboBox" />
                </children>
                <padding>
                   <Insets right="10.0" />

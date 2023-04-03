@@ -46,10 +46,10 @@ public class ProductsListController implements Initializable {
         List<Produit> produits = produitService.getAllProducts();
         
         // Afficher les produits dans la console (juste pour tester)
-        System.out.println("Liste des produits:");
+      /*   System.out.println("Liste des produits:");
         for (Produit produit : produits) {
             System.out.println(produit);
-        }
+        }*/
 
         int column = 0;
         int row = 1;
@@ -82,11 +82,12 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private void open_addProduct(MouseEvent event) throws IOException {
+        Produit.actionTest = 0;
         Parent fxml = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
-        Produit.actionTest = 0;
+        
     }
 
    

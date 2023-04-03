@@ -9,9 +9,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
+import java.util.Locale.Category;
 
+import entities.Categorie_produit;
 import entities.Produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +31,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import services.Categorie_produitService;
+import services.ICategorie_produitService;
 import services.IProduitService;
 import services.ProduitService;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -84,13 +90,6 @@ public class AddProductCardController implements Initializable {
         if(Produit.actionTest == 0){ //add product
             update_productBtn.setVisible(false);
 
-            nameInput.setText("");
-            descriptionInput.setText("");
-            numberInput.setText("");
-            priceInput.setText("");
-            pointsInput.setText("");
-          //  Image image = new Image(getClass().getResource("/assets/img/" + p.getImage()).toExternalForm());
-          //  imageInput.setImage(image);
         }else{ // update product
             add_new_productBtn.setVisible(false);
 
@@ -107,29 +106,38 @@ public class AddProductCardController implements Initializable {
             numberInput.setText(String.valueOf(p.getQuantite()));
             priceInput.setText(String.valueOf(p.getPrix_produit()));
             pointsInput.setText(String.valueOf(p.getPrix_point_produit()));
-            Image image = new Image(getClass().getResource("/assets/img/" + p.getImage()).toExternalForm());
+            Image image = new Image(getClass().getResource("/assets/ProductUploads/" + p.getImage()).toExternalForm());
             imageInput.setImage(image);
+
+            categoryInput.setValue(produitService.getCategory(p.getCategorie_produit_id()));
 
         }
     
-        // ComboBox<String> comboBox = new ComboBox<>();
-        categoryInput.getItems().addAll(
-                "Option 1",
-                "Option 2",
-                "Option 3"
-        );
+        // Ajouter la liste des categories au combobox;
+        // Instancier le service de categorie
+        ICategorie_produitService categoryService = new Categorie_produitService();
+
+        // Récupérer tous les categories
+        List<Categorie_produit> categories = categoryService.getAllCategories();
         
+        // Afficher les categories dans la console (juste pour tester)
+        /*System.out.println("Liste des produits:");
+        for (Categorie_produit categorie : categories) {
+            System.out.println(categorie);
+        }*/
+
         Map<String, Integer> valuesMap = new HashMap<>();
-        valuesMap.put("Option 1", 38);
-        valuesMap.put("Option 2", 38);
-        valuesMap.put("Option 3", 38);
+        for (Categorie_produit categorie : categories) {
+            categoryInput.getItems().add(categorie.getNom_categorie());
+            valuesMap.put(categorie.getNom_categorie(), categorie.getId());
+        }
         
         categoryInput.setOnAction(event -> {
             String selectedOption = categoryInput.getValue();
             int selectedValue = valuesMap.get(selectedOption);
             categId = selectedValue;
-            System.out.println("Selected option: " + selectedOption);
-            System.out.println("Selected value: " + selectedValue);
+            //System.out.println("Selected option: " + selectedOption);
+            //System.out.println("Selected value: " + selectedValue);
         });
         
     
@@ -172,21 +180,23 @@ public class AddProductCardController implements Initializable {
     void ajouter_image(MouseEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisir une image");
-        fileChooser.getExtensionFilters().addAll( new ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
         selectedImageFile = fileChooser.showOpenDialog(imageInput.getScene().getWindow());
         if (selectedImageFile != null) {
             Image image = new Image(selectedImageFile.toURI().toString());
             imageInput.setImage(image);
 
-            // Récupérer le nom de l'image sélectionnée
-            imageName = selectedImageFile.getName();
-            //System.out.println(imageName);
+            // Générer un nom de fichier unique pour l'image
+            String uniqueID = UUID.randomUUID().toString();
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf(".")); // Récupérer l'extension de l'image
+            imageName = uniqueID + extension;
             
-            // Enregistrer l'image dans le répertoire d'images
-            Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/img/" + imageName);
+            // Enregistrer l'image dans le dossier "uploads"
+            Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }
+    
 
     @FXML
     void updateProduct(MouseEvent event) {
