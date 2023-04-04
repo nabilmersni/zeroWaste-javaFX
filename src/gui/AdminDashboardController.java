@@ -111,7 +111,12 @@ public class AdminDashboardController implements Initializable {
         UserService userService = new UserService();
 
         try {
-            user = userService.getOneUser(UserSession.getInstance().getEmail());
+            // user = userService.getOneUser(UserSession.getInstance().getEmail());
+            if (UserSession.getInstance().getEmail() == null) {
+                user = userService.getOneUser("admin@gmail.com");
+            } else {
+                user = userService.getOneUser(UserSession.getInstance().getEmail());
+            }
             Image img = new Image("assets/userUploads/" + user.getImgUrl());
             circle.setFill(new ImagePattern(img));
 

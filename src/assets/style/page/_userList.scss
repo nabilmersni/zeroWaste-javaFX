@@ -82,3 +82,34 @@
     -fx-background-color:#defee6;        
     }
 }
+
+.updateUserModel {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .updateUserModel-card {
+    -fx-background-color: #fff;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+  }
+  
+  .updateUserModel-card-title {
+    -fx-font-weight: 700;
+    -fx-font-size: 20px;
+  }
+  
+  .updateUserModel-card-exitBtn {
+    -fx-background-color: #43882b;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-cursor: hand;
+  }
+  
+  .updateUserModel-card-exitBtn:hover {
+    -fx-background-color: #397425;
+  }
+
+  .updateUserModel-scrollPane {
+    -fx-background: #fff;
+    -fx-background-color: transparent;
+  }

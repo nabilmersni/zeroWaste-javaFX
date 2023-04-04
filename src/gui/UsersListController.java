@@ -11,49 +11,20 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import services.UserService;
 
 public class UsersListController implements Initializable {
 
     @FXML
-    private Text userItemEmail;
+    private HBox updateUserModel;
 
     @FXML
-    private ImageView userItemImg;
-
-    @FXML
-    private Text userItemName;
-
-    @FXML
-    private Text userItemRole;
-
-    @FXML
-    private Label userItemStateBtn;
-
-    @FXML
-    private ImageView userItemStateBtnImg;
-
-    @FXML
-    private Label userItemStateLabel;
-
-    @FXML
-    private Text userItemStateText;
-
-    @FXML
-    private Text userItemTel;
-
-    @FXML
-    private Label userItemUpdateBtn;
-
-    @FXML
-    private ImageView userItemUpdateBtnImg;
+    private VBox updateUserModelContent;
 
     @FXML
     private VBox userListContainer;
@@ -67,9 +38,52 @@ public class UsersListController implements Initializable {
     @FXML
     private HBox userTableHead;
 
+    private static int updateUserModelShow = 0;
+    private static String userEmailToUpdate = "";
+
+    public static int getupdateUserModelShow() {
+        return updateUserModelShow;
+    }
+
+    public static void setupdateUserModelShow(int updateUserModelShow) {
+        UsersListController.updateUserModelShow = updateUserModelShow;
+    }
+
+    public static String getuserToUpdate() {
+        return userEmailToUpdate;
+    }
+
+    public static void setuserEmailToUpdate(String userEmailToUpdate) {
+        UsersListController.userEmailToUpdate = userEmailToUpdate;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserService userService = new UserService();
+        User userToUpdate;
+
+        // System.out.println(userEmailToUpdate);
+        if (UsersListController.getupdateUserModelShow() == 0) {
+            updateUserModel.setVisible(false);
+        } else if (UsersListController.getupdateUserModelShow() == 1) {
+            updateUserModel.setVisible(true);
+            FXMLLoader fxmlLoader1 = new FXMLLoader();
+            fxmlLoader1.setLocation(getClass().getResource("updateUserCard.fxml"));
+            VBox updateUserform;
+            try {
+                updateUserform = fxmlLoader1.load();
+                UpdateUserCardController updateUserCardController = fxmlLoader1.getController();
+                userToUpdate = userService.getOneUser(userEmailToUpdate);
+
+                updateUserCardController.setUserUpdateData(userToUpdate);
+                updateUserModelContent.getChildren().add(updateUserform);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             ArrayList<User> userList = userService.getAllUser();
             for (int i = 0; i < userList.size(); i++) {
@@ -85,6 +99,12 @@ public class UsersListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void close_updateUserModel(MouseEvent event) {
+        updateUserModel.setVisible(false);
+        updateUserModelShow = 0;
     }
 
 }
