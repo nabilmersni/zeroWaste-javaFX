@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import utils.MyDB;
 
@@ -93,4 +94,38 @@ public class UserService implements IUserService {
         return user;
     }
 
+    public ArrayList<User> getAllUser() throws SQLException {
+        String req = "SELECT * FROM `user` where roles = ? or roles = ?";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, "[\"ROLE_USER\"]");
+        ps.setString(2, "[\"ROLE_ASSOCIATION\"]");
+
+        ResultSet rs = ps.executeQuery();
+        ArrayList<User> userList = new ArrayList<>();
+
+        while (rs.next()) {
+            User user = new User();
+
+            user.setId(rs.getInt("id"));
+            user.setFullname(rs.getString("full_name"));
+            user.setEmail(rs.getString("email"));
+            user.setTel(rs.getString("tel"));
+            user.setToken(rs.getString("token"));
+            user.setIsVerified(rs.getBoolean("is_verified"));
+            user.setState(rs.getBoolean("state"));
+            user.setDescription(rs.getString("description"));
+            user.setFbLink(rs.getString("fb_link"));
+            user.setTwitterLink(rs.getString("twitter_link"));
+            user.setInstaLink(rs.getString("insta_link"));
+            user.setImgUrl(rs.getString("img_url"));
+            user.setRoles(rs.getString("roles"));
+            user.setPassword(rs.getString("password"));
+            user.setPoint(rs.getInt("point"));
+            user.setVerificationCode(rs.getInt("verification_code"));
+
+            userList.add(user);
+        }
+        ps.close();
+        return userList;
+    }
 }

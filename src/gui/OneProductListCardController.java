@@ -1,7 +1,5 @@
 package gui;
 
-
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -47,23 +45,22 @@ public class OneProductListCardController {
     @FXML
     private Label categoryProduit;
 
+    public void setProductData(Produit produit) {
+        // Instancier le service de produit
+        IProduitService produitService = new ProduitService();
 
-    
-    public void setProductData(Produit produit){
-         // Instancier le service de produit
-         IProduitService produitService = new ProduitService();
-         
-        Image image = new Image(getClass().getResource("/assets/ProductUploads/" + produit.getImage()).toExternalForm());
+        Image image = new Image(
+                getClass().getResource("/assets/ProductUploads/" + produit.getImage()).toExternalForm());
         img.setImage(image);
 
         productName.setText(produit.getNom_produit());
-        //get category Name
+        // get category Name
         String categoryName = produitService.getCategory(produit.getCategorie_produit_id());
         categoryProduit.setText(categoryName);
 
-        priceProduit.setText(""+produit.getPrix_produit());
+        priceProduit.setText("" + produit.getPrix_produit());
 
-        //deleteProduit btn click
+        // deleteProduit btn click
         deleteProduit.setId(String.valueOf(produit.getId()));
 
         deleteProduit.setOnMouseClicked(event -> {
@@ -73,11 +70,13 @@ public class OneProductListCardController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            //supprimer le contenu de la liste et afficher la nouvelle liste(apres supprimer)
+            // supprimer le contenu de la liste et afficher la nouvelle liste(apres
+            // supprimer)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
                 Parent root = loader.load();
-                // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
+                // Accéder à la pane content_area depuis le controller de
+                // OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
                 // Vider la pane et afficher le contenu de ProductsList.fxml
@@ -86,23 +85,24 @@ public class OneProductListCardController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //end  
+            // end
         });
-        //END deleteProduit btn click
+        // END deleteProduit btn click
 
-        //editProduit btn click
+        // editProduit btn click
         editProduit.setId(String.valueOf(produit.getId()));
 
         editProduit.setOnMouseClicked(event -> {
             System.out.println("ID du produit à modifier : " + produit.getId());
             Produit.setIdProduit(produit.getId());
 
-            Produit.actionTest = 1;  // pour afficher le bouton update
-            
+            Produit.actionTest = 1; // pour afficher le bouton update
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProduct.fxml"));
             try {
                 Parent root = loader.load();
-                // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
+                // Accéder à la pane content_area depuis le controller de
+                // OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
                 // Vider la pane et afficher le contenu de AddProduct.fxml
@@ -111,15 +111,10 @@ public class OneProductListCardController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
-        });
-        //END editProduit btn click
 
+        });
+        // END editProduit btn click
 
     }
-    
-    
 
-
-    
 }

@@ -91,6 +91,16 @@ public class LogInController {
                                 NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
                         UserSession.getInstance().setEmail(user.getEmail());
                         System.out.println("to the DASHBOARD");
+                        if (user.getRoles().equals("[\"ROLE_USER\"]")
+                                || user.getRoles().equals("[\"ROLE_ASSOCIATION\"]")) {
+                            System.out.println("to the USERDASHBOARD");
+                        } else if (user.getRoles().equals("[\"ROLE_ADMIN\"]")) {
+                            Parent root = FXMLLoader.load(getClass().getResource("AdminDashboard.fxml"));
+                            Scene scene = new Scene(root);
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
+                        }
                     } else {
 
                         Map<String, String> data = new HashMap<>();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -100,10 +101,13 @@
                </children>
             </VBox>
             <Button fx:id="signUpBTN" layoutX="309.0" layoutY="574.0" mnemonicParsing="false" onAction="#signUp" styleClass="SignUp__btn" stylesheets="@../assets/style/nabilStyle.css" text="Sign Up" />
-            <HBox layoutX="241.0" layoutY="626.0" prefHeight="34.0" prefWidth="231.0" style="-fx-spacing: 5px;">
+            <HBox layoutX="251.0" layoutY="629.0" prefHeight="34.0" style="-fx-spacing: 5px;">
                <children>
-                  <Label prefHeight="34.0" prefWidth="168.0" styleClass="form__member" stylesheets="@../assets/style/nabilStyle.css" text="You already have an account!" />
-                  <Hyperlink fx:id="logInLink" onAction="#toLogin" prefHeight="34.0" prefWidth="56.0" styleClass="form__member__link" stylesheets="@../assets/style/nabilStyle.css" text="Log In!" />
+                  <Label prefHeight="34.0" styleClass="form__member" stylesheets="@../assets/style/nabilStyle.css" text="You already have an account!">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin></Label>
+                  <Hyperlink fx:id="logInLink" onAction="#toLogin" prefHeight="34.0" styleClass="form__member__link" stylesheets="@../assets/style/nabilStyle.css" text="Log In!" />
                </children>
             </HBox>
          </children>

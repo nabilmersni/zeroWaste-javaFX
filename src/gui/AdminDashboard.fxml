@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="bg" stylesheets="@../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.UserDashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="bg" stylesheets="@../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AdminDashboardController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="250.0" styleClass="dash__side-bar">
          <opaqueInsets>
@@ -178,7 +178,7 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="72.0">
+            <HBox fx:id="sideBarLogout" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="72.0">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -210,7 +210,7 @@
                   <Font name="Montserrat ExtraBold" size="18.0" />
                </font>
             </Text>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="nav-icon">
+            <HBox fx:id="navBarLogout" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="50.0" styleClass="nav-icon">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -246,7 +246,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </HBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nav-user-fullname" text="Braiek Ali">
+            <Text fx:id="navFullname" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="nav-user-fullname" text="Braiek Ali">
                <font>
                   <Font name="Montserrat Bold" size="18.0" />
                </font>
@@ -261,7 +261,7 @@
             </Circle>
          </children>
       </HBox>
-      <Pane fx:id="content_area" layoutX="266.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="1084.0" styleClass="dash__container-card">
+      <Pane fx:id="content_area" layoutX="266.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1084.0" styleClass="dash__container-card">
          <children>
             <Text layoutX="65.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dashboard" />
          </children>

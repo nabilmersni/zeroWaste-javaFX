@@ -1,0 +1,84 @@
+.dash__container-card {
+    -fx-background-color: #fff;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+}
+
+.user_list--title{
+    -fx-fill: #32594a;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    // -fx-padding-top: 1.6rem;
+}
+
+.userTableHead{
+    // -fx-background-color: #5ba890;
+    -fx-background-color: #defee6;
+    -fx-background-radius: 35px 35px 0 0;
+    -fx-padding: 0 15px;
+}
+
+.userTableHeadTitle{
+    -fx-fill: #5ba890;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+}
+
+.user_listScrollPane{
+    -fx-background: rgba(251, 237, 237, 0.166);
+    -fx-background-color: transparent;
+}
+
+.userTableBody{
+    -fx-padding: 15px 10px;   
+}
+
+.userItem{
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+    -fx-background-radius: 1000px;
+    -fx-padding: 10px 18px;   
+
+    &__img{
+       
+    }
+}
+
+.userItem__name{
+    -fx-fill: #585856;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+.userItem__field{
+    -fx-fill: #585856;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.userItem__field-active{
+    -fx-background-color:#03bf8a;
+    -fx-padding: 5px 15px;   
+    -fx-background-radius:1000px;
+}
+
+.userItem__field-unactive{
+    -fx-background-color:#ef2c53;
+    -fx-padding: 5px 15px;   
+    -fx-background-radius:1000px;
+}
+
+.userItem__field-text{
+    -fx-fill: #fff;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+}
+
+.userItem__btn{
+    -fx-padding: 10px;   
+    -fx-background-radius:1000px;
+    -fx-cursor:hand;
+
+    &:hover{
+    -fx-background-color:#defee6;        
+    }
+}

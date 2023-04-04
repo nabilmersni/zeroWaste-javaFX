@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 @font-face {
   font-family: primaryFont;
   src: url("../fonts/Nunito-VariableFont_wght.ttf") format("truetype");
@@ -6,8 +7,9 @@
   font-family: displayFont;
   src: url("../fonts/AdigianaExtreme.ttf") format("truetype");
 }
-.root {
-  -fx-font-family: displayFont;
+* {
+  /*font-family: "Adigiana Extreme";*/
+  -fx-font-family: "Montserrat", sans-serif;
 }
 
 .signUp__container {
@@ -122,4 +124,82 @@
 }
 .google-btn:hover .google-btn__text {
   -fx-fill: #DEFEE6;
+}
+
+.dash__container-card {
+  -fx-background-color: #fff;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+}
+
+.user_list--title {
+  -fx-fill: #32594a;
+  -fx-font-size: 20px;
+  -fx-font-weight: 700;
+}
+
+.userTableHead {
+  -fx-background-color: #defee6;
+  -fx-background-radius: 35px 35px 0 0;
+  -fx-padding: 0 15px;
+}
+
+.userTableHeadTitle {
+  -fx-fill: #5ba890;
+  -fx-font-size: 13px;
+  -fx-font-weight: 700;
+}
+
+.user_listScrollPane {
+  -fx-background: rgba(251, 237, 237, 0.166);
+  -fx-background-color: transparent;
+}
+
+.userTableBody {
+  -fx-padding: 15px 10px;
+}
+
+.userItem {
+  -fx-background-color: #fff;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+  -fx-background-radius: 1000px;
+  -fx-padding: 10px 18px;
+}
+.userItem__name {
+  -fx-fill: #585856;
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+}
+
+.userItem__field {
+  -fx-fill: #585856;
+  -fx-font-size: 13px;
+  -fx-font-weight: 600;
+}
+
+.userItem__field-active {
+  -fx-background-color: #03bf8a;
+  -fx-padding: 5px 15px;
+  -fx-background-radius: 1000px;
+}
+
+.userItem__field-unactive {
+  -fx-background-color: #ef2c53;
+  -fx-padding: 5px 15px;
+  -fx-background-radius: 1000px;
+}
+
+.userItem__field-text {
+  -fx-fill: #fff;
+  -fx-font-size: 13px;
+  -fx-font-weight: 700;
+}
+
+.userItem__btn {
+  -fx-padding: 10px;
+  -fx-background-radius: 1000px;
+  -fx-cursor: hand;
+}
+.userItem__btn:hover {
+  -fx-background-color: #defee6;
 }/*# sourceMappingURL=nabilStyle.css.map */
