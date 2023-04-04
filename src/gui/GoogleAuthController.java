@@ -110,11 +110,23 @@ public class GoogleAuthController implements Initializable {
                                             e.printStackTrace();
                                         }
                                     } else {
-
+                                        Platform.runLater(() -> service.cancel());
                                         TrayNotificationAlert.notif("Login", "logged in successfully.",
                                                 NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
                                         UserSession.getInstance().setEmail(user.getEmail());
                                         System.out.println("to the DASHBOARD");
+
+                                        try {
+                                            Parent root;
+                                            root = FXMLLoader.load(getClass().getResource("/gui/AdminDashboard.fxml"));
+                                            Scene scene = new Scene(root);
+                                            Stage stage = (Stage) ((Node) left).getScene().getWindow();
+                                            stage.setScene(scene);
+                                            stage.show();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
                                     }
 
                                 });
