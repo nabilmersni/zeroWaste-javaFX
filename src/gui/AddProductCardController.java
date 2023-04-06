@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.Locale.Category;
 
 import entities.Categorie_produit;
 import entities.Produit;
@@ -37,6 +36,11 @@ import services.IProduitService;
 import services.ProduitService;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Node;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
+
 
 
 
@@ -163,10 +167,13 @@ public class AddProductCardController implements Initializable {
          // Instancier le service de produit
          IProduitService produitService = new ProduitService();
 
-         produitService.ajouter(produit);
-
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
+                produitService.ajouter(produit);
+                TrayNotificationAlert.notif("Product", "Product added successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+         
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
@@ -197,7 +204,7 @@ public class AddProductCardController implements Initializable {
             
             // Enregistrer l'image dans le dossier "uploads"
             // Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
-            Path destination = Paths.get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+            Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }
@@ -220,11 +227,13 @@ public class AddProductCardController implements Initializable {
 
          // Instancier le service de produit
          IProduitService produitService = new ProduitService();
-
-         produitService.updateProduct(produit);
          
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
+                produitService.updateProduct(produit);
+                TrayNotificationAlert.notif("Product", "Product updated successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+        
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
@@ -232,6 +241,8 @@ public class AddProductCardController implements Initializable {
                 // Vider la pane et afficher le contenu de ProductsList.fxml
                 contentArea.getChildren().clear();
                 contentArea.getChildren().add(root);
+
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }

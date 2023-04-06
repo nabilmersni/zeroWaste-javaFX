@@ -20,4 +20,7 @@ public interface IProduitService {
   public void updateProduct(Produit produit) ;
 
   public List<Produit> searchProducts(String search);
+
+  public List<Produit> sortProducts(int value, int idCategory); //0: sort by stock *** 1: sort by category *** 2: sort by stack and category
+
 }

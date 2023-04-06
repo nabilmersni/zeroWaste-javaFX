@@ -8,22 +8,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.Locale.Category;
 
 import entities.Categorie_produit;
-import entities.Produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,11 +26,12 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
-import services.IProduitService;
-import services.ProduitService;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Node;
-
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
 
 
 /**
@@ -109,11 +102,14 @@ public class AddCategoryCardController implements Initializable {
          // Instancier le service de categorie
          ICategorie_produitService categoryService = new Categorie_produitService();
 
-         categoryService.ajouter(categorie);
-
-         ProductsListController.setCategoryModelShow(1);
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
+                categoryService.ajouter(categorie);
+                TrayNotificationAlert.notif("Category", "Category added successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+                ProductsListController.setCategoryModelShow(1);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+         
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
@@ -144,7 +140,7 @@ public class AddCategoryCardController implements Initializable {
             
             // Enregistrer l'image dans le dossier "uploads"
             // Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
-            Path destination = Paths.get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+            Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }
@@ -162,13 +158,16 @@ public class AddCategoryCardController implements Initializable {
          // Instancier le service de category
          ICategorie_produitService categoryService = new Categorie_produitService();
 
-         categoryService.updateCategory(category);
-         
-         ProductsListController.setCategoryModelShow(1);
-         Categorie_produit.actionTest = 0;  // pour afficher le bouton ajouter et cacher le bouton modifier
-         
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
             try {
+                categoryService.updateCategory(category);
+                TrayNotificationAlert.notif("Category", "Category updated successfully.",
+                            NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+       
+                ProductsListController.setCategoryModelShow(1);
+                Categorie_produit.actionTest = 0;  // pour afficher le bouton ajouter et cacher le bouton modifier
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+         
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");

@@ -2,8 +2,9 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import entities.Categorie_produit;
@@ -13,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +27,6 @@ import services.Categorie_produitService;
 import services.ICategorie_produitService;
 import services.IProduitService;
 import services.ProduitService;
-import zerowaste.ZeroWaste;
 
 
 /**
@@ -48,6 +50,16 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private TextField productSearchInput;
+    
+    @FXML
+    private Button stockBtn;
+
+    @FXML
+    private ComboBox<String> categoryInput;
+
+    private int categId = -1;
+
+    private int sortValue = -1; //1: sort by stock *** 0: filter by category *** 2: filter by category and sort by stock
 
     private static int categoryModelShow = 0;
     
@@ -123,6 +135,28 @@ public class ProductsListController implements Initializable {
             e.printStackTrace();
         }
 
+        // Ajouter la liste des categories au combobox-----------------
+
+        Map<String, Integer> valuesMap = new HashMap<>();
+        for (Categorie_produit categorie : categories) {
+            categoryInput.getItems().add(categorie.getNom_categorie());
+            valuesMap.put(categorie.getNom_categorie(), categorie.getId());
+        }
+        
+        categoryInput.setOnAction(event -> {
+            String selectedOption = categoryInput.getValue();
+            int selectedValue = valuesMap.get(selectedOption);
+            categId = selectedValue;
+            Produit.setSearchValue(null);
+            //System.out.println("Selected option: " + selectedOption);
+            //System.out.println("Selected value: " + categId);
+            GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
+            productsListContainer.getChildren().clear();
+            this.setProductGridPaneList();
+        });
+        
+
+
 
     
     }    
@@ -151,9 +185,13 @@ public class ProductsListController implements Initializable {
     @FXML
     void searchProduct(KeyEvent event) throws IOException {
         Produit.setSearchValue(((TextField) event.getSource()).getText());
-        System.out.println("Recherche en cours: " + Produit.getSearchValue());
+        //System.out.println("Recherche en cours: " + Produit.getSearchValue());
+        if (stockBtn.getStyleClass().contains("sort__stockBtn-active")) {
+            stockBtn.getStyleClass().remove("sort__stockBtn-active");
+        }
+        categId = -1;
         
-        Parent fxml = FXMLLoader.load(getClass().getResource("ProductsList.fxml"));
+       // Parent fxml = FXMLLoader.load(getClass().getResource("ProductsList.fxml"));
         GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
         productsListContainer.getChildren().clear();
         this.setProductGridPaneList();
@@ -167,8 +205,24 @@ public class ProductsListController implements Initializable {
         List<Produit> produits = null;
         System.out.println("searchValue" + Produit.getSearchValue());
         if(Produit.getSearchValue() == null){
-            // Récupérer tous les produits
-            produits = produitService.getAllProducts();
+            if(sortValue == -1 && categId == -1){
+                // Récupérer tous les produits
+                produits = produitService.getAllProducts();
+            }
+            if(sortValue == 1 && categId == -1){
+                // sort by stock
+                produits = produitService.sortProducts(1, -1);
+            }
+            if(sortValue == -1 && categId != -1){
+                // filter by category
+                produits = produitService.sortProducts(0, categId);
+            }
+            if(sortValue == 1 && categId != -1){
+                // filter by category and sort by stock
+                produits = produitService.sortProducts(0, categId);
+            }
+
+            
         }else{
             produits = produitService.searchProducts(Produit.getSearchValue());
         }
@@ -198,6 +252,27 @@ public class ProductsListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @FXML
+    void sort__ByStock(MouseEvent event) {
+        Produit.setSearchValue(null);
+        if (!stockBtn.getStyleClass().contains("sort__stockBtn-active")) {
+            stockBtn.getStyleClass().add("sort__stockBtn-active");
+            //Button stock = (Button) content_area.lookup("#stockBtn");
+            //stock.getStyleClass().add("sort__stockBtn-active");
+            sortValue = 1;
+        }else{
+            stockBtn.getStyleClass().remove("sort__stockBtn-active");
+            sortValue = -1;
+        }
+
+       // Parent fxml = FXMLLoader.load(getClass().getResource("ProductsList.fxml"));
+        GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
+        productsListContainer.getChildren().clear();
+        this.setProductGridPaneList();
+
     }
     
 }

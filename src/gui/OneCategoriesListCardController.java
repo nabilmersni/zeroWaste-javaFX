@@ -9,7 +9,6 @@ import entities.Categorie_produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -18,6 +17,10 @@ import javafx.scene.text.Text;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
 import javafx.scene.Node;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -57,6 +60,9 @@ public class OneCategoriesListCardController {
             try {
                 categoryService.supprimer(category.getId());
                 ProductsListController.setCategoryModelShow(1);
+                TrayNotificationAlert.notif("Category", "Category deleted successfully.",
+                                NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }

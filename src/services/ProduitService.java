@@ -151,9 +151,11 @@ public class ProduitService implements IProduitService {
   public List<Produit> searchProducts(String search) {
     List<Produit> productList = new ArrayList<>();
     try {
-        String query = "SELECT * FROM produit WHERE nom_produit LIKE ?";
+        String query = "SELECT * FROM produit WHERE nom_produit LIKE ? OR description LIKE ? OR prix_produit LIKE ?";
         PreparedStatement preparedStatement = conx.prepareStatement(query);
         preparedStatement.setString(1, "%" + search + "%");
+        preparedStatement.setString(2, "%" + search + "%");
+        preparedStatement.setString(3, "%" + search + "%");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         // Parcours du résultat de la requête
@@ -177,7 +179,51 @@ public class ProduitService implements IProduitService {
     }
 
     return productList;
-}
+  }
+
+
+  public List<Produit> sortProducts(int value, int idCategory) {
+    List<Produit> productList = new ArrayList<>();
+    try {
+        String query = "";
+        PreparedStatement preparedStatement;
+        
+        if(value == 1 && idCategory == -1){ //sort by stock
+          query = "SELECT * FROM produit ORDER BY quantite asc";
+          preparedStatement = conx.prepareStatement(query);
+        }else if(value == 0 && idCategory !=0 ){ //filter by category
+          query = "SELECT * FROM produit where categorie_produit_id = ? ";
+          preparedStatement = conx.prepareStatement(query);
+          preparedStatement.setInt(1, idCategory);
+        }else{ // sort by stock and category
+          query = "SELECT * FROM produit where categorie_produit_id = ? and ORDER BY quantite asc";
+          preparedStatement = conx.prepareStatement(query);
+          preparedStatement.setInt(1, idCategory );
+        }
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Parcours du résultat de la requête
+        while (resultSet.next()) {
+            Produit produit = new Produit();
+            produit.setId(resultSet.getInt("id"));
+            produit.setNom_produit(resultSet.getString("nom_produit"));
+            produit.setDescription(resultSet.getString("description"));
+            produit.setQuantite(resultSet.getInt("quantite"));
+            produit.setPrix_produit(resultSet.getFloat("prix_produit"));
+            produit.setImage(resultSet.getString("image"));
+            produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+            produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+
+            productList.add(produit);
+        }
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return productList;
+  }
 
 
   

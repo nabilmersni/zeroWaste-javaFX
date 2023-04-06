@@ -16,6 +16,11 @@ import javafx.scene.text.Text;
 import services.IProduitService;
 import services.ProduitService;
 import javafx.scene.Node;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
+
 
 /**
  * FXML Controller class
@@ -45,6 +50,9 @@ public class OneProductListCardController {
     @FXML
     private Label categoryProduit;
 
+    @FXML
+    private Text stockProduitValue;
+
     public void setProductData(Produit produit) {
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
@@ -58,6 +66,7 @@ public class OneProductListCardController {
         String categoryName = produitService.getCategory(produit.getCategorie_produit_id());
         categoryProduit.setText(categoryName);
 
+        stockProduitValue.setText("" + produit.getQuantite());
         priceProduit.setText("" + produit.getPrix_produit());
 
         // deleteProduit btn click
@@ -67,6 +76,8 @@ public class OneProductListCardController {
             System.out.println("ID du produit à supprimer : " + produit.getId());
             try {
                 produitService.supprimer(produit.getId());
+                TrayNotificationAlert.notif("Product", "Product deleted successfully.",
+                                NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

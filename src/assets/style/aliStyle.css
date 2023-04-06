@@ -424,3 +424,66 @@
 .product__list-searchInput:focused {
   -fx-border-color: #43882b;
 }
+
+.sort-text {
+  -fx-font-size: 16px;
+  -fx-font-weight: 800;
+}
+
+.sort__stockBtn {
+  -fx-font-size: 15px;
+  -fx-background-color: rgba(151, 209, 88, 0.178);
+  -fx-padding: 10px 20px;
+  -fx-text-fill: #43882b;
+  -fx-font-weight: 800;
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+  -fx-transition: all 2s ease;
+  -fx-cursor: hand;
+}
+
+.sort__stockBtn:hover {
+  -fx-background-color: #43882b;
+  -fx-text-fill: #defee6;
+}
+
+.sort__stockBtn-active {
+  -fx-background-color: #43882b;
+  -fx-text-fill: #defee6;
+}
+
+/***************************************/
+
+.sort__comboBox {
+  -fx-background-color: rgba(151, 209, 88, 0.178);
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-pref-height: 40px;
+  -fx-text-fill: #43882b;
+  -fx-cursor: hand;
+}
+
+.sort__comboBox:hover {
+  -fx-background-color: #43882b;
+  -fx-text-fill: #fff;
+}
+
+.sort__comboBox:hover .list-cell {
+  -fx-text-fill: #fff;
+}
+
+.sort__comboBox .list-cell {
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-text-fill: #43882b;
+  -fx-background-color: rgba(151, 209, 88, 0.178);
+}
+
+.sort__comboBox .list-cell:hover {
+  -fx-background-color: #43882b;
+  -fx-pref-height: 40px;
+  -fx-text-fill: #fff;
+  -fx-cursor: hand;
+}
