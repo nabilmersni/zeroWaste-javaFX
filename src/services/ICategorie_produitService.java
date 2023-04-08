@@ -18,5 +18,7 @@ public interface ICategorie_produitService {
   public Categorie_produit getOneCategory(int idCategory) throws SQLException;
 
   public void updateCategory(Categorie_produit category) ;
+
+  public int categoryExists(String categoryName); 
   
 }

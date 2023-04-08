@@ -111,6 +111,26 @@ public class Categorie_produitService implements ICategorie_produitService {
     
   }
 
+  @Override
+  public int categoryExists(String categoryName) {
+      int result = 0;
+      try {
+          String query = "SELECT COUNT(*) FROM categorie_produit WHERE nom_categorie=?";
+          PreparedStatement preparedStatement = conx.prepareStatement(query);
+          preparedStatement.setString(1, categoryName);
+          ResultSet resultSet = preparedStatement.executeQuery();
+          
+          if(resultSet.next()) {
+              result = resultSet.getInt(1);
+          }
+          
+          preparedStatement.close();
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+      return result;
+  }
+
 
   
 }

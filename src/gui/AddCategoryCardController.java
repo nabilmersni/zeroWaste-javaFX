@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -55,9 +56,23 @@ public class AddCategoryCardController implements Initializable {
 
     @FXML
     private HBox update_categoryBtn;
+
+    @FXML
+    private HBox nameInputErrorHbox;
+
+    @FXML
+    private HBox photoInputErrorHbox;
+
+    @FXML
+    private Text nameInputError;
+
+    @FXML
+    private Text photoInputError;
     
     private File selectedImageFile;
     private String imageName;
+    private int nomTest = 0;
+    private int photoTest = 0;
     
 
     /**
@@ -66,6 +81,9 @@ public class AddCategoryCardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(Categorie_produit.actionTest);
+
+        nameInputErrorHbox.setVisible(false);
+        photoInputErrorHbox.setVisible(false);
         if(Categorie_produit.actionTest == 0){ //add product
             update_categoryBtn.setVisible(false);
 
@@ -85,7 +103,7 @@ public class AddCategoryCardController implements Initializable {
             imageInput.setImage(image);
             imageName = c.getImage_categorie();
 
-
+            nomTest = 1;
         }
         
     
@@ -95,12 +113,34 @@ public class AddCategoryCardController implements Initializable {
     void addNewCategory(MouseEvent event) throws SQLException {
      
         Categorie_produit categorie = new Categorie_produit();
-        categorie.setNom_categorie(nameInput.getText());
         
-        categorie.setImage_categorie(imageName);
+        // Instancier le service de categorie
+        ICategorie_produitService categoryService = new Categorie_produitService();
 
-         // Instancier le service de categorie
-         ICategorie_produitService categoryService = new Categorie_produitService();
+        if(nameInput.getText().isEmpty()){
+            nomTest = 0;
+            nameInputErrorHbox.setVisible(true);
+        }else{
+            if(nomTest == 1){
+                if(categoryService.categoryExists(nameInput.getText()) == 0){
+                    categorie.setNom_categorie(nameInput.getText());
+                }else{
+                    nameInputError.setText("category name already exist !");
+                    nomTest = 0;
+                    nameInputErrorHbox.setVisible(true);
+                }
+            }
+        }
+
+        if(imageName == null){
+            photoTest = 0;
+            photoInputErrorHbox.setVisible(true);
+        }else{
+            photoTest = 1;
+            categorie.setImage_categorie(imageName);
+        }
+
+        if(nomTest == 1 && photoTest == 1){
 
             try {
                 categoryService.ajouter(categorie);
@@ -120,6 +160,7 @@ public class AddCategoryCardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
         
     }
 
@@ -142,21 +183,48 @@ public class AddCategoryCardController implements Initializable {
             // Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+
+            //pour le controle de saisie
+            photoTest = 1;
+            photoInputErrorHbox.setVisible(false);
         }
     }
     
 
     @FXML
-    void updateCategory(MouseEvent event) {
-        
+    void updateCategory(MouseEvent event) throws SQLException {
+        // Instancier le service de category
+        ICategorie_produitService categoryService = new Categorie_produitService();
+
         Categorie_produit category = new Categorie_produit();
         category.setId(Categorie_produit.getIdCategory());
-        category.setNom_categorie(nameInput.getText());
-        
-        category.setImage_categorie(imageName);
 
-         // Instancier le service de category
-         ICategorie_produitService categoryService = new Categorie_produitService();
+        if(nameInput.getText().isEmpty()){
+            nomTest = 0;
+            nameInputErrorHbox.setVisible(true);
+        }else{
+            if(!(categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie().equals(nameInput.getText()) ) && (categoryService.categoryExists(nameInput.getText()) == 1)){
+                System.out.println("Category name : " + categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie() );
+                System.out.println("Category count : " + categoryService.categoryExists(nameInput.getText()) );
+                System.out.println("text name : " + nameInput.getText());
+                
+                nameInputError.setText("category name already exist !");
+                nomTest = 0;
+                nameInputErrorHbox.setVisible(true);
+            }else {
+                category.setNom_categorie(nameInput.getText());
+            }
+        }
+
+        if(imageName == null){
+            photoTest = 0;
+            photoInputErrorHbox.setVisible(true);
+        }else{
+            photoTest = 1;
+            category.setImage_categorie(imageName);
+        }
+
+        if(nomTest == 1 && photoTest == 1){
 
             try {
                 categoryService.updateCategory(category);
@@ -178,7 +246,17 @@ public class AddCategoryCardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
+    }
+
+    @FXML
+    void nameTypedInput(KeyEvent event) {
+        String nameText = ((TextField) event.getSource()).getText() ;
+        if(!nameText.isEmpty()){
+            nameInputErrorHbox.setVisible(false);
+            nomTest = 1;
+        }
     }
 
 
