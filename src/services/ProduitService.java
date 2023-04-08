@@ -196,7 +196,7 @@ public class ProduitService implements IProduitService {
           preparedStatement = conx.prepareStatement(query);
           preparedStatement.setInt(1, idCategory);
         }else{ // sort by stock and category
-          query = "SELECT * FROM produit where categorie_produit_id = ? and ORDER BY quantite asc";
+          query = "SELECT * FROM produit where categorie_produit_id = ? ORDER BY quantite asc";
           preparedStatement = conx.prepareStatement(query);
           preparedStatement.setInt(1, idCategory );
         }

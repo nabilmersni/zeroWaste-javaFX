@@ -219,9 +219,10 @@ public class ProductsListController implements Initializable {
             }
             if(sortValue == 1 && categId != -1){
                 // filter by category and sort by stock
-                produits = produitService.sortProducts(0, categId);
+                produits = produitService.sortProducts(1, categId);
             }
-
+            System.out.println("sortValue : "  + sortValue);
+            System.out.println("categId : "  + categId);
             
         }else{
             produits = produitService.searchProducts(Produit.getSearchValue());
