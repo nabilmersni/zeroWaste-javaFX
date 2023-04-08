@@ -487,3 +487,13 @@
   -fx-text-fill: #fff;
   -fx-cursor: hand;
 }
+
+.form_errors-product {
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+}
+
+.form_errors-product-point {
+  -fx-font-size: 34px;
+  -fx-font-weight: 800;
+}

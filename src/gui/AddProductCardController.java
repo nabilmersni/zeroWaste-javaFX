@@ -26,9 +26,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
@@ -80,10 +82,59 @@ public class AddProductCardController implements Initializable {
 
     @FXML
     private HBox choose_photoBtn;
+
+    @FXML
+    private Text nameInputError;
+
+    @FXML
+    private Text descriptionInputError;
+
+    @FXML
+    private Text categoryInputError;
+
+    @FXML
+    private Text numberInputError;
+
+    @FXML
+    private Text priceInputError;
+
+    @FXML
+    private Text pointsInputError;
+
+    @FXML
+    private Text photoInputError;
+
+    @FXML
+    private HBox nameInputErrorHbox;
+
+    @FXML
+    private HBox descriptionInputErrorHbox;
+
+    @FXML
+    private HBox categoryInputErrorHbox;
+
+    @FXML
+    private HBox numberInputErrorHbox;
     
-    private int categId;
+    @FXML
+    private HBox priceInputErrorHbox;
+
+    @FXML
+    private HBox pointsInputErrorHbox;
+
+    @FXML
+    private HBox photoInputErrorHbox;
+    
+    private int categId = -1;
     private File selectedImageFile;
-    private String imageName;
+    private String imageName = null;
+    private int nomTest = 0;
+    private int descriptionTest = 0;
+    private int categoryTest = 0;
+    private int numberTest = 0;
+    private int priceTest = 0;
+    private int pointsTest = 0;
+    private int photoTest = 0;
 
     /**
      * Initializes the controller class.
@@ -91,9 +142,18 @@ public class AddProductCardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(Produit.actionTest);
+        //errorsField
+        nameInputErrorHbox.setVisible(false);
+        descriptionInputErrorHbox.setVisible(false);
+        categoryInputErrorHbox.setVisible(false);
+        numberInputErrorHbox.setVisible(false);
+        priceInputErrorHbox.setVisible(false);
+        pointsInputErrorHbox.setVisible(false);
+        photoInputErrorHbox.setVisible(false);
+
         if(Produit.actionTest == 0){ //add product
             update_productBtn.setVisible(false);
-
+            
         }else{ // update product
             add_new_productBtn.setVisible(false);
 
@@ -116,8 +176,13 @@ public class AddProductCardController implements Initializable {
 
             categoryInput.setValue(produitService.getCategory(p.getCategorie_produit_id()));
             categId = p.getCategorie_produit_id();
-           // System.out.println("catgevalueeeee : " + produitService.getCategory(p.getCategorie_produit_id()));
-
+            // System.out.println("catgevalueeeee : " + produitService.getCategory(p.getCategorie_produit_id()));
+            nomTest = 1;
+            descriptionTest = 1;
+            categoryTest = 1;
+            numberTest = 1;
+            priceTest = 1;
+            pointsTest = 1;
         }
     
         // Ajouter la liste des categories au combobox-----------------
@@ -143,6 +208,8 @@ public class AddProductCardController implements Initializable {
             String selectedOption = categoryInput.getValue();
             int selectedValue = valuesMap.get(selectedOption);
             categId = selectedValue;
+            categoryTest = 1;
+            categoryInputErrorHbox.setVisible(false);
             //System.out.println("Selected option: " + selectedOption);
             //System.out.println("Selected value: " + selectedValue);
         });
@@ -154,19 +221,72 @@ public class AddProductCardController implements Initializable {
     void addNewProduct(MouseEvent event) throws SQLException {
      
         Produit produit = new Produit();
-        produit.setNom_produit(nameInput.getText());
-        produit.setDescription(descriptionInput.getText());
-        produit.setCategorie_produit_id(categId);
-        produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
-        produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
-        produit.setQuantite(Integer.parseInt(numberInput.getText()));
-        produit.setCategorie_produit_id(categId);
         
-        produit.setImage(imageName);
+        if(nameInput.getText().isEmpty()){
+            nomTest = 0;
+            nameInputErrorHbox.setVisible(true);
+        }else{
+            if(nomTest == 1){
+                produit.setNom_produit(nameInput.getText());
+            }
+        }
+        
+        if(descriptionInput.getText().isEmpty()){
+            descriptionTest = 0;
+            descriptionInputErrorHbox.setVisible(true);
+        }else{
+            if(descriptionTest == 1){
+                produit.setDescription(descriptionInput.getText());
+            }
+        }
 
-         // Instancier le service de produit
-         IProduitService produitService = new ProduitService();
+        if(categId == -1){
+            categoryTest = 0;
+            categoryInputErrorHbox.setVisible(true);
+        }else{
+            if(categoryTest == 1){
+                produit.setCategorie_produit_id(categId);
+            }
+        }
 
+        if(numberInput.getText().isEmpty()){
+            numberTest = 0;
+            numberInputErrorHbox.setVisible(true);
+        }else{
+            if(numberTest == 1){
+                produit.setQuantite(Integer.parseInt(numberInput.getText()));
+            }
+        }
+
+        if(priceInput.getText().isEmpty()){
+            priceTest = 0;
+            priceInputErrorHbox.setVisible(true);
+        }else{
+            if(priceTest == 1){
+                produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
+            }
+        }
+
+        if(pointsInput.getText().isEmpty()){
+            pointsTest = 0;
+            pointsInputErrorHbox.setVisible(true);
+        }else{
+            if(pointsTest == 1){
+                produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
+            }
+        }
+
+        if(imageName == null){
+            photoTest = 0;
+            photoInputErrorHbox.setVisible(true);
+        }else{
+            photoTest = 1;
+            produit.setImage(imageName);
+        }
+        
+        if(nomTest == 1 && descriptionTest == 1 && categoryTest == 1 && numberTest == 1 && priceTest == 1 && pointsTest == 1 && photoTest == 1){
+            // Instancier le service de produit
+            IProduitService produitService = new ProduitService();
             try {
                 produitService.ajouter(produit);
                 TrayNotificationAlert.notif("Product", "Product added successfully.",
@@ -184,7 +304,9 @@ public class AddProductCardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        
+           
+        }
+         
     }
 
     @FXML
@@ -206,6 +328,10 @@ public class AddProductCardController implements Initializable {
             // Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+
+            //pour le controle de saisie
+            photoTest = 1;
+            photoInputErrorHbox.setVisible(false);
         }
     }
     
@@ -214,19 +340,74 @@ public class AddProductCardController implements Initializable {
     void updateProduct(MouseEvent event) {
         
         Produit produit = new Produit();
+        
         produit.setId(Produit.getIdProduit());
-        produit.setNom_produit(nameInput.getText());
-        produit.setDescription(descriptionInput.getText());
-        produit.setCategorie_produit_id(categId);
-        produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
-        produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
-        produit.setQuantite(Integer.parseInt(numberInput.getText()));
         
-            produit.setImage(imageName);
+        if(nameInput.getText().isEmpty()){
+            nomTest = 0;
+            nameInputErrorHbox.setVisible(true);
+        }else{
+            if(nomTest == 1){
+                produit.setNom_produit(nameInput.getText());
+            }
+        }
         
+        if(descriptionInput.getText().isEmpty()){
+            descriptionTest = 0;
+            descriptionInputErrorHbox.setVisible(true);
+        }else{
+            if(descriptionTest == 1){
+                produit.setDescription(descriptionInput.getText());
+            }
+        }
 
-         // Instancier le service de produit
-         IProduitService produitService = new ProduitService();
+        if(categId == -1){
+            categoryTest = 0;
+            categoryInputErrorHbox.setVisible(true);
+        }else{
+            if(categoryTest == 1){
+                produit.setCategorie_produit_id(categId);
+            }
+        }
+
+        if(numberInput.getText().isEmpty()){
+            numberTest = 0;
+            numberInputErrorHbox.setVisible(true);
+        }else{
+            if(numberTest == 1){
+                produit.setQuantite(Integer.parseInt(numberInput.getText()));
+            }
+        }
+
+        if(priceInput.getText().isEmpty()){
+            priceTest = 0;
+            priceInputErrorHbox.setVisible(true);
+        }else{
+            if(priceTest == 1){
+                produit.setPrix_produit(Float.parseFloat(priceInput.getText()));
+            }
+        }
+
+        if(pointsInput.getText().isEmpty()){
+            pointsTest = 0;
+            pointsInputErrorHbox.setVisible(true);
+        }else{
+            if(pointsTest == 1){
+                produit.setPrix_point_produit(Integer.parseInt(pointsInput.getText()));
+            }
+        }
+
+        if(imageName == null){
+            photoTest = 0;
+            photoInputErrorHbox.setVisible(true);
+        }else{
+            photoTest = 1;
+            produit.setImage(imageName);
+        }
+
+        if(nomTest == 1 && descriptionTest == 1 && categoryTest == 1 && numberTest == 1 && priceTest == 1 && pointsTest == 1 && photoTest == 1){
+            // Instancier le service de produit
+            IProduitService produitService = new ProduitService();
          
             try {
                 produitService.updateProduct(produit);
@@ -246,7 +427,89 @@ public class AddProductCardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
+    }
+
+
+    @FXML
+    void numberTypedInput(KeyEvent event) {
+        String numberText = ((TextField) event.getSource()).getText() ;
+        if(!numberText.matches("-?\\d+") ){
+            numberInputError.setText("number should be positive");
+            numberInputErrorHbox.setVisible(true);
+            numberTest = 0;
+        }else{
+            int number = Integer.parseInt(numberText);
+            if(number < 0) {
+                numberInputError.setText("number cannot be negative");
+                numberInputErrorHbox.setVisible(true);
+                numberTest = 0;
+            }else{
+                numberInputErrorHbox.setVisible(false);
+                numberTest = 1;
+            } 
+        }
+    }
+
+    @FXML
+    void priceTypedInput(KeyEvent event) {
+        String priceText = ((TextField) event.getSource()).getText();
+        if (!priceText.matches("-?\\d+(\\.\\d+)?")) {
+            priceInputError.setText("price should be a positive number");
+            priceInputErrorHbox.setVisible(true);
+            priceTest = 0;
+        } else {
+            double price = Double.parseDouble(priceText);
+            if (price < 0) {
+                priceInputError.setText("price cannot be negative");
+                priceInputErrorHbox.setVisible(true);
+                priceTest = 0;
+            } else {
+                priceInputErrorHbox.setVisible(false);
+                priceTest = 1;
+            }
+        }
+
+    }
+
+    @FXML
+    void pointsTypedInput(KeyEvent event) {
+        String pointsText = ((TextField) event.getSource()).getText() ;
+        if(!pointsText.matches("-?\\d+") ){
+            pointsInputError.setText("points should be a positive number");
+            pointsInputErrorHbox.setVisible(true);
+            pointsTest = 0;
+        }else{
+            int points = Integer.parseInt(pointsText);
+            if(points < 0) {
+                pointsInputError.setText("points cannot be negative");
+                pointsInputErrorHbox.setVisible(true);
+                pointsTest = 0;
+            }else{
+                pointsInputErrorHbox.setVisible(false);
+                pointsTest = 1;
+            } 
+        }
+
+    }
+
+    @FXML
+    void nameTypedInput(KeyEvent event) {
+        String nameText = ((TextField) event.getSource()).getText() ;
+        if(!nameText.isEmpty()){
+            nameInputErrorHbox.setVisible(false);
+            nomTest = 1;
+        }
+    }
+
+    @FXML
+    void descriptionTypedInput(KeyEvent event) {
+        String descriptionText = ((TextArea) event.getSource()).getText() ;
+        if(!descriptionText.isEmpty()){
+            descriptionInputErrorHbox.setVisible(false);
+            descriptionTest = 1;
+        }
     }
 
 
