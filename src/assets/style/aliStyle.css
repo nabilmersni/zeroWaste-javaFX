@@ -497,3 +497,13 @@
   -fx-font-size: 34px;
   -fx-font-weight: 800;
 }
+
+.pdfBtn {
+  -fx-background-radius: 50%;
+  -fx-border-radius: 50%;
+  -fx-cursor: hand;
+}
+
+.pdfBtn:hover {
+  -fx-background-color: #defee6;
+}
