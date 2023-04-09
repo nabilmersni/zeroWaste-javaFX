@@ -165,6 +165,7 @@
   -fx-background-radius: 1000px;
   -fx-padding: 10px 18px;
 }
+
 .userItem__name {
   -fx-fill: #585856;
   -fx-font-size: 14px;
@@ -233,4 +234,57 @@
 .updateUserModel-scrollPane {
   -fx-background: #fff;
   -fx-background-color: transparent;
+}
+
+.home__msg {
+  -fx-fill: #5BA890;
+  -fx-font-weight: 800;
+  -fx-font-size: 24px;
+}
+
+.home__msg__text {
+  -fx-fill: #10036a;
+  -fx-font-weight: 700;
+  -fx-font-size: 13px;
+}
+
+.profileContainer {
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+  -fx-background-color: #fff;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+}
+
+.profileImgBorder {
+  -fx-background-color: #DEFEE6;
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+}
+
+.profileTitle {
+  -fx-fill: #74da08;
+  -fx-font-weight: 700;
+  -fx-font-size: 20px;
+}
+
+.profileData {
+  -fx-fill: #10036A;
+  -fx-font-weight: 600;
+  -fx-font-size: 14px;
+}
+
+.changePass__btn {
+  -fx-font-size: 15px;
+  -fx-background-color: #DEFEE6;
+  -fx-padding: 10px 20px;
+  -fx-text-fill: #43882B;
+  -fx-font-weight: 800;
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+  -fx-transition: all 2s ease;
+  -fx-cursor: hand;
+}
+.changePass__btn:hover {
+  -fx-background-color: #97D158;
+  -fx-text-fill: #DEFEE6;
 }/*# sourceMappingURL=nabilStyle.css.map */

@@ -117,12 +117,27 @@ public class GoogleAuthController implements Initializable {
                                         System.out.println("to the DASHBOARD");
 
                                         try {
-                                            Parent root;
-                                            root = FXMLLoader.load(getClass().getResource("/gui/AdminDashboard.fxml"));
-                                            Scene scene = new Scene(root);
-                                            Stage stage = (Stage) ((Node) left).getScene().getWindow();
-                                            stage.setScene(scene);
-                                            stage.show();
+
+                                            if (user.getRoles().equals("[\"ROLE_USER\"]")
+                                                    || user.getRoles().equals("[\"ROLE_ASSOCIATION\"]")) {
+
+                                                Parent root;
+                                                root = FXMLLoader
+                                                        .load(getClass().getResource("/gui/UserDashboard.fxml"));
+                                                Scene scene = new Scene(root);
+                                                Stage stage = (Stage) ((Node) left).getScene().getWindow();
+                                                stage.setScene(scene);
+                                                stage.show();
+                                            } else if (user.getRoles().equals("[\"ROLE_ADMIN\"]")) {
+                                                Parent root;
+                                                root = FXMLLoader
+                                                        .load(getClass().getResource("/gui/AdminDashboard.fxml"));
+                                                Scene scene = new Scene(root);
+                                                Stage stage = (Stage) ((Node) left).getScene().getWindow();
+                                                stage.setScene(scene);
+                                                stage.show();
+                                            }
+
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }

@@ -34,7 +34,6 @@ import tray.notification.NotificationType;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
 
-
 /**
  * FXML Controller class
  *
@@ -68,12 +67,11 @@ public class AddCategoryCardController implements Initializable {
 
     @FXML
     private Text photoInputError;
-    
+
     private File selectedImageFile;
     private String imageName;
     private int nomTest = 0;
     private int photoTest = 0;
-    
 
     /**
      * Initializes the controller class.
@@ -84,14 +82,14 @@ public class AddCategoryCardController implements Initializable {
 
         nameInputErrorHbox.setVisible(false);
         photoInputErrorHbox.setVisible(false);
-        if(Categorie_produit.actionTest == 0){ //add product
+        if (Categorie_produit.actionTest == 0) { // add product
             update_categoryBtn.setVisible(false);
 
-        }else{ // update product
+        } else { // update product
             add_new_categoryBtn.setVisible(false);
 
             // Instancier le service de categorie
-            ICategorie_produitService categoryService = new Categorie_produitService() ;
+            ICategorie_produitService categoryService = new Categorie_produitService();
             Categorie_produit c = new Categorie_produit();
             try {
                 c = categoryService.getOneCategory(Categorie_produit.getIdCategory());
@@ -99,32 +97,32 @@ public class AddCategoryCardController implements Initializable {
                 e.printStackTrace();
             }
             nameInput.setText(c.getNom_categorie());
-            Image image = new Image(getClass().getResource("/assets/ProductUploads/" + c.getImage_categorie()).toExternalForm());
+            Image image = new Image(
+                    getClass().getResource("/assets/ProductUploads/" + c.getImage_categorie()).toExternalForm());
             imageInput.setImage(image);
             imageName = c.getImage_categorie();
 
             nomTest = 1;
         }
-        
-    
-    }    
+
+    }
 
     @FXML
     void addNewCategory(MouseEvent event) throws SQLException {
-     
+
         Categorie_produit categorie = new Categorie_produit();
-        
+
         // Instancier le service de categorie
         ICategorie_produitService categoryService = new Categorie_produitService();
 
-        if(nameInput.getText().isEmpty()){
+        if (nameInput.getText().isEmpty()) {
             nomTest = 0;
             nameInputErrorHbox.setVisible(true);
-        }else{
-            if(nomTest == 1){
-                if(categoryService.categoryExists(nameInput.getText()) == 0){
+        } else {
+            if (nomTest == 1) {
+                if (categoryService.categoryExists(nameInput.getText()) == 0) {
                     categorie.setNom_categorie(nameInput.getText());
-                }else{
+                } else {
                     nameInputError.setText("category name already exist !");
                     nomTest = 0;
                     nameInputErrorHbox.setVisible(true);
@@ -132,26 +130,27 @@ public class AddCategoryCardController implements Initializable {
             }
         }
 
-        if(imageName == null){
+        if (imageName == null) {
             photoTest = 0;
             photoInputErrorHbox.setVisible(true);
-        }else{
+        } else {
             photoTest = 1;
             categorie.setImage_categorie(imageName);
         }
 
-        if(nomTest == 1 && photoTest == 1){
+        if (nomTest == 1 && photoTest == 1) {
 
             try {
                 categoryService.ajouter(categorie);
                 TrayNotificationAlert.notif("Category", "Category added successfully.",
-                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+                        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
                 ProductsListController.setCategoryModelShow(1);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
-         
+
                 Parent root = loader.load();
-                // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
+                // Accéder à la pane content_area depuis le controller de
+                // OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
                 // Vider la pane et afficher le contenu de ProductsList.fxml
@@ -161,7 +160,7 @@ public class AddCategoryCardController implements Initializable {
                 e.printStackTrace();
             }
         }
-        
+
     }
 
     @FXML
@@ -176,20 +175,23 @@ public class AddCategoryCardController implements Initializable {
 
             // Générer un nom de fichier unique pour l'image
             String uniqueID = UUID.randomUUID().toString();
-            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf(".")); // Récupérer l'extension de l'image
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
+
             imageName = uniqueID + extension;
-            
+
             // Enregistrer l'image dans le dossier "uploads"
-            // Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
-            Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+            // Path destination = Paths.get("D:/SSD
+            // SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" +
+            // imageName);
+            Path destination = Paths
+                    .get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
-            //pour le controle de saisie
+            // pour le controle de saisie
             photoTest = 1;
             photoInputErrorHbox.setVisible(false);
         }
     }
-    
 
     @FXML
     void updateCategory(MouseEvent event) throws SQLException {
@@ -199,45 +201,48 @@ public class AddCategoryCardController implements Initializable {
         Categorie_produit category = new Categorie_produit();
         category.setId(Categorie_produit.getIdCategory());
 
-        if(nameInput.getText().isEmpty()){
+        if (nameInput.getText().isEmpty()) {
             nomTest = 0;
             nameInputErrorHbox.setVisible(true);
-        }else{
-            if(!(categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie().equals(nameInput.getText()) ) && (categoryService.categoryExists(nameInput.getText()) == 1)){
-                System.out.println("Category name : " + categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie() );
-                System.out.println("Category count : " + categoryService.categoryExists(nameInput.getText()) );
+        } else {
+            if (!(categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie()
+                    .equals(nameInput.getText())) && (categoryService.categoryExists(nameInput.getText()) == 1)) {
+                System.out.println("Category name : "
+                        + categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie());
+                System.out.println("Category count : " + categoryService.categoryExists(nameInput.getText()));
                 System.out.println("text name : " + nameInput.getText());
-                
+
                 nameInputError.setText("category name already exist !");
                 nomTest = 0;
                 nameInputErrorHbox.setVisible(true);
-            }else {
+            } else {
                 category.setNom_categorie(nameInput.getText());
             }
         }
 
-        if(imageName == null){
+        if (imageName == null) {
             photoTest = 0;
             photoInputErrorHbox.setVisible(true);
-        }else{
+        } else {
             photoTest = 1;
             category.setImage_categorie(imageName);
         }
 
-        if(nomTest == 1 && photoTest == 1){
+        if (nomTest == 1 && photoTest == 1) {
 
             try {
                 categoryService.updateCategory(category);
                 TrayNotificationAlert.notif("Category", "Category updated successfully.",
-                            NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-       
+                        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
                 ProductsListController.setCategoryModelShow(1);
-                Categorie_produit.actionTest = 0;  // pour afficher le bouton ajouter et cacher le bouton modifier
-                
+                Categorie_produit.actionTest = 0; // pour afficher le bouton ajouter et cacher le bouton modifier
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
-         
+
                 Parent root = loader.load();
-                // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
+                // Accéder à la pane content_area depuis le controller de
+                // OneProductListCard.fxml
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
                 // Vider la pane et afficher le contenu de ProductsList.fxml
@@ -252,14 +257,11 @@ public class AddCategoryCardController implements Initializable {
 
     @FXML
     void nameTypedInput(KeyEvent event) {
-        String nameText = ((TextField) event.getSource()).getText() ;
-        if(!nameText.isEmpty()){
+        String nameText = ((TextField) event.getSource()).getText();
+        if (!nameText.isEmpty()) {
             nameInputErrorHbox.setVisible(false);
             nomTest = 1;
         }
     }
 
-
-
-    
 }

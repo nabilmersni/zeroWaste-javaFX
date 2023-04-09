@@ -78,7 +78,7 @@ public class UpdateUserCardController implements Initializable {
             imageName = uniqueID + extension;
 
             Path destination = Paths
-                    .get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/userUploads/" + imageName);
+                    .get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/userUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }

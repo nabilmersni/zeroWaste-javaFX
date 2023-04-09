@@ -94,6 +94,11 @@ public class LogInController {
                         if (user.getRoles().equals("[\"ROLE_USER\"]")
                                 || user.getRoles().equals("[\"ROLE_ASSOCIATION\"]")) {
                             System.out.println("to the USERDASHBOARD");
+                            Parent root = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
+                            Scene scene = new Scene(root);
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
                         } else if (user.getRoles().equals("[\"ROLE_ADMIN\"]")) {
                             Parent root = FXMLLoader.load(getClass().getResource("AdminDashboard.fxml"));
                             Scene scene = new Scene(root);
