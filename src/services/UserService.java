@@ -128,4 +128,66 @@ public class UserService implements IUserService {
         ps.close();
         return userList;
     }
+
+    public int getIndivNB() throws SQLException {
+        String req = "SELECT * FROM `user` where roles = ?";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, "[\"ROLE_USER\"]");
+        // ps.setString(2, "[\"ROLE_ASSOCIATION\"]");
+
+        ResultSet rs = ps.executeQuery();
+        int count = 0;
+
+        while (rs.next()) {
+            count++;
+        }
+        ps.close();
+        return count;
+    }
+
+    public int getAssociationNB() throws SQLException {
+        String req = "SELECT * FROM `user` where roles = ?";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, "[\"ROLE_ASSOCIATION\"]");
+
+        ResultSet rs = ps.executeQuery();
+        int count = 0;
+
+        while (rs.next()) {
+            count++;
+        }
+        ps.close();
+        return count;
+    }
+
+    public int getActiveNB() throws SQLException {
+        String req = "SELECT * FROM `user` where state = ?";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, "1");
+
+        ResultSet rs = ps.executeQuery();
+        int count = 0;
+
+        while (rs.next()) {
+            count++;
+        }
+        ps.close();
+        return count;
+    }
+
+    public int getunActiveNB() throws SQLException {
+        String req = "SELECT * FROM `user` where state = ?";
+        PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, "0");
+
+        ResultSet rs = ps.executeQuery();
+        int count = 0;
+
+        while (rs.next()) {
+            count++;
+        }
+        ps.close();
+        return count;
+    }
+
 }

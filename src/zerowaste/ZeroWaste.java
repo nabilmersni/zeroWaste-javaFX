@@ -17,7 +17,8 @@ public class ZeroWaste extends Application {
         Parent root;
         try {
             // root = FXMLLoader.load(getClass().getResource("/gui/LogIn.fxml"));
-            root = FXMLLoader.load(getClass().getResource("/gui/UserDashboard.fxml"));
+            // root = FXMLLoader.load(getClass().getResource("/gui/UserDashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/gui/AdminDashboard.fxml"));
             Scene scene = new Scene(root);
 
             primaryStage.getIcons().add(new Image("/assets/img/logo.png"));

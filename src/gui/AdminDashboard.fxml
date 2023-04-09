@@ -263,7 +263,17 @@
       </HBox>
       <Pane fx:id="content_area" layoutX="266.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1084.0" styleClass="dash__container-card">
          <children>
-            <Text layoutX="65.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dashboard" />
+            <HBox alignment="CENTER_LEFT" layoutX="22.0" layoutY="28.0" stylesheets="@../assets/style/nabilStyle.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="home__msg" text="Home |">
+                     <HBox.margin>
+                        <Insets right="8.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="home__msg__text" text="Hello Nabil admin, Are you ready to help people and the nature again ?" />
+               </children>
+            </HBox>
+            <HBox fx:id="chartContainer" layoutX="22.0" layoutY="92.0" />
          </children>
       </Pane>
    </children>

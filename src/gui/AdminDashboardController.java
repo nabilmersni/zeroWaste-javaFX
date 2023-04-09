@@ -11,6 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -102,6 +107,9 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private Text navFullname;
 
+    @FXML
+    private HBox chartContainer;
+
     /**
      * Initializes the controller class.
      */
@@ -109,11 +117,15 @@ public class AdminDashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         User user;
         UserService userService = new UserService();
+        int indivNB = 0;
+        int assocNB = 0;
+        int activeNB = 0;
+        int unActiveNB = 0;
 
         try {
             // user = userService.getOneUser(UserSession.getInstance().getEmail());
             if (UserSession.getInstance().getEmail() == null) {
-                user = userService.getOneUser("admin@gmail.com");
+                user = userService.getOneUser("nabilkdp0@gmail.com");
             } else {
                 user = userService.getOneUser(UserSession.getInstance().getEmail());
             }
@@ -122,10 +134,56 @@ public class AdminDashboardController implements Initializable {
 
             navFullname.setText(user.getFullname());
 
+            indivNB = userService.getIndivNB();
+            assocNB = userService.getAssociationNB();
+            activeNB = userService.getActiveNB();
+            unActiveNB = userService.getunActiveNB();
+
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        // create the axes
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+
+        // set the labels for the axes
+        xAxis.setLabel("Number of users");
+        // yAxis.setLabel("Value");
+
+        // create the bar chart
+        final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+
+        // set the size of the bar chart
+        // barChart.setPrefSize(500, 500);
+
+        // create the data series
+        final XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.getData().add(new XYChart.Data<>("Individual", indivNB));
+
+        // set the name of the data series
+        series.setName("Individual");
+
+        final XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.getData().add(new XYChart.Data<>("Association", assocNB));
+
+        // set the name of the data series2
+        series2.setName("Association");
+
+        // add the data to the bar chart
+        barChart.getData().addAll(series, series2);
+
+        final PieChart pieChart = new PieChart();
+
+        // create the data
+        final PieChart.Data data1 = new PieChart.Data("Active", activeNB);
+        final PieChart.Data data2 = new PieChart.Data("Unactive", unActiveNB);
+
+        // add the data to the pie chart
+        pieChart.getData().addAll(data1, data2);
+
+        chartContainer.getChildren().addAll(barChart, pieChart);
     }
 
     @FXML
