@@ -507,3 +507,51 @@
 .pdfBtn:hover {
   -fx-background-color: #defee6;
 }
+
+.userProductsContainer {
+  -fx-background-color: #fff;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+}
+.userProductCard {
+  -fx-border-color: #ccfccb;
+  -fx-border-width: 8px;
+  -fx-background-color: #fff;
+  -fx-background-radius: 50px;
+  -fx-border-radius: 50px;
+}
+
+.userProductCard-imgContainer {
+  -fx-border-color: #ccfccb;
+  -fx-border-width: 1px;
+  -fx-background-radius: 50px;
+  -fx-border-radius: 50px;
+}
+
+.userProductCard-name {
+  -fx-font-size: 25px;
+  -fx-font-weight: 800;
+}
+
+.userProductCard-description {
+  -fx-font-size: 18px;
+  -fx-font-weight: 400;
+}
+
+.userProductCard-price {
+  -fx-font-size: 20px;
+  -fx-font-weight: 800;
+}
+
+.userProductCard-btn {
+  -fx-font-size: 17px;
+  -fx-font-weight: 800;
+  -fx-background-color: #43882b;
+  -fx-background-radius: 1000px;
+  -fx-border-radius: 1000px;
+  -fx-cursor: hand;
+}
+
+.userProductCard-btn:hover {
+  -fx-background-color: #97d158;
+}
