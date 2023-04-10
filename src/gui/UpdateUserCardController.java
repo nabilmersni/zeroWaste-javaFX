@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.nio.file.Files;
 import javafx.stage.FileChooser.ExtensionFilter;
 import services.UserService;
+import zerowaste.ZeroWaste;
 import javafx.scene.Node;
 
 public class UpdateUserCardController implements Initializable {
@@ -61,6 +62,15 @@ public class UpdateUserCardController implements Initializable {
     User userToUpdate;
     private File selectedImageFile;
     private String imageName;
+    private static String FxmlToLoad;
+
+    public static String getFxmlToLoad() {
+        return FxmlToLoad;
+    }
+
+    public static void setFxmlToLoad(String FxmlToLoad) {
+        UpdateUserCardController.FxmlToLoad = FxmlToLoad;
+    }
 
     @FXML
     void ajouter_image(MouseEvent event) throws IOException {
@@ -98,15 +108,19 @@ public class UpdateUserCardController implements Initializable {
         try {
             userService.update(userToUpdate);
             UsersListController.setupdateUserModelShow(0);
+            UserProfileController.setupdateUserModelShow(0);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("UsersList.fxml"));
+            if (FxmlToLoad.equals("UserDashboard.fxml")) {
+                Parent root = FXMLLoader.load(getClass().getResource("UserDashboard.fxml"));
+                ZeroWaste.stage.getScene().setRoot(root);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlToLoad));
+                Parent root = loader.load();
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
-            Parent root = loader.load();
-
-            Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
-
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(root);
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

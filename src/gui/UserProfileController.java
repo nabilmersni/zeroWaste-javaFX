@@ -1,5 +1,8 @@
 package gui;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -7,17 +10,23 @@ import java.util.ResourceBundle;
 import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import services.UserService;
 import utils.UserSession;
+import javafx.scene.Node;
+import java.awt.*;
 
 public class UserProfileController implements Initializable {
 
@@ -40,6 +49,12 @@ public class UserProfileController implements Initializable {
     private Text telText;
 
     @FXML
+    private HBox updateUserModel;
+
+    @FXML
+    private VBox updateUserModelContent;
+
+    @FXML
     private ImageView userItemImg;
 
     @FXML
@@ -48,9 +63,20 @@ public class UserProfileController implements Initializable {
     @FXML
     private ImageView userItemUpdateBtnImg;
 
+    User user;
+    private static int updateUserModelShow = 0;
+
+    public static int getupdateUserModelShow() {
+        return updateUserModelShow;
+    }
+
+    public static void setupdateUserModelShow(int updateUserModelShow) {
+        UserProfileController.updateUserModelShow = updateUserModelShow;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        User user;
+
         UserService userService = new UserService();
         try {
             // user = userService.getOneUser(UserSession.getInstance().getEmail());
@@ -76,7 +102,26 @@ public class UserProfileController implements Initializable {
             emailText.setText(user.getEmail());
             telText.setText(user.getTel());
 
+            if (UserProfileController.getupdateUserModelShow() == 0) {
+                updateUserModel.setVisible(false);
+            } else if (UserProfileController.getupdateUserModelShow() == 1) {
+                updateUserModel.setVisible(true);
+                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                fxmlLoader1.setLocation(getClass().getResource("updateUserCard.fxml"));
+                VBox updateUserform;
+
+                updateUserform = fxmlLoader1.load();
+                UpdateUserCardController updateUserCardController = fxmlLoader1.getController();
+                UpdateUserCardController.setFxmlToLoad("UserDashboard.fxml");
+
+                updateUserCardController.setUserUpdateData(user);
+                updateUserModelContent.getChildren().add(updateUserform);
+
+            }
+
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -89,7 +134,42 @@ public class UserProfileController implements Initializable {
 
     @FXML
     void updateProfile(MouseEvent event) {
+        updateUserModel.setVisible(true);
+        updateUserModelShow = 1;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserProfile.fxml"));
+        try {
+            Parent root = loader.load();
+            Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+            // Vider la pane et afficher le contenu de ProductsList.fxml
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void close_updateUserModel(MouseEvent event) {
+        updateUserModel.setVisible(false);
+        updateUserModelShow = 0;
+    }
+
+    @FXML
+    void fbClicked(MouseEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.facebook.com/" + user.getFbLink()));
+    }
+
+    @FXML
+    void instaClicked(MouseEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/" + user.getInstaLink()));
 
     }
 
+    @FXML
+    void twitterClicked(MouseEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://twitter.com/" + user.getTwitterLink()));
+
+    }
 }

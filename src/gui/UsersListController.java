@@ -82,6 +82,7 @@ public class UsersListController implements Initializable {
             try {
                 updateUserform = fxmlLoader1.load();
                 UpdateUserCardController updateUserCardController = fxmlLoader1.getController();
+                UpdateUserCardController.setFxmlToLoad("UsersList.fxml");
                 userToUpdate = userService.getOneUser(userEmailToUpdate);
 
                 updateUserCardController.setUserUpdateData(userToUpdate);
