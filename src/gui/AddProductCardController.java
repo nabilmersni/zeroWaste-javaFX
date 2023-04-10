@@ -333,7 +333,7 @@ public class AddProductCardController implements Initializable {
             // SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" +
             // imageName);
             Path destination = Paths
-                    .get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+                    .get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
             // pour le controle de saisie

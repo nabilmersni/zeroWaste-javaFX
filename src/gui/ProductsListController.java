@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -45,6 +46,14 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import javafx.scene.Node;
+
+import javafx.embed.swing.SwingFXUtils;
+import java.awt.image.BufferedImage;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 /**
  * FXML Controller class
@@ -74,6 +83,12 @@ public class ProductsListController implements Initializable {
     @FXML
     private ComboBox<String> categoryInput;
 
+    @FXML
+    private ImageView qrCodeImg;
+
+    @FXML
+    private HBox qrCodeImgModel;
+
     private int categId = -1;
 
     private int sortValue = -1; // 1: sort by stock *** 0: filter by category *** 2: filter by category and sort
@@ -94,7 +109,7 @@ public class ProductsListController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        qrCodeImgModel.setVisible(false);
         if (ProductsListController.getCategoryModelShow() == 0) {
             categoriesModel.setVisible(false);
         } else if (ProductsListController.getCategoryModelShow() == 1) {
@@ -328,7 +343,7 @@ public class ProductsListController implements Initializable {
 
                 // Créer une instance de l'image
                 Image image = Image
-                        .getInstance("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/img/logo.png");
+                        .getInstance("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/img/logo.png");
 
                 // Positionner l'image en haut à gauche
                 image.setAbsolutePosition(5, document.getPageSize().getHeight() - 120);
@@ -493,6 +508,12 @@ public class ProductsListController implements Initializable {
             }
         }
 
+    }
+
+
+    @FXML
+    void close_QrCodeModel(MouseEvent event) {
+        qrCodeImgModel.setVisible(false);
     }
 
 }

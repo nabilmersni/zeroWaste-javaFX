@@ -125,7 +125,7 @@ public class AdminDashboardController implements Initializable {
         try {
             // user = userService.getOneUser(UserSession.getInstance().getEmail());
             if (UserSession.getInstance().getEmail() == null) {
-                user = userService.getOneUser("nabilkdp0@gmail.com");
+                user = userService.getOneUser("1");
             } else {
                 user = userService.getOneUser(UserSession.getInstance().getEmail());
             }

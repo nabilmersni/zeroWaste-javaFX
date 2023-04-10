@@ -180,12 +180,12 @@ public class AddCategoryCardController implements Initializable {
             imageName = uniqueID + extension;
 
             // Enregistrer l'image dans le dossier "uploads"
-            // Path destination = Paths.get("D:/SSD
-            // SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" +
-            // imageName);
-            Path destination = Paths
-                    .get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
-            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+            // Nabil Path
+        //    Path destination = Paths
+        //            .get("D:/SSD SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+        //Ali path
+        Path destination = Paths.get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);         
+        Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
             // pour le controle de saisie
             photoTest = 1;
