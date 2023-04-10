@@ -9,15 +9,15 @@ public interface IProduitService {
 
   public List<Produit> getAllProducts();
   
-  public void ajouter(Produit produit) ;
+ public void ajouter(Produit produit) ;
 
   public void supprimer(int idProduit) throws SQLException;
 
-  public String getCategory(int idCategory);
+ public String getCategory(int idCategory);
   
-  public Produit getOneProduct(int idProduct) throws SQLException;
+ public Produit getOneProduct(int idProduct) throws SQLException;
   
   public void updateProduct(Produit produit) ;
 
-  public List<Produit> searchProducts(String search);
+ public List<Produit> searchProducts(String search);
 }
