@@ -77,8 +77,7 @@ public class UpdateUserCardController implements Initializable {
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
 
-            Path destination = Paths
-                    .get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/UserUploads/" + imageName);
+            Path destination = Paths.get(System.getProperty("user.dir"), "src", "assets", "userUploads", imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }

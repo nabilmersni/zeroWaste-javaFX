@@ -342,8 +342,7 @@ public class ProductsListController implements Initializable {
                 document.open();
 
                 // Créer une instance de l'image
-                Image image = Image
-                        .getInstance("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/img/logo.png");
+                Image image = Image.getInstance(System.getProperty("user.dir") + "/src/assets/img/logo.png");
 
                 // Positionner l'image en haut à gauche
                 image.setAbsolutePosition(5, document.getPageSize().getHeight() - 120);
@@ -509,7 +508,6 @@ public class ProductsListController implements Initializable {
         }
 
     }
-
 
     @FXML
     void close_QrCodeModel(MouseEvent event) {

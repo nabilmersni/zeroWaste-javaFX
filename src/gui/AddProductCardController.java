@@ -322,18 +322,10 @@ public class AddProductCardController implements Initializable {
 
             // Générer un nom de fichier unique pour l'image
             String uniqueID = UUID.randomUUID().toString();
-            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf(".")); // Récupérer
-                                                                                                                    // l'extension
-                                                                                                                    // de
-                                                                                                                    // l'image
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
 
-            // Enregistrer l'image dans le dossier "uploads"
-            // Path destination = Paths.get("D:/SSD
-            // SUPORT/Desktop/pidev_java/zeroWaste-javaFX/src/assets/ProductUploads/" +
-            // imageName);
-            Path destination = Paths
-                    .get("C:/Users/ALI/Desktop/ZeroWaste - JavaFx/zeroWaste-javaFX/src/assets/ProductUploads/" + imageName);
+            Path destination = Paths.get(System.getProperty("user.dir"), "src", "assets", "ProductUploads", imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
             // pour le controle de saisie

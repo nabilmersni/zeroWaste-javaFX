@@ -110,7 +110,7 @@ public class UserDashboardController implements Initializable {
         try {
             // user = userService.getOneUser(UserSession.getInstance().getEmail());
             if (UserSession.getInstance().getEmail() == null) {
-                user = userService.getOneUser("1");
+                user = userService.getOneUser("nabilkdp0@gmail.com");
             } else {
                 user = userService.getOneUser(UserSession.getInstance().getEmail());
             }
