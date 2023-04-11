@@ -17,7 +17,7 @@ public interface IFundrisingService {
   
     //public String getCategory(int idCategory);
     
-    // public Fundrising getOneFunds(int id) throws SQLException;
+    public Fundrising getOneFund(int id) throws SQLException;
     
-  //  public void updateFunds(Fundrising funds) ;
+    public void updateFunds(Fundrising funds) ;
 }

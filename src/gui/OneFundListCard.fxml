@@ -25,37 +25,36 @@
             <Insets left="20.0" />
          </HBox.margin>
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="599.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="599.0">
                <children>
-                  <Text fx:id="fundName" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-title" text="Nike Air Deldon &quot;Deldon Designs&quot;">
-                     <font>
-                        <Font name="Montserrat ExtraBold" size="19.0" />
-                     </font>
-                  </Text>
+                  <Label text="Titre du don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
+                  <Text fx:id="fundName" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="599.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="599.0">
                <children>
-                  <!-- <Text fx:id="stockProduit" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" text="In Stock" translateY="-5.0" /> -->
-                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="\$" translateX="427.0" translateY="-5.0" />
-                  <Text fx:id="objectif" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="269.0" translateX="431.0" translateY="-5.0" />
+                  <Label text="Description don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
+                  <Text fx:id="descriptionDon" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
                </children>
+            </HBox>
+
+            <HBox alignment="CENTER_RIGHT" spacing="50" prefHeight="10.0" prefWidth="200.0" translateX="-50">
+               <Label text="Date don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
+               <Text fx:id="dateDon" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" />
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="50" prefHeight="10.0" prefWidth="200.0" translateX="-50">
+               <Label text="Date don Limite: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
+               <Text fx:id="dateDonLimite" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" />
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="599.0">
                <children>
                   <Label />
-                  <!-- <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="249.0">
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="250.0">
                      <children>
-                        <Label fx:id="categoryProduit" style="-fx-background-color: #defee6; -fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" text="Shoes" textFill="#585856">
-                           <padding>
-                              <Insets bottom="7.5" left="20.0" right="20.0" top="7.5" />
-                           </padding>
-                           <font>
-                              <Font name="Montserrat Regular" size="33.0" />
-                           </font>
-                        </Label>
+                        <Label text="Objectif: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
+                        <Text fx:id="objectif" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
                      </children>
-                  </HBox> -->
+                  </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="306.0">
                      <children>
                         <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">

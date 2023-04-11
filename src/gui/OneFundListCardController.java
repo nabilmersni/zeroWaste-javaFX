@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -33,9 +34,18 @@ public class OneFundListCardController {
 
     @FXML
     private Text fundName;
+    
+    @FXML
+    private Text descriptionDon;
 
     @FXML
     private Text objectif;
+
+    @FXML
+    private Text dateDon;
+
+    @FXML
+    private Text dateDonLimite;
 
 
     
@@ -50,9 +60,10 @@ public class OneFundListCardController {
         //get category Name
        // String etat = fundrisingSer(fun.getCategorie_produit_id());
        // categoryProduit.setText(categoryName);
-
+        descriptionDon.setText(""+fundrising.getDescription_don());
         objectif.setText(""+fundrising.getObjectif());
-
+        dateDon.setText(""+fundrising.getDate_don());
+        dateDonLimite.setText(""+fundrising.getDate_don_limite());
         //deleteProduit btn click
         deleteFund.setId(String.valueOf(fundrising.getId()));
 
@@ -63,8 +74,9 @@ public class OneFundListCardController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             //supprimer le contenu de la liste et afficher la nouvelle liste(apres supprimer)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Fundrising.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FundrisingList.fxml"));
             try {
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneFundListCard.fxml
@@ -85,11 +97,11 @@ public class OneFundListCardController {
 
         editFund.setOnMouseClicked(event -> {
             System.out.println("ID du produit à modifier : " + fundrising.getId());
-            fundrising.setId(fundrising.getId());
+            Fundrising.setIdFund(fundrising.getId());
 
-            fundrising.actionTest = 1;  // pour afficher le bouton update
+            Fundrising.actionTest = 1;  // pour afficher le bouton update
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddFund.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddFundraising.fxml"));
             try {
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de OneFundListCard.fxml
@@ -101,7 +113,6 @@ public class OneFundListCardController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
         });
         //END editProduit btn click
 
