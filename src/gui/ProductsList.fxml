@@ -169,7 +169,7 @@
                      </children>
                   </HBox>
                   <Line endX="391.0" layoutX="31.0" layoutY="493.0" startX="-16.0" stroke="#defee6" strokeWidth="2.0" translateY="-180.0" />
-                  <VBox layoutX="-2.0" layoutY="148.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="441.0">
+                  <VBox fx:id="reductionForm" layoutX="-2.0" layoutY="148.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="441.0">
                      <padding>
                         <Insets left="20.0" right="16.0" />
                      </padding>
@@ -203,19 +203,59 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER" layoutX="14.0" layoutY="355.0" onMouseClicked="#submit_offer" prefHeight="41.0" prefWidth="126.0" styleClass="submitOfferBtn" translateX="4.0" translateY="-110.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="submitOfferBtnText" text="Submit offer" />
-                     </children>
-                  </HBox>
                   <HBox alignment="TOP_RIGHT" layoutX="243.0" layoutY="314.0" prefHeight="100.0" prefWidth="180.0">
                      <children>
-                        <Text fx:id="addNewCoupnBtn" fill="#32bb6f" onMouseClicked="#addNewCoupon" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="addCouponBtn" text="Add New Coupon" />
+                        <Text fx:id="addNewCouponBtn" fill="#32bb6f" onMouseClicked="#addNewCoupon" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="addCouponBtn" text="Add New Coupon" />
                      </children>
                      <padding>
                         <Insets top="15.0" />
                      </padding>
                   </HBox>
+                  <HBox fx:id="submitCouponBtn" alignment="CENTER" layoutX="24.0" layoutY="365.0" onMouseClicked="#submit_coupon" prefHeight="41.0" prefWidth="126.0" styleClass="submitOfferBtn" translateX="-6.0" translateY="-115.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="submitOfferBtnText" text="Submit coupon" />
+                     </children>
+                  </HBox>
+                  <VBox fx:id="couponForm" layoutX="-2.0" layoutY="148.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="441.0">
+                     <padding>
+                        <Insets left="20.0" right="16.0" />
+                     </padding>
+                     <children>
+                        <HBox prefHeight="6.0" prefWidth="538.0">
+                           <children>
+                              <Text fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-input-label" text="Phone">
+                                 <HBox.margin>
+                                    <Insets right="2.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </HBox>
+                        <TextField fx:id="couponInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#couponTypedInput" prefHeight="40.0" prefWidth="225.0" promptText="Phone" styleClass="product__add-input">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox fx:id="couponInputErrorHbox" prefHeight="28.0" prefWidth="405.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+                           <children>
+                              <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                              <Text fx:id="couponInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number can not be negative !">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox fx:id="submitOfferBtn" alignment="CENTER" layoutX="18.0" layoutY="286.0" onMouseClicked="#submit_offer" prefHeight="41.0" prefWidth="126.0" styleClass="submitOfferBtn" translateY="-38.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="submitOfferBtnText" text="Submit offer" />
+                     </children>
+                  </HBox>
+                  <Text fx:id="backToReductionBtn" fill="#32594a" layoutX="18.0" layoutY="348.0" onMouseClicked="#back_toReduction" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="closeOffreModelBtn" text="back" translateX="5.0" translateY="-4.0" />
                </children>
             </Pane>
          </children>

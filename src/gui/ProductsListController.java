@@ -50,6 +50,19 @@ import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.json.JSONObject;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 
 
 /**
@@ -91,18 +104,50 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private TextField reductionInput;
+
+    @FXML
+    private TextField couponInput;
     
     @FXML
     private Text reductionInputError;
 
     @FXML
+    private Text couponInputError;
+
+    @FXML
+    private Text backToReductionBtn;
+
+    @FXML
+    private Text addNewCouponBtn;
+    
+
+    @FXML
     private HBox reductionInputErrorHbox;
+
+    @FXML
+    private HBox couponInputErrorHbox;
+
+    @FXML
+    private VBox couponForm;
+
+    @FXML
+    private VBox reductionForm;
+
+    @FXML
+    private HBox submitCouponBtn;
+
+    @FXML
+    private HBox submitOfferBtn;
+
+
 
     private int categId = -1;
 
     private int sortValue = -1; // 1: sort by stock *** 0: filter by category *** 2: filter by category and sort
                                 // by stock
     private int submitOfferTest = 0;
+    private int submitCouponTest = 0;
+
 
     private static int categoryModelShow = 0;
 
@@ -114,6 +159,9 @@ public class ProductsListController implements Initializable {
         ProductsListController.categoryModelShow = categoryModelShow;
     }
 
+
+
+    
     /**
      * Initializes the controller class.
      */
@@ -122,6 +170,11 @@ public class ProductsListController implements Initializable {
         qrCodeImgModel.setVisible(false);
         offreModel.setVisible(false);
         reductionInputErrorHbox.setVisible(false);
+        couponForm.setVisible(false);
+        submitCouponBtn.setVisible(false);
+        couponInputErrorHbox.setVisible(false);
+        backToReductionBtn.setVisible(false);
+ 
         
         if (ProductsListController.getCategoryModelShow() == 0) {
             categoriesModel.setVisible(false);
@@ -568,10 +621,76 @@ public class ProductsListController implements Initializable {
         }
     }
 
-
     @FXML
-    void addNewCoupon(MouseEvent event) {
+    void addNewCoupon(MouseEvent event) throws IOException {
+        reductionForm.setVisible(false);
+        submitOfferBtn.setVisible(false);
+        couponForm.setVisible(true);
+        submitCouponBtn.setVisible(true);
+        addNewCouponBtn.setVisible(false);
+        backToReductionBtn.setVisible(true);
+     }
+
+     @FXML
+     void submit_coupon(MouseEvent event) {
+        // Initialisation de la bibliothèque Twilio avec les informations de votre compte
+        String ACCOUNT_SID = "ACde0fe3e27b9f6940e6700cbef936d1a9";
+        String AUTH_TOKEN = "7270aba8d8ed493992e56483cf83af46";
+             
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        if(submitCouponTest == 1){
+            //System.out.println("number : " + couponInput.getText());
+            String recipientNumber = "+216" + couponInput.getText();
+            String message = "Bonjour Braiek Ali\n,Nous sommes ravis de vous offrir un coupon pour sac-ecologique valable jusqu'au 25/04/2023.\n Utilisez le code suivant 071532 lors de votre prochain achat en ligne ou en magasin pour bénéficier de 20% de la réduction.\n Merci de votre fidélité et à bientôt chez ZeroWaste.\nCordialement,\nZeroWaste";
+                
+            Message twilioMessage = Message.creator(
+                new PhoneNumber(recipientNumber),
+                new PhoneNumber("+15076328189"),
+                message)
+                .create();
+                
+            System.out.println("SMS envoyé : " + twilioMessage.getSid());
+            TrayNotificationAlert.notif("Coupon", "Coupon sent successfully.",
+                NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+            offreModel.setVisible(false);
+            couponInput.clear();
+        }
+         
+     }
+ 
+
+     @FXML
+     void couponTypedInput(KeyEvent event) {
+         String couponText = couponInput.getText();
+         if (!couponText.matches("-?\\d+(\\.\\d+)?")) {
+             couponInputError.setText("coupon should be a positive number");
+             couponInputErrorHbox.setVisible(true);
+             submitCouponTest = 0;
+         } else {
+             double coupon = Double.parseDouble(couponText);
+             if (coupon < 0) {
+                 couponInputError.setText("coupon cannot be negative");
+                 couponInputErrorHbox.setVisible(true);
+                 submitCouponTest = 0;
+             } else {
+                 couponInputErrorHbox.setVisible(false);
+                 submitCouponTest = 1;
+             }
+         }
+ 
+    
+     }
+
+     @FXML
+    void back_toReduction(MouseEvent event) {
+        reductionForm.setVisible(true);
+        submitOfferBtn.setVisible(true);
+        couponForm.setVisible(false);
+        submitCouponBtn.setVisible(false);
+        addNewCouponBtn.setVisible(true);
+        backToReductionBtn.setVisible(false);
 
     }
-
 }
