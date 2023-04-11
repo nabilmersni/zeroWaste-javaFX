@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import utils.MyDB;
 
@@ -58,6 +58,26 @@ public class FundrisingService implements IFundrisingService  {
       return fundstList;
     
     }
+
+    public Fundrising getOneFund(int idFund) throws SQLException {
+      String req = "SELECT * FROM `fundrising` where id = ?";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, idFund);
+  
+      ResultSet rs = ps.executeQuery();
+      Fundrising fundrising = new Fundrising();
+      
+      while (rs.next()) {
+        fundrising.setId(rs.getInt("id"));
+        fundrising.setTitre_don(rs.getString("titre_don"));
+        fundrising.setDescription_don(rs.getString("description_don"));
+        fundrising.setObjectif(rs.getFloat("objectif"));
+        fundrising.setDate_don(rs.getDate("date_don"));
+        fundrising.setDate_don_limite(rs.getDate("date_don_limite"));
+      }
+      ps.close();
+      return fundrising;
+    }
   
   
     @Override
@@ -83,7 +103,7 @@ public class FundrisingService implements IFundrisingService  {
         PreparedStatement ps = conx.prepareStatement(req);
           ps.setString(1, funds.getTitre_don());
           ps.setString(2, funds.getDescription_don());
-         ps.setString(3, funds.getImage_don());
+          ps.setString(3, "zzz");
           ps.setDate(4, funds.getDate_don());
           ps.setDate(5, funds.getDate_don_limite());     
           ps.setString(6, funds.getEtat());
@@ -93,37 +113,31 @@ public class FundrisingService implements IFundrisingService  {
           System.out.println("fundraising added successfully");
           ps.close();
       }catch (SQLException e) {
-        System.out.println("Une erreur s'est produite lors de la récupération de la dons : " + e.getMessage());
+        System.out.println("Une erreur s'est produite lors de lajout de la dons : " + e.getMessage());
       }
       
     }
 
-   /*  @Override
-    public void ajouterFunds(Fundrising funds) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthdate = null;
-        try {
-            birthdate = dateFormat.parse("1990-01-01");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void updateFunds(Fundrising funds) {
       try {
-        String req = "INSERT INTO `fundrising`(`titre_don`, `description_don`, `image_don`, `date_don`, `date_don_limite`, `etat`, `objectif` , `total`) VALUES (?,?,?,?,?,?,?,?)";
+        String req = "UPDATE `fundrising` SET `titre_don`=?,`description_don`=?,`image_don`=?,`date_don`=?,`date_don_limite`=?,`etat`=?,`objectif`=? WHERE id=?";
         PreparedStatement ps = conx.prepareStatement(req);
-          ps.setString(1, "test");
-          ps.setString(2, "test");
-         ps.setString(3, "test");
-          ps.setDate(4, new java.sql.Date(birthdate.getTime()));
-          ps.setDate(5, new java.sql.Date(birthdate.getTime()));     
-          ps.setString(6, "test");
-          ps.setFloat(7, 200);
-          ps.setFloat(8,  3000);
+          ps.setString(1, funds.getTitre_don());
+          ps.setString(2, funds.getDescription_don());
+          ps.setString(3, "zzz");
+          ps.setDate(4, funds.getDate_don());
+          ps.setDate(5, funds.getDate_don_limite());
+          ps.setString(6, funds.getEtat());
+          ps.setFloat(7, funds.getObjectif());
+          ps.setInt(8, funds.getId());
           ps.executeUpdate();
-          System.out.println("Product added successfully");
+          System.out.println("funds updated successfully");
           ps.close();
       }catch (SQLException e) {
-        System.out.println("Une erreur s'est produite lors de la récupération de la dons : " + e.getMessage());
+        System.out.println("Une erreur s'est produite lors de la modification du fund : " + e.getMessage());
       }
-    }*/
+      
+    }
     
 }

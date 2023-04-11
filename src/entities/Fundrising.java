@@ -10,18 +10,29 @@ public class Fundrising {
     private String image_don;
     private Date date_don;
     private Date date_don_limite;
-    private Boolean etat;
+    private String etat;
     private float objectif;
     private float total;
 
     public static int actionTest = 0;
+
+    private static int idFund;
+
+    public static int getIdFund() {
+        
+        return idFund;
+    }
+
+    public static void setIdFund(int idFund) {
+        Fundrising.idFund = idFund;
+    }
     
     public Fundrising() {
     }
 
 
     public Fundrising( String titre_don, String description_don, String image_don, Date date_don,
-            Date date_don_limite, Boolean etat, float objectif, float total) {
+            Date date_don_limite, String etat, float objectif, float total) {
        this.titre_don = titre_don;
         this.description_don = description_don;
         this.image_don = image_don;
@@ -67,10 +78,10 @@ public class Fundrising {
     public void setDate_don_limite(Date date_don_limite) {
         this.date_don_limite = date_don_limite;
     }
-    public Boolean getEtat() {
+    public String getEtat() {
         return etat;
     }
-    public void setEtat(Boolean etat) {
+    public void setEtat(String etat) {
         this.etat = etat;
     }
     public float getObjectif() {

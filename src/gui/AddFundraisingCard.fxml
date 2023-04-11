@@ -127,6 +127,7 @@
                      </padding>
                   </HBox>
                   <ComboBox fx:id="etat" prefHeight="40.0" prefWidth="299.0" styleClass="product__add-comboBox" />
+
                </children>
                <padding>
                   <Insets right="10.0" />
@@ -151,7 +152,7 @@
                         <Insets bottom="10.0" />
                      </padding>
                   </HBox>
-                  <DatePicker />
+                  <DatePicker fx:id="dateDon" />
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -212,7 +213,7 @@
                         <Insets bottom="10.0" />
                      </padding>
                   </HBox>
-                  <DatePicker />
+                  <DatePicker fx:id="dateDonLimite" />
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -297,7 +298,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
+                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image1" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
                            <children>
                               <ImageView fitHeight="23.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateY="-3.0">
                                  <image>
@@ -343,9 +344,9 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <!-- <HBox alignment="CENTER" prefHeight="46.0" prefWidth="630.0">
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="630.0">
          <children>
-            <Button fx:id="update_productBtn" mnemonicParsing="false" onMouseClicked="#updateProduct" styleClass="product__add-new-productBtn" text="Update Fundraising" textFill="WHITE" translateY="-46.0">
+            <Button fx:id="update_productBtn" mnemonicParsing="false" onMouseClicked="#updateFund" styleClass="product__add-new-productBtn" text="Update Fundraising" textFill="WHITE" translateY="-46.0">
                <font>
                   <Font name="Montserrat Regular" size="16.0" />
                </font>
@@ -354,6 +355,6 @@
                </padding>
             </Button>
          </children>
-      </HBox> -->
+      </HBox>
    </children>
 </VBox>
