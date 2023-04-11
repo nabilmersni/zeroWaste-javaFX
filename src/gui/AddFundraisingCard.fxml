@@ -338,7 +338,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
+                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image1" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
                            <children>
                               <ImageView fitHeight="23.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateY="-3.0">
                                  <image>
