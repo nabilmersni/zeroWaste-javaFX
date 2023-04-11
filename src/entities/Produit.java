@@ -12,7 +12,7 @@ public class Produit {
     private int prix_point_produit;
     private float remise;
     private String etiquette;
-    private String score;
+    private double score;
 
     public static int actionTest = 0;
 
@@ -110,11 +110,11 @@ public class Produit {
         this.etiquette = etiquette;
     }
 
-    public String getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 

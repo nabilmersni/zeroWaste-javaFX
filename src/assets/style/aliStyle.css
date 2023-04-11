@@ -555,3 +555,46 @@
 .userProductCard-btn:hover {
   -fx-background-color: #97d158;
 }
+
+.closeOffreModelBtn {
+  -fx-font-size: 15px;
+  -fx-font-weight: 800;
+  -fx-cursor: hand;
+}
+
+.closeOffreModelBtn:hover {
+  -fx-text-fill: #000;
+  -fx-fill: #000;
+}
+
+.submitOfferBtn {
+  -fx-background-color: #43882b;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-cursor: hand;
+}
+
+.submitOfferBtnText {
+  -fx-cursor: hand;
+  -fx-font-size: 14px;
+  -fx-font-weight: 800;
+}
+
+.submitOfferBtn:hover {
+  -fx-background-color: #2f611f;
+}
+
+.addCouponBtn {
+  -fx-cursor: hand;
+  -fx-font-size: 15px;
+  -fx-font-weight: 700;
+}
+
+.addCouponBtn:hover {
+  -fx-text-fill: #2ba160;
+  -fx-fill: #2ba160;
+}
+
+.priceBeforeOffer {
+  -fx-strikethrough: true;
+}

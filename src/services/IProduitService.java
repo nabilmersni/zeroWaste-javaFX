@@ -23,4 +23,6 @@ public interface IProduitService {
 
   public List<Produit> sortProducts(int value, int idCategory); //0: sort by stock *** 1: sort by category *** 2: sort by stack and category
 
+  public void AddProductOffer(Produit produit) ;
+
 }

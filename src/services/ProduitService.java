@@ -41,6 +41,7 @@ public class ProduitService implements IProduitService {
             produit.setImage(resultSet.getString("image"));
             produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
             produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+            produit.setRemise(resultSet.getFloat("remise"));
   
             productList.add(produit);
         }
@@ -225,6 +226,20 @@ public class ProduitService implements IProduitService {
     return productList;
   }
 
+
+  public void AddProductOffer(Produit produit){
+    try {
+      String req = "UPDATE `produit` SET `remise`=? WHERE id=? ";
+      PreparedStatement ps = conx.prepareStatement(req);
+        ps.setFloat(1, produit.getRemise());
+        ps.setInt(2, produit.getId());
+        ps.executeUpdate();
+        System.out.println("Offer added successfully");
+        ps.close();
+    }catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la creation d'une offre : " + e.getMessage());
+    }      
+  }
 
   
 }

@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
 import services.IProduitService;
@@ -37,7 +38,6 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -46,14 +46,11 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import javafx.scene.Node;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
 
-import javafx.embed.swing.SwingFXUtils;
-import java.awt.image.BufferedImage;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 /**
  * FXML Controller class
@@ -89,10 +86,23 @@ public class ProductsListController implements Initializable {
     @FXML
     private HBox qrCodeImgModel;
 
+    @FXML
+    private HBox offreModel;
+
+    @FXML
+    private TextField reductionInput;
+    
+    @FXML
+    private Text reductionInputError;
+
+    @FXML
+    private HBox reductionInputErrorHbox;
+
     private int categId = -1;
 
     private int sortValue = -1; // 1: sort by stock *** 0: filter by category *** 2: filter by category and sort
                                 // by stock
+    private int submitOfferTest = 0;
 
     private static int categoryModelShow = 0;
 
@@ -110,6 +120,9 @@ public class ProductsListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         qrCodeImgModel.setVisible(false);
+        offreModel.setVisible(false);
+        reductionInputErrorHbox.setVisible(false);
+        
         if (ProductsListController.getCategoryModelShow() == 0) {
             categoriesModel.setVisible(false);
         } else if (ProductsListController.getCategoryModelShow() == 1) {
@@ -303,23 +316,6 @@ public class ProductsListController implements Initializable {
 
     }
 
-    @FXML
-    void genererPdf(ActionEvent event) {
-        // Afficher la boîte de dialogue de sélection de fichier
-        /*
-         * FileChooser fileChooser = new FileChooser();
-         * fileChooser.setTitle("Enregistrer le fichier PDF");
-         * fileChooser.getExtensionFilters().add(new ExtensionFilter("Fichiers PDF",
-         * "*.pdf"));
-         * File selectedFile = fileChooser.showSaveDialog(((Node)
-         * event.getSource()).getScene().getWindow());
-         * 
-         * if (selectedFile != null) {
-         * // Générer le fichier PDF avec l'emplacement de sauvegarde sélectionné
-         * generatePDF(selectedFile);
-         * }
-         */
-    }
 
     @FXML
     void pdfBtn(MouseEvent event) {
@@ -512,6 +508,70 @@ public class ProductsListController implements Initializable {
     @FXML
     void close_QrCodeModel(MouseEvent event) {
         qrCodeImgModel.setVisible(false);
+    }
+
+    @FXML
+    void close_offerModel(MouseEvent event) {
+        offreModel.setVisible(false);
+    }
+
+    @FXML
+    void submit_offer(MouseEvent event) {
+        Produit produit = new Produit();
+        produit.setId(Produit.getIdProduit());
+        produit.setRemise( Float.parseFloat(reductionInput.getText())); 
+
+        // Instancier le service de produit
+        IProduitService produitService = new ProduitService();
+
+        if (submitOfferTest == 1){
+            produitService.AddProductOffer(produit);
+        
+            TrayNotificationAlert.notif("Product", "Offer added successfully.",
+                            NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+            
+            offreModel.setVisible(false);
+            reductionInput.clear();
+
+            //reflesh list
+            GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
+            productsListContainer.getChildren().clear();
+            this.setProductGridPaneList();
+        }
+    }
+
+
+    @FXML
+    void reductionTypedInput(KeyEvent event) {
+        String reductionText = reductionInput.getText();
+        if (!reductionText.matches("-?\\d+(\\.\\d+)?")) {
+            reductionInputError.setText("reduction should be a positive number");
+            reductionInputErrorHbox.setVisible(true);
+            submitOfferTest = 0;
+        } else {
+            double reduction = Double.parseDouble(reductionText);
+            if (reduction < 0) {
+                reductionInputError.setText("reduction cannot be negative");
+                reductionInputErrorHbox.setVisible(true);
+                submitOfferTest = 0;
+            } else {
+                reductionInputErrorHbox.setVisible(false);
+                submitOfferTest = 1;
+            }
+        }
+
+        double reduction = Double.parseDouble(reductionText);
+        if(reduction>100){
+            reductionInputError.setText("reduction should be less then 100");
+            reductionInputErrorHbox.setVisible(true);
+            submitOfferTest = 0;
+        }
+    }
+
+
+    @FXML
+    void addNewCoupon(MouseEvent event) {
+
     }
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -51,8 +52,52 @@
                         <Text fx:id="stockProduit11" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" text=")" />
                      </children>
                   </HBox>
-                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="\$" translateX="375.0" translateY="-5.0" />
-                  <Text fx:id="priceProduit" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="269.0" translateX="380.0" translateY="-5.0" />
+                  <HBox fx:id="priceAfterOfferHbox" prefHeight="39.0" prefWidth="185.0" translateX="285.0">
+                     <children>
+                        <Text fill="#f53737" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="\$" />
+                        <Text fx:id="priceBeforeOffer" fill="#f53737" strokeType="OUTSIDE" strokeWidth="0.0" text=" 269.0">
+                           <HBox.margin>
+                              <Insets left="4.0" />
+                           </HBox.margin>
+                           <styleClass>
+                              <String fx:value="product-price-text" />
+                              <String fx:value="priceBeforeOffer" />
+                           </styleClass>
+                        </Text>
+                        <HBox prefHeight="39.0" prefWidth="72.0" translateX="20.0" translateY="-5.0">
+                           <children>
+                              <Text fill="#34be82" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="\$" />
+                              <Text fx:id="priceAfterOffer" fill="#34be82" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="269.0">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="priceHbox" prefHeight="39.0" prefWidth="72.0" translateX="185.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="\$" />
+                        <Text fx:id="priceProduit" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="269.0">
+                           <HBox.margin>
+                              <Insets left="4.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </HBox>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="599.0">
@@ -81,7 +126,7 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                        <HBox fx:id="offerProduit" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
                            <children>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

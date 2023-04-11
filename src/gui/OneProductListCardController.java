@@ -28,6 +28,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.itextpdf.text.pdf.TextField;
 
 
 
@@ -65,7 +66,40 @@ public class OneProductListCardController {
     @FXML
     private HBox qrCodeProduit;
 
+    @FXML
+    private HBox offerProduit;
+
+    @FXML
+    private Text priceAfterOffer;
+
+    @FXML
+    private HBox priceAfterOfferHbox;
+
+    @FXML
+    private Text priceBeforeOffer;
+    
+    @FXML
+    private HBox priceHbox;
+
     public void setProductData(Produit produit) {
+        float prixApresOffre = 0 ;
+
+        System.out.println("remisssssssss " +produit.getRemise());
+        
+        if(produit.getRemise() == 0 ){
+            priceAfterOfferHbox.setVisible(false);
+            priceHbox.setVisible(true);
+            priceProduit.setText("" + produit.getPrix_produit());
+        }else{
+            priceHbox.setVisible(false);
+            priceAfterOfferHbox.setVisible(true);
+            priceBeforeOffer.setText("" + produit.getPrix_produit());
+            
+            
+            prixApresOffre = (float) (produit.getPrix_produit() - (produit.getPrix_produit() * produit.getRemise() / 100.0));
+            String prixApresOffreStr = String.format("%.1f", prixApresOffre);
+            priceAfterOffer.setText(prixApresOffreStr);
+        }
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
 
@@ -79,7 +113,7 @@ public class OneProductListCardController {
         categoryProduit.setText(categoryName);
 
         stockProduitValue.setText("" + produit.getQuantite());
-        priceProduit.setText("" + produit.getPrix_produit());
+        
 
         // deleteProduit btn click
         deleteProduit.setId(String.valueOf(produit.getId()));
@@ -170,6 +204,19 @@ public class OneProductListCardController {
 
         });
         // END qrCodeProduit btn click
+
+        // offreProduit btn click
+        offerProduit.setId(String.valueOf(produit.getId()));
+
+        offerProduit.setOnMouseClicked(event -> {
+            System.out.println("ID du produit à créer une offre : " + produit.getId());
+            Produit.setIdProduit(produit.getId());
+
+            HBox offreModel = (HBox) ((Node) event.getSource()).getScene().lookup("#offreModel");
+            offreModel.setVisible(true);
+
+        });
+        // END offreProduit btn click
 
     }
 
