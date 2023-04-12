@@ -257,7 +257,6 @@ public class AddFundraisingCardController implements Initializable {
             alert.setHeaderText("The selected date is earlier than the current date");
             alert.setContentText("Please select a valid date.");
             alert.showAndWait();
-
             // Return from the method and prevent the data from being added to the database
             return;
         }
@@ -269,7 +268,6 @@ public class AddFundraisingCardController implements Initializable {
             alert.setHeaderText("The limit date for donations is earlier than the beginning date of the fund");
             alert.setContentText("Please select a valid date.");
             alert.showAndWait();
-
             // Return from the method and prevent the data from being added to the database
             return;
         }
