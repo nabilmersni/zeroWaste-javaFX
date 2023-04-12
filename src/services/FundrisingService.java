@@ -103,7 +103,7 @@ public class FundrisingService implements IFundrisingService  {
         PreparedStatement ps = conx.prepareStatement(req);
           ps.setString(1, funds.getTitre_don());
           ps.setString(2, funds.getDescription_don());
-          ps.setString(3, "zzz");
+          ps.setString(3, funds.getImage_don());
           ps.setDate(4, funds.getDate_don());
           ps.setDate(5, funds.getDate_don_limite());     
           ps.setString(6, funds.getEtat());
@@ -125,7 +125,7 @@ public class FundrisingService implements IFundrisingService  {
         PreparedStatement ps = conx.prepareStatement(req);
           ps.setString(1, funds.getTitre_don());
           ps.setString(2, funds.getDescription_don());
-          ps.setString(3, "zzz");
+          ps.setString(3, funds.getImage_don());
           ps.setDate(4, funds.getDate_don());
           ps.setDate(5, funds.getDate_don_limite());
           ps.setString(6, funds.getEtat());

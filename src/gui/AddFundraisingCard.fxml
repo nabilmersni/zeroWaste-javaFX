@@ -45,7 +45,7 @@
             <Insets bottom="27.0" left="16.0" right="16.0" />
          </VBox.margin>
       </Line>
-      <VBox prefHeight="102.0" prefWidth="570.0">
+      <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="570.0">
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding>
@@ -72,9 +72,19 @@
                   <Insets />
                </VBox.margin>
             </TextField>
+            <HBox fx:id="titreInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+               <children>
+                  <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                  <Text fx:id="titreInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Title is required!">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <VBox prefHeight="183.0" prefWidth="570.0">
+      <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="183.0" prefWidth="570.0">
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding>
@@ -97,12 +107,22 @@
                </padding>
             </HBox>
             <TextArea fx:id="description_don" prefHeight="200.0" prefWidth="200.0" promptText="Description of fundraising" styleClass="product__add-input-textArea" />
+            <HBox fx:id="descriptionInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+               <children>
+                  <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                  <Text fx:id="descriptionInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Description is required!">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </VBox>
-      <HBox prefHeight="105.0" prefWidth="570.0">
+      <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="105.0" prefWidth="570.0">
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding>
@@ -127,6 +147,16 @@
                      </padding>
                   </HBox>
                   <ComboBox fx:id="etat" prefHeight="40.0" prefWidth="299.0" styleClass="product__add-comboBox" />
+                  <HBox fx:id="etatInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+                  <children>
+                     <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                     <Text fx:id="etatInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Etat is required!">
+                        <HBox.margin>
+                           <Insets top="5.0" />
+                        </HBox.margin>
+                     </Text>
+                  </children>
+            </HBox>
 
                </children>
                <padding>
@@ -160,7 +190,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="105.0" prefWidth="570.0">
+      <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="105.0" prefWidth="570.0">
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding>
@@ -189,6 +219,16 @@
                         <Insets />
                      </VBox.margin>
                   </TextField>
+                  <HBox fx:id="objectifInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+                     <children>
+                        <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                        <Text fx:id="objectifInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Objectif is required!">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets right="10.0" />
@@ -226,7 +266,7 @@
             <Insets bottom="30.0" left="16.0" />
          </VBox.margin>
       </Line>
-      <VBox prefHeight="263.0" prefWidth="680.0">
+      <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="263.0" prefWidth="680.0">
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding>
@@ -298,7 +338,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image1" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
+                        <HBox fx:id="choose_photoBtn" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#ajouter_image" prefHeight="48.0" prefWidth="200.0" styleClass="product__add-img-btn">
                            <children>
                               <ImageView fitHeight="23.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateY="-3.0">
                                  <image>
@@ -322,6 +362,16 @@
                   </VBox>
                </children>
             </HBox>
+            <HBox fx:id="imageInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+               <children>
+                  <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                  <Text fx:id="imageInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Image is required!">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
          </children>
       </VBox>
       <Line endX="498.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0">
@@ -331,7 +381,7 @@
       </Line>
       <HBox alignment="CENTER" prefHeight="46.0" prefWidth="630.0">
          <children>
-            <Button fx:id="add_new_productBtn" mnemonicParsing="false" onMouseClicked="#addNewFund" styleClass="product__add-new-productBtn" text="Add New Product" textFill="WHITE">
+            <Button fx:id="add_new_productBtn" mnemonicParsing="false" onMouseClicked="#addNewFund" styleClass="product__add-new-productBtn" text="Add New Fundraising" textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="16.0" />
                </font>

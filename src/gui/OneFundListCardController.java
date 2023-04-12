@@ -53,7 +53,8 @@ public class OneFundListCardController {
          // Instancier le service de produit
          IFundrisingService fundrisingService = new FundrisingService();
          
-        Image image = new Image(getClass().getResource("/assets/img/").toExternalForm());
+         Image image = new Image(
+            getClass().getResource("/assets/FundraisingUploads/" + fundrising.getImage_don()).toExternalForm());
         img.setImage(image);
 
         fundName.setText(fundrising.getTitre_don());

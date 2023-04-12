@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import entities.Fundrising;
 import javafx.fxml.FXML;
@@ -76,7 +77,45 @@ public class AddFundraisingCardController implements Initializable {
     private HBox choose_photoBtn;
 
     private File selectedImageFile;
+
     private String imageName;
+
+    @FXML
+    private Text titreInputError;
+
+    @FXML
+    private Text descriptionInputError;
+
+    @FXML
+    private Text etatInputError;
+
+    @FXML
+    private Text objectifInputError;
+
+    @FXML
+    private Text imageInputError;
+
+    @FXML
+    private HBox titreInputErrorHbox;
+
+    @FXML
+    private HBox descriptionInputErrorHbox;
+
+    @FXML
+    private HBox etatInputErrorHbox;
+
+    @FXML
+    private HBox objectifInputErrorHbox;
+
+    @FXML
+    private HBox imageInputErrorHbox;
+
+    private String etatOption = "";
+    private int titreTest = 0;
+    private int descriptionTest = 0;
+    private int objectifTest = 0;
+    private int etatTest = 0;
+    private int imageTest = 0;
 
     /**
      * Initializes the controller class.
@@ -84,36 +123,38 @@ public class AddFundraisingCardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(Fundrising.actionTest);
-        if (Fundrising.actionTest == 0) { // add product
+        titreInputErrorHbox.setVisible(false);
+        descriptionInputErrorHbox.setVisible(false);
+        etatInputErrorHbox.setVisible(false);
+        objectifInputErrorHbox.setVisible(false);
+        imageInputErrorHbox.setVisible(false);
+
+        if (Fundrising.actionTest == 0) { 
              update_productBtn.setVisible(false);
-
-            titre_don.setText("");
-            description_don.setText("");
-            objectif.setText("");
-            dateDon.setValue(LocalDate.now());
-            dateDonLimite.setValue(LocalDate.now());
             
-
-        //  Image image = new Image(getClass().getResource("/assets/img/" +
-        //     // p.getImage()).toExternalForm());
-        //      imageInput.setImage(image);
-         } else { // update product
+         } else { // update fundraising
              add_new_productBtn.setVisible(false);
 
-            // Instancier le service de produit
             IFundrisingService fundrisingService = new FundrisingService();
-            Fundrising p = new Fundrising();
+            Fundrising fundrising = new Fundrising();
             try {
-                p = fundrisingService.getOneFund(Fundrising.getIdFund());
+                fundrising = fundrisingService.getOneFund(Fundrising.getIdFund());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
           
-            titre_don.setText(p.getTitre_don());
-            description_don.setText(p.getDescription_don());
-            objectif.setText(String.valueOf(p.getObjectif()));
+            titre_don.setText(fundrising.getTitre_don());
+            description_don.setText(fundrising.getDescription_don());
+            objectif.setText(String.valueOf(fundrising.getObjectif()));
+            etatOption = fundrising.getEtat();
             dateDon.setValue(LocalDate.now());
             dateDonLimite.setValue(LocalDate.now());
+
+            titreTest = 1;
+            descriptionTest = 1;
+            objectifTest = 1;
+            etatTest = 1;
+            imageTest = 1;
 
 
             // Image image = new Image(getClass().getResource("/assets/img/" + fundrising.getImage_don()).toExternalForm());
@@ -129,96 +170,10 @@ public class AddFundraisingCardController implements Initializable {
         etat.setOnAction(event -> {
             String selectedOption = etat.getValue();
             String selectedValue = valuesMap.get(selectedOption);
-            System.out.println("Selected option: " + selectedOption);
-            System.out.println("Selected value: " + selectedValue);
+            etatOption = selectedValue;
+            etatTest = 1;
+            etatInputErrorHbox.setVisible(false);
         });
-
-    }
-    @FXML
-    void ajouter_image1(MouseEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choisir une image");
-        fileChooser.getExtensionFilters().addAll( new ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
-        selectedImageFile = fileChooser.showOpenDialog(imageInput.getScene().getWindow());
-        if (selectedImageFile != null) {
-            Image image = new Image(selectedImageFile.toURI().toString());
-            imageInput.setImage(image);
-
-            // Récupérer le nom de l'image sélectionnée
-            imageName = selectedImageFile.getName();
-            //System.out.println(imageName);
-            
-            // Enregistrer l'image dans le répertoire d'images
-            Path destination = Paths.get("C:/Users/Farah Torkhani/Desktop/javafarah/ - zeroWaste-javaFX/src/assets/img" + imageName);
-            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-        }
-    }
-
-    @FXML
-    void addNewFund(MouseEvent event) throws SQLException {
-
-        Fundrising fundrising = new Fundrising();
-        String selectedOption = etat.getValue();
-        if (selectedOption != null) {
-            String etatValue = selectedOption;
-            fundrising.setEtat(etatValue);
-        } 
-        fundrising.setTitre_don(titre_don.getText());
-        fundrising.setDescription_don(description_don.getText());
-        fundrising.setObjectif(Float.parseFloat(objectif.getText()));
-        fundrising.setImage("test");
-        java.util.Date utilDate = new java.util.Date();
-        Date currentDate = new Date(utilDate.getTime());
-        LocalDate date_don_limite = dateDonLimite.getValue();
-        Date sqlDate = Date.valueOf(date_don_limite);
-        if (sqlDate.before(currentDate)) {
-            // Display an error message using an Alert dialog
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("The selected date is earlier than the current date");
-            alert.setContentText("Please select a valid date.");
-            alert.showAndWait();
-    
-            // Return from the method and prevent the data from being added to the database
-            return;
-        }
-        Date dateDon = fundrising.getDate_don();
-        if (dateDon != null && sqlDate.before(dateDon)) {
-            // Display an error message using an Alert dialog
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("The limit date for donations is earlier than the beginning date of the fund");
-            alert.setContentText("Please select a valid date.");
-            alert.showAndWait();
-    
-            // Return from the method and prevent the data from being added to the database
-            return;
-        }
-        fundrising.setDate_don(currentDate);
-        fundrising.setDate_don_limite(sqlDate);
-
-        // fundrising.setQuantite(Integer.parseInt(numberInput.getText()));
-
-        fundrising.setImage(imageName);
-
-        // Instancier le service de produit
-        IFundrisingService fundrisingService = new FundrisingService();
-
-        fundrisingService.ajouterFunds(fundrising);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FundrisingList.fxml"));
-        try {
-            Parent root = loader.load();
-            // Accéder à la pane content_area depuis le controller de
-            // OneProductListCard.fxml
-            Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
-
-            // Vider la pane et afficher le contenu de ProductsList.fxml
-            contentArea.getChildren().clear();
-            contentArea.getChildren().add(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -232,32 +187,203 @@ public class AddFundraisingCardController implements Initializable {
             Image image = new Image(selectedImageFile.toURI().toString());
             imageInput.setImage(image);
 
-            // Récupérer le nom de l'image sélectionnée
-            imageName = selectedImageFile.getName();
-            // System.out.println(imageName);
+            // Générer un nom de fichier unique pour l'image
+            String uniqueID = UUID.randomUUID().toString();
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
+            imageName = uniqueID + extension;
 
-            // Enregistrer l'image dans le répertoire d'images
-            Path destination = Paths.get(
-                    "C:/Users/Farah Torkhani/Desktop/javafarah - JavaFx/zeroWaste-javaFX/src/assets/img/" + imageName);
+            Path destination = Paths.get(System.getProperty("user.dir"), "src", "assets", "FundraisingUploads", imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+
+            imageTest = 1;
+            imageInputErrorHbox.setVisible(false);
         }
+    }
+
+    @FXML
+    void addNewFund(MouseEvent event) throws SQLException {
+
+        Fundrising fundrising = new Fundrising();
+
+        if (etatOption == "") {
+            etatTest = 0;
+            etatInputErrorHbox.setVisible(true);
+        } else {
+            etatTest = 1;
+            fundrising.setEtat(etatOption);
+            
+        }
+        
+        if (titre_don.getText().isEmpty()) {
+            titreTest = 0;
+            titreInputErrorHbox.setVisible(true);
+        } else {    
+            titreTest = 1;
+            fundrising.setTitre_don(titre_don.getText());
+        }
+
+        if (description_don.getText().isEmpty()) {
+            descriptionTest = 0;
+            descriptionInputErrorHbox.setVisible(true);
+        } else {    
+            descriptionTest = 1;
+            fundrising.setDescription_don(description_don.getText());
+        }
+
+        if (objectif.getText().isEmpty()) {
+            objectifTest = 0;
+            objectifInputErrorHbox.setVisible(true);
+        } else {    
+            objectifTest = 1; 
+            fundrising.setObjectif(Float.parseFloat(objectif.getText()));
+        }
+
+        if (imageName == null) {
+            imageTest = 0;
+            imageInputErrorHbox.setVisible(true);
+        } else {
+            imageTest = 1;
+            fundrising.setImage(imageName);
+        }
+
+        java.util.Date utilDate = new java.util.Date();
+        Date currentDate = new Date(utilDate.getTime());
+        LocalDate date_don_limite = dateDonLimite.getValue();
+        Date sqlDate = Date.valueOf(date_don_limite);
+        if (sqlDate.before(currentDate)) {
+            // Display an error message using an Alert dialog
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("The selected date is earlier than the current date");
+            alert.setContentText("Please select a valid date.");
+            alert.showAndWait();
+
+            // Return from the method and prevent the data from being added to the database
+            return;
+        }
+        Date dateDon = fundrising.getDate_don();
+        if (dateDon != null && sqlDate.before(dateDon)) {
+            // Display an error message using an Alert dialog
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("The limit date for donations is earlier than the beginning date of the fund");
+            alert.setContentText("Please select a valid date.");
+            alert.showAndWait();
+
+            // Return from the method and prevent the data from being added to the database
+            return;
+        }
+        fundrising.setDate_don(currentDate);
+        fundrising.setDate_don_limite(sqlDate);
+
+        // fundrising.setQuantite(Integer.parseInt(numberInput.getText()));
+
+        System.out.println(titreTest);
+        System.out.println(descriptionTest);
+        System.out.println(etatTest);
+        System.out.println(objectifTest);
+        System.out.println(imageTest);
+
+
+        if (titreTest == 1 && descriptionTest == 1 && etatTest == 1 && objectifTest == 1 && imageTest == 1) {
+            IFundrisingService fundrisingService = new FundrisingService();
+
+            fundrisingService.ajouterFunds(fundrising);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FundrisingList.fxml"));
+            try {
+                Parent root = loader.load();
+                // Accéder à la pane content_area depuis le controller de
+                // OneProductListCard.fxml
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+                // Vider la pane et afficher le contenu de ProductsList.fxml
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
     @FXML
     void updateFund(MouseEvent event) {
-        
-        
         Fundrising fundrising = new Fundrising();
         fundrising.setId(Fundrising.getIdFund());
-        fundrising.setTitre_don(titre_don.getText());
-        fundrising.setDescription_don(description_don.getText());
-        fundrising.setEtat(etat.getValue());
-        fundrising.setObjectif(Float.parseFloat(objectif.getText()));
+
+        if (etatOption == "") {
+            etatTest = 0;
+            etatInputErrorHbox.setVisible(true);
+        } else {
+            if (titreTest == 1) {
+                fundrising.setEtat(etatOption);
+            }
+        }
+        
+        if (titre_don.getText().isEmpty()) {
+            titreTest = 0;
+            titreInputErrorHbox.setVisible(true);
+        } else {    
+            if (titreTest == 1) {
+                fundrising.setTitre_don(titre_don.getText());
+            }
+        }
+
+        if (description_don.getText().isEmpty()) {
+            descriptionTest = 0;
+            descriptionInputErrorHbox.setVisible(true);
+        } else {    
+            if (descriptionTest == 1) {
+                fundrising.setDescription_don(description_don.getText());
+            }
+        }
+
+        if (objectif.getText().isEmpty()) {
+            objectifTest = 0;
+            objectifInputErrorHbox.setVisible(true);
+        } else {    
+            if (objectifTest == 1) {
+                fundrising.setObjectif(Float.parseFloat(objectif.getText()));
+            }
+        }
+
+        if (imageName == null) {
+            imageTest = 0;
+            imageInputErrorHbox.setVisible(true);
+        } else {
+            imageTest = 1;
+            fundrising.setImage(imageName);
+        }
+
         java.util.Date utilDate = new java.util.Date();
         Date currentDate = new Date(utilDate.getTime());
         LocalDate date_don_limite = dateDonLimite.getValue();
         Date sqlDate = Date.valueOf(date_don_limite);
+        if (sqlDate.before(currentDate)) {
+            // Display an error message using an Alert dialog
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("The selected date is earlier than the current date");
+            alert.setContentText("Please select a valid date.");
+            alert.showAndWait();
+
+            // Return from the method and prevent the data from being added to the database
+            return;
+        }
+        Date dateDon = fundrising.getDate_don();
+        if (dateDon != null && sqlDate.before(dateDon)) {
+            // Display an error message using an Alert dialog
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("The limit date for donations is earlier than the beginning date of the fund");
+            alert.setContentText("Please select a valid date.");
+            alert.showAndWait();
+
+            // Return from the method and prevent the data from being added to the database
+            return;
+        }
         fundrising.setDate_don(currentDate);
         fundrising.setDate_don_limite(sqlDate);
         
@@ -268,25 +394,26 @@ public class AddFundraisingCardController implements Initializable {
         // }
         
 
-         // Instancier le service de produit
-         IFundrisingService fundrisingService = new FundrisingService();
+        if (titreTest == 1 && descriptionTest == 1 && etatTest == 1 && objectifTest == 1 && imageTest == 1) {
+            IFundrisingService fundrisingService = new FundrisingService();
 
-         try {
+            try {
 
-         fundrisingService.updateFunds(fundrising);
-         
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("FundrisingList.fxml"));
+            fundrisingService.updateFunds(fundrising);
             
-                Parent root = loader.load();
-                // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
-                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FundrisingList.fxml"));
+                
+                    Parent root = loader.load();
+                    // Accéder à la pane content_area depuis le controller de OneProductListCard.fxml
+                    Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
-                // Vider la pane et afficher le contenu de ProductsList.fxml
-                contentArea.getChildren().clear();
-                contentArea.getChildren().add(root);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    // Vider la pane et afficher le contenu de ProductsList.fxml
+                    contentArea.getChildren().clear();
+                    contentArea.getChildren().add(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
 
     }
 
