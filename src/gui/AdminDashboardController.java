@@ -194,7 +194,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_usersList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("UsersList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/userInterfaces/UsersList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -244,7 +244,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_fundrisingList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("FundrisingList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/fundInterfaces/FundrisingList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -294,7 +294,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_productsList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("ProductsList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -344,7 +344,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_collectList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("CollectList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/collectInterfaces/CollectList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -394,7 +394,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_commandsList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("CommandsList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/commandInterfaces/CommandsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -445,7 +445,7 @@ public class AdminDashboardController implements Initializable {
     @FXML
     void logout(MouseEvent event) throws IOException {
         UserSession.getInstance().cleanUserSession();
-        Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/userInterfaces/LogIn.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

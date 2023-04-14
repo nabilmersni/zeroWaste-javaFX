@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.UserService;
@@ -99,6 +100,21 @@ public class UserDashboardController implements Initializable {
     @FXML
     private ImageView profileIcon;
 
+    @FXML
+    private Circle circle1;
+
+    @FXML
+    private Text navFullname1;
+
+    @FXML
+    private Circle donHisImg;
+
+    @FXML
+    private Rectangle fundImg;
+
+    @FXML
+    private Text userPointText;
+
     /**
      * Initializes the controller class.
      */
@@ -116,8 +132,18 @@ public class UserDashboardController implements Initializable {
             }
             Image img = new Image("assets/userUploads/" + user.getImgUrl());
             circle.setFill(new ImagePattern(img));
+            circle1.setFill(new ImagePattern(img));
+
+            userPointText.setText(user.getPoint() + " Point");
+
+            Image fundImage = new Image("assets/img/cancer.jpg");
+            fundImg.setFill(new ImagePattern(fundImage));
+
+            Image donHisImage = new Image("assets/img/darna-logo.jpg");
+            donHisImg.setFill(new ImagePattern(donHisImage));
 
             navFullname.setText(user.getFullname());
+            navFullname1.setText(user.getFullname());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,7 +158,7 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     void open_profile(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("UserProfile.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/userInterfaces/UserProfile.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -232,7 +258,7 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     private void open_productsList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("UserProductsList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/UserProductsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -364,7 +390,7 @@ public class UserDashboardController implements Initializable {
     @FXML
     void logout(MouseEvent event) throws IOException {
         UserSession.getInstance().cleanUserSession();
-        Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/userInterfaces/LogIn.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

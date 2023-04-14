@@ -164,3 +164,106 @@
     -fx-text-fill: #DEFEE6;
     }
 }
+
+.balance__card{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+    -fx-background-color: rgba(222, 254, 230, 0.5);
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+
+    &--2{
+        -fx-background-color: rgba(255, 147, 111, 0.5);
+    }
+    
+    &__title{
+        -fx-fill: #10036a;
+        -fx-font-weight: 700;
+        -fx-font-size:17px
+    }
+
+    &__points{
+        -fx-fill: #10036a;
+        -fx-fill: #32594A;
+        -fx-font-weight: 700;
+        -fx-font-size:18px
+    }
+}
+
+.profile__card{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+    -fx-background-color: #fff;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+
+    &__name{
+        -fx-fill: #10036a;
+        -fx-font-weight: 700;
+        -fx-font-size:15px;
+
+        &--2{
+            -fx-font-weight: 500;
+            -fx-font-size:12px
+        }
+
+        &--span{
+            -fx-background-color: red;
+            -fx-background-radius: 30px;
+            -fx-border-radius: 30px;
+        }
+    }
+
+    &__title{
+        -fx-fill: #10036a;
+        -fx-fill: #32594A;
+        -fx-font-weight: 700;
+        -fx-font-size:18px;
+    }
+}
+
+.donHisValue{
+    -fx-fill: #10036a;
+    -fx-fill: #32594A;
+    -fx-font-weight: 700;
+    -fx-font-size:16px;
+}
+
+.fundItem{
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0, 2, 3);
+    -fx-background-color: #fff;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-padding: 10px;
+
+    &__title{
+        -fx-fill: #5BA890;
+        -fx-font-weight: 700;
+        -fx-font-size:23px;
+    }
+
+    &__tag{
+        -fx-fill: #5BA890;
+        -fx-font-weight: 700;
+
+        &--2{
+            -fx-font-size:16px;
+        }
+    }
+
+    &__btn{
+        -fx-background-color:rgba(151, 209, 88, 0.178);
+        -fx-padding: 8px 18;
+        -fx-text-fill: $primary;
+        -fx-font-weight: 700;
+        -fx-background-radius: 1000px;
+        -fx-border-radius: 1000px;
+        -fx-transition: all 2s ease;
+        -fx-cursor: hand;
+        -fx-font-size: 8px;
+
+    
+        &:hover{
+            -fx-background-color:$primary;
+            -fx-text-fill: $primary-extra-light;
+        }
+    }
+}
