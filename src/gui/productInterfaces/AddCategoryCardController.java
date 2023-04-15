@@ -146,7 +146,7 @@ public class AddCategoryCardController implements Initializable {
                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
                 ProductsListController.setCategoryModelShow(1);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
 
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de
@@ -240,7 +240,7 @@ public class AddCategoryCardController implements Initializable {
                 ProductsListController.setCategoryModelShow(1);
                 Categorie_produit.actionTest = 0; // pour afficher le bouton ajouter et cacher le bouton modifier
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
 
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de

@@ -65,7 +65,7 @@ public class OneCategoriesListCardController {
             }
             // supprimer le contenu de la liste et afficher la nouvelle liste(apres
             // supprimer)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
             try {
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de
@@ -92,7 +92,7 @@ public class OneCategoriesListCardController {
             Categorie_produit.actionTest = 1; // pour afficher le bouton update
             ProductsListController.setCategoryModelShow(1);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
             try {
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de

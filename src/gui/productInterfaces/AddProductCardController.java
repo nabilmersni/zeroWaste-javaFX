@@ -292,7 +292,7 @@ public class AddProductCardController implements Initializable {
                 TrayNotificationAlert.notif("Product", "Product added successfully.",
                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
 
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de
@@ -412,7 +412,7 @@ public class AddProductCardController implements Initializable {
                 produitService.updateProduct(produit);
                 TrayNotificationAlert.notif("Product", "Product updated successfully.",
                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductsList.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));
 
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de

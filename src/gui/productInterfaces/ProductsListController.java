@@ -63,6 +63,12 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  * FXML Controller class
  *
@@ -186,7 +192,7 @@ public class ProductsListController implements Initializable {
         // categories list ---------------------------------------------------------
         // Ajouter AddCategoryCard (forum) au debut de la liste
         FXMLLoader fxmlLoader1 = new FXMLLoader();
-        fxmlLoader1.setLocation(getClass().getResource("AddCategoryCard.fxml"));
+        fxmlLoader1.setLocation(getClass().getResource("/gui/productInterfaces/AddCategoryCard.fxml"));
         VBox CategoryAddCard;
         try {
             CategoryAddCard = fxmlLoader1.load();
@@ -207,7 +213,7 @@ public class ProductsListController implements Initializable {
             for (int i = 0; i < categories.size(); i++) {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("OneCategoriesListCard.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/gui/productInterfaces/OneCategoriesListCard.fxml"));
                 HBox oneCategoryCard = fxmlLoader.load();
                 OneCategoriesListCardController categorieCardController = fxmlLoader.getController();
                 categorieCardController.setCategoryData(categories.get(i));
@@ -250,7 +256,7 @@ public class ProductsListController implements Initializable {
     @FXML
     private void open_addProduct(MouseEvent event) throws IOException {
         Produit.actionTest = 0;
-        Parent fxml = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/AddProduct.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
@@ -319,7 +325,7 @@ public class ProductsListController implements Initializable {
             for (int i = 0; i < produits.size(); i++) {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("OneProductListCard.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/gui/productInterfaces/OneProductListCard.fxml"));
                 HBox oneProductCard = fxmlLoader.load();
                 OneProductListCardController productCardController = fxmlLoader.getController();
                 productCardController.setProductData(produits.get(i));
@@ -359,7 +365,7 @@ public class ProductsListController implements Initializable {
 
     }
 
-    @FXML
+   /*  @FXML
     void pdfBtn(MouseEvent event) {
         // Afficher la boîte de dialogue de sélection de fichier
         FileChooser fileChooser = new FileChooser();
@@ -545,7 +551,7 @@ public class ProductsListController implements Initializable {
             }
         }
 
-    }
+    }*/
 
     @FXML
     void close_QrCodeModel(MouseEvent event) {
@@ -679,5 +685,58 @@ public class ProductsListController implements Initializable {
         addNewCouponBtn.setVisible(true);
         backToReductionBtn.setVisible(false);
 
+    }
+
+    @FXML
+    void excelBtn(MouseEvent event) throws IOException {
+        // Créer un nouveau classeur
+        Workbook workbook = new XSSFWorkbook();
+
+        // Créer une nouvelle feuille de calcul
+        Sheet sheet = workbook.createSheet("Produits");
+
+        // Récupérer la liste des produits
+        IProduitService produitService = new ProduitService();
+        List<Produit> productList = produitService.getAllProducts();
+
+         // Créer la première ligne pour les en-têtes des colonnes
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("Nom");
+        headerRow.createCell(2).setCellValue("Quantité");
+        headerRow.createCell(3).setCellValue("Prix");
+        headerRow.createCell(4).setCellValue("Points");
+        headerRow.createCell(5).setCellValue("Catégorie");
+
+        // Remplir les données des produits
+        int rowNum = 1;
+        for (Produit produit : productList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(produit.getId());
+            row.createCell(1).setCellValue(produit.getNom_produit());
+            row.createCell(2).setCellValue(produit.getQuantite());
+            row.createCell(3).setCellValue(produit.getPrix_produit());
+            row.createCell(4).setCellValue(produit.getPrix_point_produit());
+            row.createCell(5).setCellValue(produitService.getCategory(produit.getCategorie_produit_id()));
+        }
+
+        // Définir la largeur de chaque cellule en fonction de son contenu
+        for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+            sheet.autoSizeColumn(i);
+        }
+        
+
+        // Ouvrir une boîte de dialogue de sélection de fichier
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Enregistrer le fichier Excel");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Fichiers Excel", "*.xlsx"));
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        if (selectedFile != null) {
+            // Enregistrer le fichier dans l'emplacement choisi par l'utilisateur
+            try (FileOutputStream outputStream = new FileOutputStream(selectedFile)) {
+                workbook.write(outputStream);
+            }
+        }
     }
 }

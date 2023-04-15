@@ -46,7 +46,7 @@ public class UserProductsListController implements Initializable {
             for (int i = 0; i < produits.size(); i++) {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("UserProductCard.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/gui/productInterfaces/UserProductCard.fxml"));
                 VBox oneProductCard = fxmlLoader.load();
                 UserProductCardController productCardController = fxmlLoader.getController();
                 productCardController.setProductData(produits.get(i));

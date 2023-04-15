@@ -35,7 +35,7 @@ public class AddProductController implements Initializable {
 
             // Ajouter productContainer à la première ligne de AddproductContainer
             FXMLLoader fxmlLoader1 = new FXMLLoader();
-            fxmlLoader1.setLocation(getClass().getResource("AddProductCard.fxml"));
+            fxmlLoader1.setLocation(getClass().getResource("/gui/productInterfaces/AddProductCard.fxml"));
             VBox productContainer1 = fxmlLoader1.load();
             AddproductContainer.add(productContainer1, 0, 1);
             GridPane.setMargin(productContainer1, new Insets(0, 10, 25, 10));
