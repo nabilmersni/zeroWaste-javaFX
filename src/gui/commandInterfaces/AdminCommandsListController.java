@@ -185,6 +185,7 @@ public class AdminCommandsListController implements Initializable {
     @FXML
     void close_commandDetailsModel(MouseEvent event) {
         commandModel.setVisible(false);
+        Achats.achatModelTest=0;
     }
 
     @FXML

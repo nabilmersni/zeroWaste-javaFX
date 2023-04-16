@@ -101,7 +101,7 @@ public class AdminCommandsListItemController  {
             System.out.println("ID du commande est affichée : " + achat.getId());
 
             Achats.achatModelTest =1;
-            Achats.setCommandeId(achat.getId());
+            Achats.setCommandeId(achat.getCommande_id());
             Achats.setAchatId(achat.getId());
 
             // afficher le contenu de la liste et afficher la nouvelle liste
@@ -121,7 +121,7 @@ public class AdminCommandsListItemController  {
             }
             // end
         });
-        //END deleteCommand btn click
+        //END showCommand btn click
 
  // qrCodeProduit btn click
         qrCodeCommand.setOnMouseClicked(event -> {

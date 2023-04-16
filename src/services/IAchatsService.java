@@ -14,6 +14,5 @@ public interface IAchatsService {
   public Achats getOneAchat(int idAchat) throws SQLException;
   public List<Produit> getAllProducts(int commande_id );
   public List<Achats> searchCommands(String search);
-
-
+  
 }

@@ -106,7 +106,7 @@ public class AchatsService implements IAchatsService {
             Produit produit = new Produit();
             produit.setId(resultSet.getInt("id"));
             produit.setNom_produit(resultSet.getString("nom_produit"));
-            produit.setQuantite(resultSet.getInt("quantite"));
+            produit.setQuantite(resultSet.getInt("quantite_c"));
             produit.setPrix_produit(resultSet.getFloat("prix_produit"));
             produit.setImage(resultSet.getString("image"));
             produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
@@ -159,6 +159,8 @@ public class AchatsService implements IAchatsService {
 
     return achatList;
   }
+
+  
 
 
 }
