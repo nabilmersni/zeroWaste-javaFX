@@ -347,44 +347,44 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     private void open_commandsList(MouseEvent event) throws IOException {
-        /*
-         * Parent fxml = FXMLLoader.load(getClass().getResource("CommandsList.fxml"));
-         * content_area.getChildren().removeAll();
-         * content_area.getChildren().setAll(fxml);
-         * 
-         * // set active class
-         * if (!commandsBtn.getStyleClass().contains("activeLink")) {
-         * commandsBtn.getStyleClass().add("activeLink");
-         * 
-         * // Load the image
-         * Image image = new Image("assets/img/shopping-cart-active.png");
-         * commandsIcon.setImage(image);
-         * 
-         * if (dashboardBtn.getStyleClass().contains("activeLink")) {
-         * dashboardBtn.getStyleClass().remove("activeLink");
-         * 
-         * Image dashIcon = new Image("assets/img/menu.png");
-         * dashboardIcon.setImage(dashIcon);
-         * } else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
-         * fundrisingBtn.getStyleClass().remove("activeLink");
-         * 
-         * Image fundrisingImg = new Image("assets/img/heart.png");
-         * fundrisingIcon.setImage(fundrisingImg);
-         * } else if (productsBtn.getStyleClass().contains("activeLink")) {
-         * productsBtn.getStyleClass().remove("activeLink");
-         * 
-         * Image productsImg = new Image("assets/img/store.png");
-         * productsIcon.setImage(productsImg);
-         * } else if (collectBtn.getStyleClass().contains("activeLink")) {
-         * collectBtn.getStyleClass().remove("activeLink");
-         * collectText.getStyleClass().remove("activeText");
-         * 
-         * Image collectImg = new Image("assets/img/recycle.png");
-         * collectIcon.setImage(collectImg);
-         * }
-         * 
-         * }
-         */
+    
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
+        content_area.getChildren().removeAll();
+        content_area.getChildren().setAll(fxml);
+          
+          // set active class
+          if (!commandsBtn.getStyleClass().contains("activeLink")) {
+          commandsBtn.getStyleClass().add("activeLink");
+          
+          // Load the image
+          Image image = new Image("assets/img/shopping-cart-active.png");
+          commandsIcon.setImage(image);
+          
+          if (dashboardBtn.getStyleClass().contains("activeLink")) {
+          dashboardBtn.getStyleClass().remove("activeLink");
+          
+          Image dashIcon = new Image("assets/img/menu.png");
+          dashboardIcon.setImage(dashIcon);
+          } else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
+          fundrisingBtn.getStyleClass().remove("activeLink");
+          
+          Image fundrisingImg = new Image("assets/img/heart.png");
+          fundrisingIcon.setImage(fundrisingImg);
+          } else if (productsBtn.getStyleClass().contains("activeLink")) {
+          productsBtn.getStyleClass().remove("activeLink");
+          
+          Image productsImg = new Image("assets/img/store.png");
+          productsIcon.setImage(productsImg);
+          } else if (collectBtn.getStyleClass().contains("activeLink")) {
+          collectBtn.getStyleClass().remove("activeLink");
+          collectText.getStyleClass().remove("activeText");
+          
+          Image collectImg = new Image("assets/img/recycle.png");
+          collectIcon.setImage(collectImg);
+          }
+          
+          }
+         
     }
 
     @FXML

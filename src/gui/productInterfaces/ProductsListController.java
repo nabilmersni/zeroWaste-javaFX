@@ -142,6 +142,8 @@ public class ProductsListController implements Initializable {
     @FXML
     private HBox submitOfferBtn;
 
+    
+
     private int categId = -1;
 
     private int sortValue = -1; // 1: sort by stock *** 0: filter by category *** 2: filter by category and sort
@@ -171,6 +173,8 @@ public class ProductsListController implements Initializable {
         submitCouponBtn.setVisible(false);
         couponInputErrorHbox.setVisible(false);
         backToReductionBtn.setVisible(false);
+
+        
 
         if (ProductsListController.getCategoryModelShow() == 0) {
             categoriesModel.setVisible(false);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="700.0" styleClass="commandItem_card" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="131.0">
+         <children>
+            <ImageView fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/ProductUploads/00e617f9-2cdc-4914-8f0e-b1697a7f370d.png" />
+               </image>
+            </ImageView>
+         </children>
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+      </HBox>
+      <VBox prefHeight="131.0" prefWidth="562.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="459.0">
+               <children>
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardTitle" text="sac isotherme ecologique" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="459.0" translateY="-8.0">
+               <children>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="92.0" styleClass="commandItem_cardPoints">
+                     <children>
+                        <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="300" />
+                        <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="pts" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="405.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="\$" />
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="120" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="459.0" translateY="-5.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="91.0" styleClass="commandItem_cardDeleteBtn">
+                     <children>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/trash2.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="345.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
+                     <children>
+                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/minus.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="40.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardQuantity" text="5" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
+                     <children>
+                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/plus.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import services.IProduitService;
@@ -29,11 +31,17 @@ public class UserProductsListController implements Initializable {
     @FXML
     private GridPane productsListContainer;
 
+    @FXML
+    private HBox addedCartModel;
+
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//        addedCartModel.setVisible(false);
+
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
 
@@ -65,6 +73,12 @@ public class UserProductsListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @FXML
+    void closeAddToCartModel(MouseEvent event) {
+        addedCartModel.setVisible(false);
 
     }
 

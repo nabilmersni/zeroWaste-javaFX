@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="content_area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1236.0" styleClass="dash__container-card" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commandInterfaces.UserCommandsListController">
+   <children>
+      <ScrollPane layoutX="40.0" layoutY="14.0" prefHeight="602.0" prefWidth="1170.0" styleClass="product-card-scrollPane" stylesheets="@../../assets/style/aliStyle.css">
+         <content>
+            <GridPane fx:id="commandsListContainer">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <VBox layoutX="-61.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="315.0" prefWidth="362.0" styleClass="checkoutCard" stylesheets="@../../assets/style/aliStyle.css" translateX="850.0" translateY="240.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="65.0" prefWidth="301.0">
+               <children>
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="checkoutCard__title" text="Order Summary" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <Line endX="222.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0" translateX="20.0" />
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="63.0" prefWidth="301.0" styleClass="checkoutCard__total">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
+                     <HBox.margin>
+                        <Insets right="160.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="240" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" / " />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="500" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="pts" />
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="TOP_CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" prefWidth="362.0">
+               <children>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="322.0" styleClass="checkoutCard__btn" stylesheets="@../../assets/style/aliStyle.css">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="checkoutCard__btnText" text="Checkout" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Line endX="222.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0" translateX="20.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Line>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="301.0" styleClass="checkoutCard__total">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Promo code">
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+            <TextField fx:id="nameInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Enter your promo code" styleClass="product__add-input">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="55.0" />
+               </padding>
+            </TextField>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="30.0" translateY="-40.0">
+               <image>
+                  <Image url="@../../assets/img/discount.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </children>
+</Pane>
