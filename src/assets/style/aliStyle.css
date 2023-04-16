@@ -598,3 +598,66 @@
 .priceBeforeOffer {
   -fx-strikethrough: true;
 }
+
+/****************************************************************************************************/
+.commands-dash__Title {
+  -fx-font-size: 18px;
+  -fx-font-weight: 700;
+}
+
+.commands-dash__row {
+  -fx-background-radius: 40px;
+  -fx-border-radius: 40px;
+  -fx-background-color: #fff;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0.1, 0, 0);
+}
+
+.commands-dash__date-container {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+  -fx-background-color: #32bb6f;
+  -fx-background-radius: 40px;
+  -fx-border-radius: 40px;
+  -fx-text-fill: #fff;
+  -fx-fill: #fff;
+}
+
+.commandLivDetails-title {
+  -fx-font-size: 16px;
+  -fx-font-weight: 800;
+}
+
+.commandLivDetails {
+  -fx-font-size: 16px;
+  -fx-font-weight: 600;
+}
+
+.commandDetailsHeader {
+  -fx-background-radius: 20px 20px 0 0;
+  -fx-border-radius: 20px 20px 0 0;
+  -fx-background-color: #defee6;
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}
+
+.commandDetailsRow {
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
+  -fx-background-color: #fff;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 25, 0.1, 0, 0);
+}
+
+.commandDetailsProductName {
+  -fx-font-size: 18px;
+  -fx-font-weight: 700;
+}
+
+.commandDetailsProductCateg {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}
+
+.commandDetailsText {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}

@@ -394,7 +394,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_commandsList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/commandInterfaces/CommandsList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/commandInterfaces/AdminCommandsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 

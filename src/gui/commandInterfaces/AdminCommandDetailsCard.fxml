@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #fff;" styleClass="commandDetailsRow" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commandInterfaces.AdminCommandDetailsCardController">
+   <children>
+      <HBox maxWidth="-Infinity" prefHeight="100.0" prefWidth="235.0">
+         <children>
+            <HBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0">
+               <children>
+                  <ImageView fx:id="img" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/ProductUploads/00e617f9-2cdc-4914-8f0e-b1697a7f370d.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </HBox>
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="140.0">
+               <children>
+                  <Text fx:id="name" fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandDetailsProductName" text="Sac ecologic">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="cat" fill="#7b88ff" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandDetailsProductCateg" text="Sac" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="121.0" styleClass="commandDetailsText">
+         <children>
+            <Text fx:id="quantite" fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="128.0" styleClass="commandDetailsText" stylesheets="@../../assets/style/aliStyle.css">
+         <children>
+            <Text fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
+            <Text fx:id="price" fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" text="199" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="96.0" styleClass="commandDetailsText">
+         <children>
+            <Text fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
+            <Text fx:id="total" fill="#585856" strokeType="OUTSIDE" strokeWidth="0.0" text="995" />
+         </children>
+      </HBox>
+   </children>
+</HBox>

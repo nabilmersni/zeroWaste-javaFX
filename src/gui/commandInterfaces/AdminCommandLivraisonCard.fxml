@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="234.0" prefWidth="600.0" style="-fx-background-color: #fff;" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commandInterfaces.AdminCommandLivraisonCardController">
+   <children>
+      <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="178.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="178.0" prefWidth="300.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Full name: " />
+                        <Text fx:id="fullname" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="Braiek Ali" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Address: " />
+                        <Text fx:id="address" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="Rue de tunis Km 23" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Phone: " />
+                        <Text fx:id="phone" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="55516530" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Command Id: " />
+                        <Text fx:id="commandId" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="34" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="178.0" prefWidth="182.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Email: " />
+                        <Text fx:id="email" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="braiekali123@gmail.com" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="City: " />
+                        <Text fx:id="city" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="Sfax" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Zip code: " />
+                        <Text fx:id="zipcode" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="3034" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="42.0" prefWidth="295.0">
+                     <children>
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Total: " />
+                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="\$ " />
+                        <Text fx:id="total" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="400" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="50.0" prefWidth="590.0" styleClass="commandDetailsHeader" stylesheets="@../../assets/style/aliStyle.css" translateY="2.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="235.0">
+               <children>
+                  <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="Product" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="121.0">
+               <children>
+                  <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="128.0">
+               <children>
+                  <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Price" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="96.0">
+               <children>
+                  <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="Total" />
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
