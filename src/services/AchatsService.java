@@ -104,6 +104,7 @@ public class AchatsService implements IAchatsService {
         // Parcours du résultat de la requête
         while (resultSet.next()) {
             Produit produit = new Produit();
+            
             produit.setId(resultSet.getInt("id"));
             produit.setNom_produit(resultSet.getString("nom_produit"));
             produit.setQuantite(resultSet.getInt("quantite_c"));

@@ -16,7 +16,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import entities.Achats;
+import entities.Commands;
 import entities.Produit;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,7 +32,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import services.AchatsService;
+import services.CommandsService;
 import services.IAchatsService;
+import services.UserService;
+import utils.UserSession;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -65,6 +71,10 @@ public class UserCommandsListController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    
+         // user = userService.getOneUser(UserSession.getInstance().getEmail());
+       
+
         //set one command details Model
          try {
             FXMLLoader fxmlLoader1 = new FXMLLoader();
@@ -77,21 +87,55 @@ public class UserCommandsListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        User user = new User() ;
         
-        
-        
+        UserService userService = new UserService();
+       //   user = userService.getOneUser(UserSession.getInstance().getEmail());
+
+         if (UserSession.getInstance().getEmail() == null ) {
+          
+                try {
+                    user = userService.getOneUser("nabilkdp0@gmail.com");
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+       
+        } else {
+                try {
+                    user = userService.getOneUser(UserSession.getInstance().getEmail());
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+                CommandsService commandsService = new CommandsService();
+
+        }
+        CommandsService commandsService = new CommandsService();
+        Commands command = new Commands();
+        command = commandsService.getOneCommand(user.getId()); 
+        if ( command != null ){
+            AchatsService achatsService = new AchatsService();
+            List<Produit> listpProduits = new ArrayList<>();
+            listpProduits = achatsService.getAllProducts(command.getId()); 
+    
+       
+
 
         int column = 0;
         int row = 2;
         try {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < listpProduits.size(); i++) {
 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/gui/commandInterfaces/UserCommandsListItem.fxml"));
                 HBox oneCommandCard = fxmlLoader.load();
                 
-                //AdminCommandDetailsCardController commandCardController = fxmlLoader.getController();
-                //commandCardController.setCommandDetails(produits.get(i));
+
+                UserCommandsListItemController commandCardController = fxmlLoader.getController();
+                commandCardController.setCommandProduit(listpProduits.get(i), command.getId() );
 
                 if (column == 1) {
                     column = 0;
@@ -106,6 +150,7 @@ public class UserCommandsListController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
         //END - set one command details Model
 
     }

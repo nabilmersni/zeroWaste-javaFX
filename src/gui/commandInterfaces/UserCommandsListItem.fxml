@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="700.0" styleClass="commandItem_card" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="700.0" styleClass="commandItem_card" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.commandInterfaces.UserCommandsListItemController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="131.0">
          <children>
@@ -25,14 +25,14 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="459.0">
                <children>
-                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardTitle" text="sac isotherme ecologique" />
+                  <Text fx:id="nomp" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardTitle" text="sac isotherme ecologique" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="459.0" translateY="-8.0">
                <children>
                   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="92.0" styleClass="commandItem_cardPoints">
                      <children>
-                        <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="300" />
+                        <Text fx:id="pointp" fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="300" />
                         <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="pts" />
                      </children>
                      <HBox.margin>
@@ -40,12 +40,12 @@
                      </HBox.margin>
                   </HBox>
                   <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="\$" />
-                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="120" />
+                  <Text fx:id="prixp" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="120" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="459.0" translateY="-5.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="91.0" styleClass="commandItem_cardDeleteBtn">
+                  <HBox fx:id="deletep" alignment="CENTER" prefHeight="36.0" prefWidth="91.0" styleClass="commandItem_cardDeleteBtn">
                      <children>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -61,7 +61,7 @@
                         <Insets right="345.0" />
                      </HBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
+                  <HBox fx:id="moin" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
                      <children>
                         <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -72,10 +72,10 @@
                   </HBox>
                   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="40.0">
                      <children>
-                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardQuantity" text="5" />
+                        <Text fx:id="quantitep" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardQuantity" text="5" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
+                  <HBox fx:id="plus" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="commandItem_cardPlus-Minus-Btn">
                      <children>
                         <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
