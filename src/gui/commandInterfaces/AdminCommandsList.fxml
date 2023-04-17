@@ -39,9 +39,9 @@
                   <Image url="@../../assets/img/magnifier.png" />
                </image>
             </ImageView>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="76.0" styleClass="sort-text" stylesheets="@../../assets/style/aliStyle.css">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="76.0" styleClass="sort-text" stylesheets="@../../assets/style/aliStyle.css" translateX="-3.0">
                <children>
-                  <Text fill="#97d158" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sort-text" text="Sort by:" />
+                  <Text fill="#97d158" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sort-text" text="Filter by:" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -50,7 +50,7 @@
                   <Insets left="10.0" />
                </padding>
             </HBox>
-            <ComboBox fx:id="categoryInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="146.0" promptText="Date" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
+            <ComboBox fx:id="dateComboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="146.0" promptText="Date" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

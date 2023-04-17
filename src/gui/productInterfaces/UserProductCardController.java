@@ -67,18 +67,17 @@ public class UserProductCardController {
         productPrice.setText("" + produit.getPrix_produit());
         productPoints.setText("" + produit.getPrix_point_produit());
      
+        //add product to cart btn
         AddToCart.setOnMouseClicked(event -> {
             System.out.println("product added to command : " + produit.getId());
             User user= new User();
             UserService userService = new UserService();
-             // user = userService.getOneUser(UserSession.getInstance().getEmail());
 
              if (UserSession.getInstance().getEmail() == null ) {
               
                     try {
                         user = userService.getOneUser("nabilkdp0@gmail.com");
                     } catch (SQLException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     System.out.println(user.getId()); 
@@ -87,27 +86,53 @@ public class UserProductCardController {
                     try {
                         user = userService.getOneUser(UserSession.getInstance().getEmail());
                     } catch (SQLException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     System.out.println(user.getId()); 
-                    CommandsService commandsService = new CommandsService();
     
             }
             CommandsService commandsService = new CommandsService();
             Commands command = new Commands();
             command = commandsService.getOneCommand(user.getId()); 
+            System.out.println("Command is :" + command);
             if ( command == null ){
     
                 commandsService.addNewCommands(user.getId());
            }
+
            command = commandsService.getOneCommand(user.getId()); 
+           
+        //    System.out.println("Command not null :" + command);
+        //    System.out.println("Command id :" + command.getId());
+        //    System.out.println("produit id :" + produit.getId());
+        //    System.out.println("user id :" + user.getId());
+    
            CommandsProduitService commandeProduitService = new CommandsProduitService();
-           commandeProduitService.addNewCommandsProduit(command.getId(), produit.getId());
-           System.out.println(commandsService.getOneCommand(user.getId())); 
+           // si le produit n'existe pas dans la commande on ajoute ce produit
+           if(commandeProduitService.getOneCommandProduit(produit.getId(), command.getId()) == null){
+                commandeProduitService.addNewCommandsProduit(command.getId(), produit.getId());
+
+                Text addedCartModelText = (Text) ((Node) event.getSource()).getScene().lookup("#addedCartModelText");
+                addedCartModelText.setText("Product Added To Cart Successfully");
+
+                HBox addedCartModel = (HBox) ((Node) event.getSource()).getScene().lookup("#addedCartModel");
+                addedCartModel.setVisible(true);
+               
+           }
+           else{ // produit existe deja dans la commande => msg affiché
+                Text addedCartModelText = (Text) ((Node) event.getSource()).getScene().lookup("#addedCartModelText");
+                addedCartModelText.setText("Product is ALready Added To Cart");
+
+                HBox addedCartModel = (HBox) ((Node) event.getSource()).getScene().lookup("#addedCartModel");
+                addedCartModel.setVisible(true);
+
+
+           }
+           //System.out.println(commandsService.getOneCommand(user.getId())); 
         
     
         });
+        //END add product to cart cart
     }
 
     

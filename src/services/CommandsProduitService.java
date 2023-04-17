@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import entities.Commands;
 import entities.Produit;
+import entities.Commands_produit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,21 +76,50 @@ public class CommandsProduitService implements ICommandsProduitService{
 
   public void Dicrimentquantity(int quantite_c , int command_id, int produit_id){
     if (quantite_c >1){
-    int quantite = quantite_c-1;      
-    try {
-      String req = "UPDATE `commands_produit` SET `quantite_c`=? WHERE produit_id=? and commande_id=?";
-      PreparedStatement ps = conx.prepareStatement(req);
-        ps.setInt(1, quantite);
-        ps.setInt(2, produit_id);
-        ps.setInt(3, command_id);
+      int quantite = quantite_c-1;      
+      try {
+        String req = "UPDATE `commands_produit` SET `quantite_c`=? WHERE produit_id=? and commande_id=?";
+        PreparedStatement ps = conx.prepareStatement(req);
+          ps.setInt(1, quantite);
+          ps.setInt(2, produit_id);
+          ps.setInt(3, command_id);
 
-        ps.executeUpdate();
-        System.out.println("la quantite a ete dicrimentée");
-        ps.close();
-    }catch (SQLException e) {
-      System.out.println("Une erreur s'est produite lors de dicrimentation : " + e.getMessage());
+          ps.executeUpdate();
+          System.out.println("la quantite a ete dicrimentée");
+          ps.close();
+      }catch (SQLException e) {
+        System.out.println("Une erreur s'est produite lors de dicrimentation : " + e.getMessage());
+      }
     }
   }
-}
+
+  public Commands_produit getOneCommandProduit(int produitId, int commandId)  {
+    Commands_produit commandsProduit = null;
+
+    try {
+    String req = "SELECT * FROM `commands_produit` where produit_id = ? and commande_id = ? ";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, produitId);
+    ps.setInt(2, commandId);
+
+    ResultSet rs = ps.executeQuery();
+    
+    if (rs.next()) {
+        commandsProduit = new Commands_produit();
+        commandsProduit.setId(rs.getInt("id"));
+        commandsProduit.setProduit_id(rs.getInt("produit_id"));
+        commandsProduit.setCommande_id(rs.getInt("commande_id"));
+        commandsProduit.setQuantite_c(rs.getInt("quantite_c"));
+
+    }
+    ps.close();
+   
+      }catch (SQLException e) {
+          System.out.println("Une erreur s'est produite lors de la récupération du commande : " + e.getMessage());
+        }
+        return commandsProduit;
+  }
+
+
   
 }

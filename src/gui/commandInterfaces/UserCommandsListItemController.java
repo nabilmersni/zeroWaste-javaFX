@@ -70,17 +70,16 @@ public class UserCommandsListItemController {
     quantitep.setText(""+produit.getQuantite());     
 
     CommandsProduitService commandsProduitService = new CommandsProduitService();
+        
         // deleteCommand btn click
-        //deleteCommand.setId(String.valueOf(achat.getId()));
-
         deletep.setOnMouseClicked(event -> {
-       //     System.out.println("ID du produit à supprimer : " + produit.getId());
+            //System.out.println("ID du produit à supprimer : " + produit.getId());
 
             commandsProduitService.CommandeDeleteProduct(produit.getId(), command_id);
-            TrayNotificationAlert.notif("Command", "produit incrimented successfully.",
+            TrayNotificationAlert.notif("Command", "produit deleted successfully.",
                     NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-
-            // supprimer le contenu de la liste et afficher la nouvelle liste
+            
+                    // supprimer le contenu de la liste et afficher la nouvelle liste
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
             try {
                 Parent root = loader.load();
@@ -97,73 +96,81 @@ public class UserCommandsListItemController {
         });
         //END deleteCommand btn click
 
-
-        //update plus 
+        
+        //incrementerProduit Btn click
         plus.setOnMouseClicked(event -> {
+            plus.setVisible(false);
+            //HBox clickedButton = (HBox) event.getSource();
+            //clickedButton.setStyle("-fx-background-color: red;");
             //     System.out.println("ID du produit a ete incrimenté : " + produit.getId());
-     ProduitService produitService = new ProduitService();
-     Produit p1= new Produit();
-     try {
-         p1 = produitService.getOneProduct(produit.getId());
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-                 commandsProduitService.Incrimentquantity(produit.getQuantite(), p1.getQuantite(), command_id, produit.getId());
-                 TrayNotificationAlert.notif("Command", "produit deleted successfully.",
-                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-     
-                 // supprimer le contenu de la liste et afficher la nouvelle liste
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
-                 try {
-                     Parent root = loader.load();
-                     // Accéder à la pane content_area depuis ce controller
-                     Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
-     
-                     // Vider la pane et afficher le contenu de ProductsList.fxml
-                     contentArea.getChildren().clear();
-                     contentArea.getChildren().add(root);
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-                 // end
-             });
-             //END plusCommand btn click
+            //tester si la quantite_c est inférieure à la quantite totale disponible pour le produit            
+            ProduitService produitService = new ProduitService();
+            Produit p1= new Produit();
+            try {
+                p1 = produitService.getOneProduct(produit.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if(produit.getQuantite() < p1.getQuantite()){
+            commandsProduitService.Incrimentquantity(produit.getQuantite(), p1.getQuantite(), command_id, produit.getId());
+            TrayNotificationAlert.notif("Command", "produit incrimented successfully.",
+                NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+            }else{
+                TrayNotificationAlert.notif("Command", "Stock Insuffisante.",
+                NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+            }
+            // supprimer le contenu de la liste et afficher la nouvelle liste
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
+            try {
+                
+                Parent root = loader.load();
+                // Accéder à la pane content_area depuis ce controller
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
             
-             //update moin 
-             moin.setOnMouseClicked(event -> {
-            //     System.out.println("ID du produit a ete incrimenté : " + produit.getId());
-     ProduitService produitService = new ProduitService();
-     Produit p1= new Produit();
-     try {
-         p1 = produitService.getOneProduct(produit.getId());
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-                 commandsProduitService.Dicrimentquantity(produit.getQuantite(), command_id, produit.getId());
-                if(produit.getQuantite() > 1){
-                 TrayNotificationAlert.notif("Command", "produit dicrimented successfully.",
-                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-                }else {
-                    TrayNotificationAlert.notif("Command", "impossible de dicrimentes vous pouver supprimer.",
-                         NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+                // Vider la pane et afficher le contenu de ProductsList.fxml
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // end
+        });
+        //END incrementerProduit btn click
+            
+            //update moin 
+            moin.setOnMouseClicked(event -> {
+                //System.out.println("ID du produit a ete incrimenté : " + produit.getId());
+                ProduitService produitService = new ProduitService();
+                Produit p1= new Produit();
+                try {
+                    p1 = produitService.getOneProduct(produit.getId());
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                 // supprimer le contenu de la liste et afficher la nouvelle liste
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
-                 try {
-                     Parent root = loader.load();
-                     // Accéder à la pane content_area depuis ce controller
-                     Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
-     
-                     // Vider la pane et afficher le contenu de ProductsList.fxml
-                     contentArea.getChildren().clear();
-                     contentArea.getChildren().add(root);
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-                 // end
-             });
+                            commandsProduitService.Dicrimentquantity(produit.getQuantite(), command_id, produit.getId());
+                            if(produit.getQuantite() > 1){
+                            TrayNotificationAlert.notif("Command", "produit dicrimented successfully.",
+                                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+                            }else {
+                                TrayNotificationAlert.notif("Command", "impossible de dicrimentes vous pouver supprimer.",
+                                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+                            }
+                            // supprimer le contenu de la liste et afficher la nouvelle liste
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
+                            try {
+                                Parent root = loader.load();
+                                // Accéder à la pane content_area depuis ce controller
+                                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+                
+                                // Vider la pane et afficher le contenu de ProductsList.fxml
+                                contentArea.getChildren().clear();
+                                contentArea.getChildren().add(root);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            // end
+            });
              //END plusCommand btn click
     }
     }

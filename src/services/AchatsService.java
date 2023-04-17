@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class AchatsService implements IAchatsService {
   public List<Achats> searchCommands(String search){
     List<Achats> achatList = new ArrayList<>();
     try {
-        String query = "SELECT * FROM achats WHERE full_name LIKE ? OR city LIKE ? OR email LIKE ? OR address LIKE ? OR tel LIKE ?";
+        String query = "SELECT * FROM achats WHERE (adminDeleted = 0 AND validate = 1) AND (full_name LIKE ? OR city LIKE ? OR email LIKE ? OR address LIKE ? OR tel LIKE ?)";
         PreparedStatement preparedStatement = conx.prepareStatement(query);
         preparedStatement.setString(1, "%" + search + "%");
         preparedStatement.setString(2, "%" + search + "%");
@@ -160,6 +161,109 @@ public class AchatsService implements IAchatsService {
 
     return achatList;
   }
+
+
+  public List<Achats> getAchatsToday() {
+    List<Achats> achatsList = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM achats WHERE adminDeleted = 0 AND validate = 1 AND date_achat >= ? ORDER BY date_achat DESC";
+        PreparedStatement preparedStatement = conx.prepareStatement(query);
+        java.sql.Date today = new java.sql.Date(new java.util.Date().getTime()); // Utiliser la date actuelle
+        preparedStatement.setDate(1, today);
+        System.out.println("Today date: " + today);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        while (resultSet.next()) {
+            Achats achat = new Achats();
+            achat.setId(resultSet.getInt("id"));
+            achat.setFull_name(resultSet.getString("full_name"));
+            achat.setAddress(resultSet.getString("address"));
+            achat.setEmail(resultSet.getString("email"));
+            achat.setCity(resultSet.getString("city"));
+            achat.setTel(resultSet.getInt("tel"));
+            achat.setCommande_id(resultSet.getInt("commande_id"));
+            achat.setDate_achat(resultSet.getString("date_achat"));
+            achatsList.add(achat);
+        }
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return achatsList;
+  }
+
+  public List<Achats> getAchatsLastWeek() {
+    List<Achats> achatsList = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM achats WHERE adminDeleted = 0 AND validate = 1 AND date_achat BETWEEN ? AND ? ORDER BY date_achat DESC";
+        PreparedStatement preparedStatement = conx.prepareStatement(query);
+        LocalDate now = LocalDate.now();
+        preparedStatement.setString(1, now.minusDays(7).toString()); // Utiliser la date il y a 7 jours
+        preparedStatement.setString(2, now.toString()); // Utiliser la date actuelle
+        System.out.println("last week deb: " + now.minusDays(7).toString());
+        System.out.println("last week end: " + now.toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        while (resultSet.next()) {
+            Achats achat = new Achats();
+            achat.setId(resultSet.getInt("id"));
+            achat.setFull_name(resultSet.getString("full_name"));
+            achat.setAddress(resultSet.getString("address"));
+            achat.setEmail(resultSet.getString("email"));
+            achat.setCity(resultSet.getString("city"));
+            achat.setTel(resultSet.getInt("tel"));
+            achat.setCommande_id(resultSet.getInt("commande_id"));
+            achat.setDate_achat(resultSet.getString("date_achat"));
+            achatsList.add(achat);
+        }
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return achatsList;
+  }
+
+  public List<Achats> getAchatsLastMonth() {
+    List<Achats> achatsList = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM achats WHERE adminDeleted = 0 AND validate = 1 AND date_achat BETWEEN ? AND ? ORDER BY date_achat DESC";
+        PreparedStatement preparedStatement = conx.prepareStatement(query);
+        LocalDate now = LocalDate.now();
+        LocalDate startOfMonth = now.withDayOfMonth(1); // Le début du mois en cours
+        LocalDate startOfLastMonth = startOfMonth.minusMonths(1); // Le début du mois précédent
+        LocalDate endOfLastMonth = startOfMonth.minusDays(1); // La fin du mois précédent
+        preparedStatement.setString(1, startOfLastMonth.toString()); // Utiliser la date du début du mois précédent
+        preparedStatement.setString(2, endOfLastMonth.toString()); // Utiliser la date de la fin du mois précédent
+        System.out.println("last month deb: " + startOfLastMonth.toString());
+        System.out.println("last month end: " + endOfLastMonth.toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        while (resultSet.next()) {
+            Achats achat = new Achats();
+            achat.setId(resultSet.getInt("id"));
+            achat.setFull_name(resultSet.getString("full_name"));
+            achat.setAddress(resultSet.getString("address"));
+            achat.setEmail(resultSet.getString("email"));
+            achat.setCity(resultSet.getString("city"));
+            achat.setTel(resultSet.getInt("tel"));
+            achat.setCommande_id(resultSet.getInt("commande_id"));
+            achat.setDate_achat(resultSet.getString("date_achat"));
+            achatsList.add(achat);
+        }
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return achatsList;
+  }
+
+
 
   
 

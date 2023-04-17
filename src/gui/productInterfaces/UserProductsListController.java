@@ -10,13 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import services.IProduitService;
 import services.ProduitService;
+import javafx.scene.Node;
 
 /**
  * FXML Controller class
@@ -34,13 +37,16 @@ public class UserProductsListController implements Initializable {
     @FXML
     private HBox addedCartModel;
 
+    @FXML
+    private Text addedCartModelText;
+
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        addedCartModel.setVisible(false);
+        addedCartModel.setVisible(false);
 
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
@@ -79,7 +85,20 @@ public class UserProductsListController implements Initializable {
     @FXML
     void closeAddToCartModel(MouseEvent event) {
         addedCartModel.setVisible(false);
+    }
 
+    @FXML
+    void open_CommandsList(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
+
+        Parent root = loader.load();
+        // Accéder à la pane content_area depuis le controller de
+        // OneProductListCard.fxml
+        Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+        // Vider la pane et afficher le contenu de UserCommandsList.fxml
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(root);
     }
 
 }

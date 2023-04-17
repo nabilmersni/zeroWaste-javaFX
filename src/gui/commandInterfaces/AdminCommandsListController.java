@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import javafx.scene.Node;
 import com.itextpdf.text.Image;
+
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 
@@ -70,12 +72,37 @@ public class AdminCommandsListController implements Initializable {
     private HBox qrCodeImgModel;
     @FXML
     private Pane content_area;
+
+    @FXML
+    private ComboBox<String> dateComboBox;
+
+    private String selectedOption = null;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         qrCodeImgModel.setVisible(false);
+
+        //set combobox values
+        dateComboBox.getItems().add("All");
+        dateComboBox.getItems().add("Today");
+        dateComboBox.getItems().add("Last Week");
+        dateComboBox.getItems().add("Last Month");
+        //END set combobox values
+        //filter by combobox values
+        dateComboBox.setOnAction(event -> {
+            selectedOption = dateComboBox.getValue();
+            Produit.setSearchValue(null);
+            System.out.println("Selected option: " + selectedOption);
+
+            Achats.setSearchValue(null);
+            // System.out.println("Selected value: " + categId);
+            GridPane commandsListContainer = (GridPane) content_area.lookup("#commandsListContainer");
+            commandsListContainer.getChildren().clear();
+            this.setCommandsGridPaneList();
+        });
+        //END filter by combobox values
 
         IAchatsService achatService = new AchatsService();
         List<Produit> produits = new ArrayList<>();
@@ -143,8 +170,23 @@ public class AdminCommandsListController implements Initializable {
 
         List<Achats> achats = null;
         if (Achats.getSearchValue() == null) {
-        // Récupérer tous les achats
-         achats = achatsService.getAllAchats();
+            if(selectedOption != null){
+                if(selectedOption.equals("Today") ){
+                    achats = achatsService.getAchatsToday();
+                }
+                if(selectedOption.equals("Last Week") ){
+                    achats = achatsService.getAchatsLastWeek();
+                }
+                if(selectedOption.equals("Last Month") ){
+                    achats = achatsService.getAchatsLastMonth();
+                }
+                if(selectedOption.equals("All") ){
+                    achats = achatsService.getAllAchats();
+                }
+            }else{
+                achats = achatsService.getAllAchats();
+            }
+ 
         }
         else {
             achats= achatsService.searchCommands(Achats.getSearchValue());
@@ -391,5 +433,6 @@ if (selectedFile != null) {
         commandsListContainer.getChildren().clear();
         this.setCommandsGridPaneList();
     }
+    
 
 }

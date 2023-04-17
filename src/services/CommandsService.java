@@ -24,7 +24,7 @@ public class CommandsService implements ICommandsService{
   
     
     public Commands getOneCommand(int userId)  {
-        Commands commands = new Commands();
+        Commands commands = null;
 
         try {
         String req = "SELECT * FROM `commands` where user_id = ? and status=0";
@@ -33,7 +33,8 @@ public class CommandsService implements ICommandsService{
     
         ResultSet rs = ps.executeQuery();
         
-        while (rs.next()) {
+        if (rs.next()) {
+            commands = new Commands();
             commands.setId(rs.getInt("id"));
             commands.setStatus(rs.getInt("status"));
             commands.setUser_id(rs.getInt("user_id"));
