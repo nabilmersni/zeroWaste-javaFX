@@ -1,21 +1,12 @@
 package gui.commandInterfaces;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import entities.Achats;
 import entities.Commands;
 import entities.Produit;
 import entities.User;
@@ -23,35 +14,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import services.AchatsService;
 import services.CommandsService;
-import services.IAchatsService;
 import services.UserService;
 import utils.UserSession;
-
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import javafx.scene.Node;
-import com.itextpdf.text.Image;
-import javafx.scene.control.TextField;
-
-
 
 
 /**
@@ -90,14 +59,12 @@ public class UserCommandsListController implements Initializable {
         User user = new User() ;
         
         UserService userService = new UserService();
-       //   user = userService.getOneUser(UserSession.getInstance().getEmail());
 
          if (UserSession.getInstance().getEmail() == null ) {
           
                 try {
                     user = userService.getOneUser("nabilkdp0@gmail.com");
                 } catch (SQLException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 System.out.println(user.getId()); 
@@ -106,11 +73,9 @@ public class UserCommandsListController implements Initializable {
                 try {
                     user = userService.getOneUser(UserSession.getInstance().getEmail());
                 } catch (SQLException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 System.out.println(user.getId()); 
-                CommandsService commandsService = new CommandsService();
 
         }
         CommandsService commandsService = new CommandsService();
