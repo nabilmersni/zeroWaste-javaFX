@@ -176,25 +176,6 @@ public class AddFundraisingCardController implements Initializable {
         });
 
     }
-    @FXML
-    void ajouter_image1(MouseEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choisir une image");
-        fileChooser.getExtensionFilters().addAll( new ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
-        selectedImageFile = fileChooser.showOpenDialog(imageInput.getScene().getWindow());
-        if (selectedImageFile != null) {
-            Image image = new Image(selectedImageFile.toURI().toString());
-            imageInput.setImage(image);
-
-            // Récupérer le nom de l'image sélectionnée
-            imageName = selectedImageFile.getName();
-            //System.out.println(imageName);
-            
-            // Enregistrer l'image dans le répertoire d'images
-            Path destination = Paths.get("C:/Users/Farah Torkhani/Desktop/javafarah/ - zeroWaste-javaFX/src/assets/img" + imageName);
-            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
-        }
-    }
 
     @FXML
     void ajouter_image(MouseEvent event) throws IOException {
