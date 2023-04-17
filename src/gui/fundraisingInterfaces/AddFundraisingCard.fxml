@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1040.0" prefWidth="630.0" styleClass="addProductCard" stylesheets="@../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AddFundraisingCardController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1040.0" prefWidth="630.0" styleClass="addProductCard" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fundraisingInterfaces.AddFundraisingCardController">
    <children>
       <HBox prefHeight="53.0" prefWidth="570.0">
          <children>
@@ -72,7 +72,7 @@
                   <Insets />
                </VBox.margin>
             </TextField>
-            <HBox fx:id="titreInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+            <HBox fx:id="titreInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                <children>
                   <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
                   <Text fx:id="titreInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Title is required!">
@@ -107,7 +107,7 @@
                </padding>
             </HBox>
             <TextArea fx:id="description_don" prefHeight="200.0" prefWidth="200.0" promptText="Description of fundraising" styleClass="product__add-input-textArea" />
-            <HBox fx:id="descriptionInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+            <HBox fx:id="descriptionInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                <children>
                   <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
                   <Text fx:id="descriptionInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Description is required!">
@@ -147,7 +147,7 @@
                      </padding>
                   </HBox>
                   <ComboBox fx:id="etat" prefHeight="40.0" prefWidth="299.0" styleClass="product__add-comboBox" />
-                  <HBox fx:id="etatInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+                  <HBox fx:id="etatInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                   <children>
                      <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
                      <Text fx:id="etatInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Etat is required!">
@@ -219,7 +219,7 @@
                         <Insets />
                      </VBox.margin>
                   </TextField>
-                  <HBox fx:id="objectifInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+                  <HBox fx:id="objectifInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                      <children>
                         <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
                         <Text fx:id="objectifInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Objectif is required!">
@@ -294,7 +294,7 @@
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../assets/img/cloud-computing.png" />
+                              <Image url="@../../assets/img/cloud-computing.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -342,7 +342,7 @@
                            <children>
                               <ImageView fitHeight="23.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" translateY="-3.0">
                                  <image>
-                                    <Image url="@../assets/img/upload-big-arrow.png" />
+                                    <Image url="@../../assets/img/upload-big-arrow.png" />
                                  </image>
                               </ImageView>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-textBtn" text="Choose a photo">
@@ -362,7 +362,7 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox fx:id="imageInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../assets/style/aliStyle.css">
+            <HBox fx:id="imageInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                <children>
                   <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
                   <Text fx:id="imageInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Image is required!">

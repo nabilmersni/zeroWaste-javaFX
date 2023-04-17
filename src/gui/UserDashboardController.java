@@ -205,7 +205,7 @@ public class UserDashboardController implements Initializable {
     }
     @FXML
     private void open_fundrisingList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("UserFundrisingsList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/fundraisingInterfaces/UserFundrisingsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 

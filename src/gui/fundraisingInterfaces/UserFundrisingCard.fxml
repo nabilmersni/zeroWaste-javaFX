@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="280.0" styleClass="userProductCard" stylesheets="@../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.UserFundrisingCardController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="280.0" styleClass="userProductCard" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fundraisingInterfaces.UserFundrisingCardController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="192.0" styleClass="userProductCard-imgContainer">
          <VBox.margin>
@@ -19,12 +19,12 @@
          <children>
             <ImageView fx:id="img" fitHeight="147.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../assets/img/sac.png" />
+                  <Image url="@../../assets/img/sac.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="16.0" prefWidth="244.0" styleClass="userProductCard-name" stylesheets="@../assets/style/aliStyle.css">
+      <HBox alignment="CENTER" prefHeight="16.0" prefWidth="244.0" styleClass="userProductCard-name" stylesheets="@../../assets/style/aliStyle.css">
          <children>
             <Text fx:id="titreDon" fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="Cooler Bag" />
          </children>
