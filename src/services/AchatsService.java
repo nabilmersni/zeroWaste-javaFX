@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import utils.MyDB;
 
 public class AchatsService implements IAchatsService {
@@ -263,8 +266,47 @@ public class AchatsService implements IAchatsService {
     return achatsList;
   }
 
+// 
+public void Checkout(Achats achat) {
+  try {
+    String req = "INSERT INTO `achats`(`commande_id`, `date_achat`, `full_name`, `email`, `address`, `tel`, `city`, `zip_code`, `validate`) VALUES (?,?,?,?,?,?,?,?,?)";
+    PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, achat.getCommande_id());
+
+      ps.setString(3, achat.getFull_name());
+      ps.setString(4, achat.getEmail());
+      ps.setString(5, achat.getAddress());
+      ps.setInt(6, achat.getTel());
+      ps.setString(7, achat.getCity());
+      ps.setInt(8, achat.getZip_code());
+      ps.setInt(9, 0);
+
+      LocalDateTime currentDateTime = LocalDateTime.now();
+java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(currentDateTime);
+ps.setTimestamp(2, sqlTimestamp);
+System.out.println("sqlTimestamp"+sqlTimestamp);
 
 
+      ps.executeUpdate();
+      System.out.println("checkout approved");
+      ps.close();
+  }catch (SQLException e) {
+    System.out.println("Une erreur s'est produite lors de la récupération du achat : " + e.getMessage());
+  }
+  
+
+}
+
+public void supprimerAddress(int achat_Id) throws SQLException {
+  String sql = "DELETE FROM achats WHERE commande_id = ?";
+  try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
+      pstmt.setInt(1, 24);
+      pstmt.executeUpdate();
+  } catch (SQLException e) {
+      System.out.println(e.getMessage());
+  }
+
+}
   
 
 

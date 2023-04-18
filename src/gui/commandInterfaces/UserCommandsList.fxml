@@ -401,7 +401,7 @@
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="760.0" style="-fx-background-color: #fff;" styleClass="categoriesModel-card">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="760.0">
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#DeleteCheckout" prefHeight="84.0" prefWidth="760.0">
                      <children>
                         <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="categoriesModel-card-title" text="1.  Address">
                            <HBox.margin>
@@ -518,7 +518,7 @@
                                                 </ImageView>
                                              </children>
                                           </HBox>
-                                          <HBox fx:id="deleteAddress" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                                          <HBox fx:id="deleteAchat" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#DeleteCheckout" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
                                              <children>
                                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>

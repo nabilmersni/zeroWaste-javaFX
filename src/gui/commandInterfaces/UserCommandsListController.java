@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+import entities.Achats;
 import entities.Commands;
 import entities.Produit;
 import entities.User;
@@ -103,6 +105,8 @@ public class UserCommandsListController implements Initializable {
 
     @FXML
     private HBox zipcodeInputErrorHbox;
+
+
     /**
      * Initializes the controller class.
      */
@@ -211,8 +215,75 @@ public class UserCommandsListController implements Initializable {
 
     @FXML
     void switchToPaymentModel(MouseEvent event) {
+        Achats achat= new Achats();
+        achat.setFull_name(fullnameInput.getText());
+        achat.setEmail(emailInput.getText());
+        achat.setCity(cityInput.getText());
+        achat.setTel(Integer.parseInt(phoneInput.getText()));
+        achat.setAddress(addressInput.getText());
+        achat.setZip_code(Integer.parseInt(zipcodeInput.getText()));
+        CommandsService commandeservice = new CommandsService();
+        //recuperation user
+        User user = new User() ;
+        
+        UserService userService = new UserService();
+
+         if (UserSession.getInstance().getEmail() == null ) {
+          
+                try {
+                    user = userService.getOneUser("nabilkdp0@gmail.com");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+       
+        } else {
+                try {
+                    user = userService.getOneUser(UserSession.getInstance().getEmail());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+
+        }
+        Commands command = new Commands();
+        command = commandeservice.getOneCommand(user.getId());
+        achat.setCommande_id(command.getId());
+       AchatsService achatsService = new AchatsService();
+       achatsService.Checkout(achat);
         checkoutModel.setVisible(false);
         paymentModel.setVisible(true);
     }
    
+    @FXML
+    void DeleteCheckout(MouseEvent event) throws SQLException {
+        User user = new User() ;
+        
+        UserService userService = new UserService();
+
+         if (UserSession.getInstance().getEmail() == null ) {
+          
+                try {
+                    user = userService.getOneUser("nabilkdp0@gmail.com");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+       
+        } else {
+                try {
+                    user = userService.getOneUser(UserSession.getInstance().getEmail());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+
+        }
+        CommandsService commandeservice = new CommandsService();
+        Commands command = new Commands();
+        command = commandeservice.getOneCommand(user.getId());
+        Achats achat = new Achats();
+        AchatsService achatsService = new AchatsService();
+        achatsService.supprimerAddress(command.getId());    
+    }
 }

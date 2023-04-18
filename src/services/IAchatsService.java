@@ -18,5 +18,10 @@ public interface IAchatsService {
   public List<Achats> getAchatsToday();
   public List<Achats> getAchatsLastWeek();
   public List<Achats> getAchatsLastMonth();
+
+  public void Checkout(Achats achat);
+  public void supprimerAddress(int achat_Id) throws SQLException ;
+
+
   
 }
