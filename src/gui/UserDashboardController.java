@@ -180,26 +180,24 @@ public class UserDashboardController implements Initializable {
 
                 Image productsImg = new Image("assets/img/store.png");
                 productsIcon.setImage(productsImg);
-            }
-
-            /*
-             * else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
-             * fundrisingBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image fundrisingImg = new Image("assets/img/heart.png");
-             * fundrisingIcon.setImage(fundrisingImg);
-             * } else if (collectBtn.getStyleClass().contains("activeLink")) {
-             * collectBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image collectImg = new Image("assets/img/recycle.png");
-             * collectIcon.setImage(collectImg);
-             * } else if (commandsBtn.getStyleClass().contains("activeLink")) {
-             * commandsBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image commandsImg = new Image("assets/img/shopping-cart.png");
-             * commandsIcon.setImage(commandsImg);
-             * }
-             */
+            } else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
+              fundrisingBtn.getStyleClass().remove("activeLink");
+              
+              Image fundrisingImg = new Image("assets/img/heart.png");
+              fundrisingIcon.setImage(fundrisingImg);
+             }// else if (collectBtn.getStyleClass().contains("activeLink")) {
+            //   collectBtn.getStyleClass().remove("activeLink");
+              
+            //   Image collectImg = new Image("assets/img/recycle.png");
+            //   collectIcon.setImage(collectImg);
+            //    }
+                else if (commandsBtn.getStyleClass().contains("activeLink")) {
+              commandsBtn.getStyleClass().remove("activeLink");
+              
+              Image commandsImg = new Image("assets/img/shopping-cart.png");
+              commandsIcon.setImage(commandsImg);
+              }
+             
 
         }
     }
@@ -232,26 +230,24 @@ public class UserDashboardController implements Initializable {
 
                 Image productsImg = new Image("assets/img/store.png");
                 productsIcon.setImage(productsImg);
-            }
-
-            /*
-             * else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
-             * fundrisingBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image fundrisingImg = new Image("assets/img/heart.png");
-             * fundrisingIcon.setImage(fundrisingImg);
-             * } else if (collectBtn.getStyleClass().contains("activeLink")) {
-             * collectBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image collectImg = new Image("assets/img/recycle.png");
-             * collectIcon.setImage(collectImg);
-             * } else if (commandsBtn.getStyleClass().contains("activeLink")) {
-             * commandsBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image commandsImg = new Image("assets/img/shopping-cart.png");
-             * commandsIcon.setImage(commandsImg);
-             * }
-             */
+            } //else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
+             //fundrisingBtn.getStyleClass().remove("activeLink");
+             
+            //  Image fundrisingImg = new Image("assets/img/heart.png");
+            //  fundrisingIcon.setImage(fundrisingImg);
+            //  } else if (collectBtn.getStyleClass().contains("activeLink")) {
+            //  collectBtn.getStyleClass().remove("activeLink");
+             
+            //  Image collectImg = new Image("assets/img/recycle.png");
+            //  collectIcon.setImage(collectImg);
+            // }
+             else if (commandsBtn.getStyleClass().contains("activeLink")) {
+             commandsBtn.getStyleClass().remove("activeLink");
+             
+             Image commandsImg = new Image("assets/img/shopping-cart.png");
+             commandsIcon.setImage(commandsImg);
+             }
+            
 
         }
     }
@@ -280,26 +276,24 @@ public class UserDashboardController implements Initializable {
 
                 Image usersImg = new Image("assets/img/user.png");
                 profileIcon.setImage(usersImg);
-            }
-
-            /*
-             * else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
-             * fundrisingBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image fundrisingImg = new Image("assets/img/heart.png");
-             * fundrisingIcon.setImage(fundrisingImg);
-             * } else if (collectBtn.getStyleClass().contains("activeLink")) {
-             * collectBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image collectImg = new Image("assets/img/recycle.png");
-             * collectIcon.setImage(collectImg);
-             * } else if (commandsBtn.getStyleClass().contains("activeLink")) {
-             * commandsBtn.getStyleClass().remove("activeLink");
-             * 
-             * Image commandsImg = new Image("assets/img/shopping-cart.png");
-             * commandsIcon.setImage(commandsImg);
-             * }
-             */
+            } else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
+              fundrisingBtn.getStyleClass().remove("activeLink");
+              
+              Image fundrisingImg = new Image("assets/img/heart.png");
+              fundrisingIcon.setImage(fundrisingImg);
+              } //else if (collectBtn.getStyleClass().contains("activeLink")) {
+              //collectBtn.getStyleClass().remove("activeLink");
+              
+              //Image collectImg = new Image("assets/img/recycle.png");
+              //collectIcon.setImage(collectImg);
+              //} 
+              else if (commandsBtn.getStyleClass().contains("activeLink")) {
+              commandsBtn.getStyleClass().remove("activeLink");
+              
+              Image commandsImg = new Image("assets/img/shopping-cart.png");
+              commandsIcon.setImage(commandsImg);
+              }
+             
 
         }
     }
@@ -365,6 +359,11 @@ public class UserDashboardController implements Initializable {
           
           Image dashIcon = new Image("assets/img/menu.png");
           dashboardIcon.setImage(dashIcon);
+          } else if (profileBtn.getStyleClass().contains("activeLink")) {
+            profileBtn.getStyleClass().remove("activeLink");
+
+            Image usersImg = new Image("assets/img/user.png");
+            profileIcon.setImage(usersImg);
           } else if (fundrisingBtn.getStyleClass().contains("activeLink")) {
           fundrisingBtn.getStyleClass().remove("activeLink");
           
@@ -375,13 +374,13 @@ public class UserDashboardController implements Initializable {
           
           Image productsImg = new Image("assets/img/store.png");
           productsIcon.setImage(productsImg);
-          } else if (collectBtn.getStyleClass().contains("activeLink")) {
-          collectBtn.getStyleClass().remove("activeLink");
-          collectText.getStyleClass().remove("activeText");
+          } //else if (collectBtn.getStyleClass().contains("activeLink")) {
+        //   collectBtn.getStyleClass().remove("activeLink");
+        //   collectText.getStyleClass().remove("activeText");
           
-          Image collectImg = new Image("assets/img/recycle.png");
-          collectIcon.setImage(collectImg);
-          }
+        //   Image collectImg = new Image("assets/img/recycle.png");
+        //   collectIcon.setImage(collectImg);
+         // }
           
           }
          

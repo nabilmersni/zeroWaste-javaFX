@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Fundrising;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,10 +42,10 @@ public class FundrisingListController implements Initializable {
         List<Fundrising> funds = fundService.getAllFunds();
         
         // Afficher les funds dans la console (juste pour tester)
-        System.out.println("Liste des funds:");
-        for (Fundrising fund : funds) {
-            System.out.println(fund);
-        }
+        // System.out.println("Liste des funds:");
+        // for (Fundrising fund : funds) {
+        //     System.out.println(fund);
+        // }
 
         int column = 0;
         int row = 1;
@@ -70,7 +69,6 @@ public class FundrisingListController implements Initializable {
                 
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     
@@ -78,11 +76,10 @@ public class FundrisingListController implements Initializable {
 
     @FXML
     private void open_addFunds(MouseEvent event) throws IOException {
+        Fundrising.actionTest = 0;
         Parent fxml = FXMLLoader.load(getClass().getResource("AddFundraising.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
-
-        Fundrising.actionTest = 0;
     }
 
             

@@ -1,20 +1,15 @@
 package gui.productInterfaces;
 
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 import entities.Commands;
 import entities.Produit;
 import entities.User;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import services.CommandsProduitService;
 import services.CommandsService;
@@ -22,11 +17,7 @@ import services.IProduitService;
 import services.ProduitService;
 import services.UserService;
 import javafx.scene.Node;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import utils.TrayNotificationAlert;
 import utils.UserSession;
-import javafx.util.Duration;
 
 /**
  * FXML Controller class

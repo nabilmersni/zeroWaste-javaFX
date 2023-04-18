@@ -2,7 +2,6 @@ package gui.productInterfaces;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.ResourceBundle;
 
 import entities.Categorie_produit;
 import entities.Produit;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,36 +30,14 @@ import services.ICategorie_produitService;
 import services.IProduitService;
 import services.ProduitService;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
-import javafx.scene.Node;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
-import okhttp3.Credentials;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import org.json.JSONObject;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -444,31 +420,9 @@ public class ProductsListController implements Initializable {
 
     @FXML
     void submit_coupon(MouseEvent event) {
-        // Initialisation de la bibliothèque Twilio avec les informations de votre
-        // compte
-        String ACCOUNT_SID = "ACde0fe3e27b9f6940e6700cbef936d1a9";
-        String AUTH_TOKEN = "7270aba8d8ed493992e56483cf83af46";
-
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-
-        if (submitCouponTest == 1) {
-            // System.out.println("number : " + couponInput.getText());
-            String recipientNumber = "+216" + couponInput.getText();
-            String message = "Bonjour Braiek Ali\n,Nous sommes ravis de vous offrir un coupon pour sac-ecologique valable jusqu'au 25/04/2023.\n Utilisez le code suivant 071532 lors de votre prochain achat en ligne ou en magasin pour bénéficier de 20% de la réduction.\n Merci de votre fidélité et à bientôt chez ZeroWaste.\nCordialement,\nZeroWaste";
-
-            Message twilioMessage = Message.creator(
-                    new PhoneNumber(recipientNumber),
-                    new PhoneNumber("+15076328189"),
-                    message)
-                    .create();
-
-            System.out.println("SMS envoyé : " + twilioMessage.getSid());
-            TrayNotificationAlert.notif("Coupon", "Coupon sent successfully.",
-                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
             offreModel.setVisible(false);
             couponInput.clear();
-        }
 
     }
 

@@ -385,13 +385,7 @@ public class AddFundraisingCardController implements Initializable {
         fundrising.setDate_don(currentDate);
         fundrising.setDate_don_limite(sqlDate);
         
-        // if(imageName == ""){
-        //     produit.setImage(produit.getImage());
-        // }else{
-        //     produit.setImage(imageName);
-        // }
-        
-
+       
         if (titreTest == 1 && descriptionTest == 1 && etatTest == 1 && objectifTest == 1 && imageTest == 1) {
             IFundrisingService fundrisingService = new FundrisingService();
 
