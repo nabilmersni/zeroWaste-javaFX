@@ -791,3 +791,56 @@
   -fx-font-size: 16px;
   -fx-font-weight: 700;
 }
+
+.checkoutContenueBtn {
+  -fx-background-color: #43882b;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+  -fx-cursor: hand;
+}
+
+.checkoutContenueBtn:hover {
+  -fx-background-color: #97d158;
+}
+
+.checkoutContenueBtnText {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}
+
+.paymentCoordonnee {
+  -fx-background-color: #defee6;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+}
+
+.verifiedAddress {
+  -fx-font-size: 18px;
+  -fx-font-weight: 700;
+}
+
+.verifiedAddress_fullname {
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+}
+
+.verifiedAddress_details {
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+}
+
+.paymentMethodTitle {
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}
+
+.paymentCardContainer {
+  -fx-background-color: #defee680;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+  -fx-cursor: hand;
+}
+
+.paymentCardContainer:hover {
+  -fx-background-color: #defee6;
+}

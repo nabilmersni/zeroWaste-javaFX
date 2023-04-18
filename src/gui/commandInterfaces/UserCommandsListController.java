@@ -14,9 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import services.AchatsService;
 import services.CommandsService;
 import services.UserService;
@@ -35,19 +38,90 @@ public class UserCommandsListController implements Initializable {
 
     @FXML
     private Pane content_area;
+
+    @FXML
+    private HBox checkoutModel;
+
+    @FXML
+    private HBox paymentModel;
+
+    @FXML
+    private TextField addressInput;
+
+    @FXML
+    private Text addressInputError;
+
+    @FXML
+    private HBox addressInputErrorHbox;
+
+    @FXML
+    private TextField cityInput;
+
+    @FXML
+    private Text cityInputError;
+
+    @FXML
+    private HBox cityInputErrorHbox;
+
+   
+
+    @FXML
+    private TextField emailInput;
+
+    @FXML
+    private Text emailInputError;
+
+    @FXML
+    private HBox emailInputErrorHbox;
+
+    @FXML
+    private TextField fullnameInput;
+
+    @FXML
+    private Text fullnameInputError;
+
+    @FXML
+    private HBox fullnameInputErrorHbox;
+
+    @FXML
+    private TextField nameInput;
+
+    @FXML
+    private TextField phoneInput;
+
+    @FXML
+    private Text phoneInputError;
+
+    @FXML
+    private HBox phoneInputErrorHbox;
+
+    @FXML
+    private TextField zipcodeInput;
+
+    @FXML
+    private Text zipcodeInputError;
+
+    @FXML
+    private HBox zipcodeInputErrorHbox;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        checkoutModel.setVisible(false);
+        paymentModel.setVisible(false);
+        fullnameInputErrorHbox.setVisible(false);
+        emailInputErrorHbox.setVisible(false);
+        cityInputErrorHbox.setVisible(false);
+        phoneInputErrorHbox.setVisible(false);
+        addressInputErrorHbox.setVisible(false);
+        zipcodeInputErrorHbox.setVisible(false);
     
-         // user = userService.getOneUser(UserSession.getInstance().getEmail());
-       
-
+         
         //set one command details Model
          try {
             FXMLLoader fxmlLoader1 = new FXMLLoader();
-        fxmlLoader1.setLocation(getClass().getResource("/gui/commandInterfaces/UsercommandsHeader.fxml"));
+            fxmlLoader1.setLocation(getClass().getResource("/gui/commandInterfaces/UsercommandsHeader.fxml"));
    
             HBox commandinfoCard = fxmlLoader1.load();
             //AdminCommandLivraisonCardController commandLivraisonController = fxmlLoader1.getController();
@@ -120,5 +194,25 @@ public class UserCommandsListController implements Initializable {
 
     }
 
+    @FXML
+    void close_commandCheckoutModel(MouseEvent event) {
+        checkoutModel.setVisible(false);
+    }
+
+    @FXML
+    void open_checkoutModel(MouseEvent event) {
+        checkoutModel.setVisible(true);
+    }
+
+    @FXML
+    void close_commandPaymentModel(MouseEvent event) {
+        paymentModel.setVisible(false);
+    }
+
+    @FXML
+    void switchToPaymentModel(MouseEvent event) {
+        checkoutModel.setVisible(false);
+        paymentModel.setVisible(true);
+    }
    
 }
