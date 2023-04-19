@@ -378,6 +378,65 @@ public class AchatsService implements IAchatsService {
   }
 
 
+  // validate by points 
+  public void ValidateCheckoutPoints(int command_id , int achatId , int user_id, int point){
+    try {
+      String req = "UPDATE `commands` SET `status`=1  WHERE id=?";
+      String req2 = "UPDATE `achats` SET `validate`=1  WHERE id=?";
+      String req3 = "UPDATE `user` SET `point`=?  WHERE id=?";
+
+      PreparedStatement ps = conx.prepareStatement(req);
+      PreparedStatement ps2 = conx.prepareStatement(req2);
+      PreparedStatement ps3 = conx.prepareStatement(req3);
+
+
+        ps.setInt( 1 , command_id);
+    
+        ps2.setInt(1, achatId);
+
+        ps3.setInt(1,point );
+        ps3.setInt(2, user_id);
+
+
+        ps.executeUpdate();
+        ps2.executeUpdate();
+        ps3.executeUpdate();
+
+
+        System.out.println("checkout method with points done");
+        ps.close();
+    }catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération de l'achat : " + e.getMessage());
+    }
+  }
+
+// validate by Livraison 
+public void ValidateCheckoutLivraison(int command_id , int achatId ){
+  try {
+    String req = "UPDATE `commands` SET `status`=1  WHERE id=?";
+    String req2 = "UPDATE `achats` SET `validate`=1  WHERE id=?";
+  
+    PreparedStatement ps = conx.prepareStatement(req);
+    PreparedStatement ps2 = conx.prepareStatement(req2);
+
+
+      ps.setInt( 1 , command_id);
+  
+      ps2.setInt(1, achatId);
+
+      ps.executeUpdate();
+      ps2.executeUpdate();
+
+
+      System.out.println("checkout method with Livraison done");
+      ps.close();
+  }catch (SQLException e) {
+    System.out.println("Une erreur s'est produite lors de la récupération de l'achat : " + e.getMessage());
+  }
+}
+
+
+
 }
 
 

@@ -27,8 +27,7 @@ public interface IAchatsService {
   //1: set method name (update)*** 2: set null (delete)
   //PaymentMethod: Points *** Stripe *** Livraison
   public void updatePaymentMethod(int test, int achatId, String PaymentMethod); 
-
-
-
+  public void ValidateCheckoutPoints(int command_id , int achatId , int user_id, int point);
+  public void ValidateCheckoutLivraison(int command_id , int achatId );
   
 }

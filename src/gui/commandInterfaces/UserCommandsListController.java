@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.itextpdf.awt.geom.Point;
 
 import entities.Achats;
 import entities.Commands;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -34,6 +36,15 @@ import tray.notification.NotificationType;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
 
+
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.Token;
+
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * FXML Controller class
@@ -141,6 +152,9 @@ public class UserCommandsListController implements Initializable {
     private HBox selectPaymentMethod;
 
     @FXML
+    private Text paymentMethod;
+
+    @FXML
     private HBox paymentQuestion;
 
     @FXML
@@ -158,8 +172,9 @@ public class UserCommandsListController implements Initializable {
     
     int totalPts=0;
     float totalPrx = 0;
-
-
+    int command_Id;
+    int user_Id;
+    int point;
 
     /**
      * Initializes the controller class.
@@ -178,17 +193,7 @@ public class UserCommandsListController implements Initializable {
         updateCheckoutBtn.setVisible(false);
         paymentValidate.setVisible(false);
 
-        //set total price and total points
-        AchatsService achatsServ = new AchatsService();
-        List<Produit> produit = new ArrayList<>();
-        produit = achatsServ.getAllProducts( 18 );
-        
-        for(int i = 0 ; i < produit.size() ; i++){
-            totalPts += produit.get(i).getPrix_point_produit() * produit.get(i).getQuantite();
-            totalPrx += produit.get(i).getPrix_produit() * produit.get(i).getQuantite();
-        }
-        totalPoints.setText(String.valueOf(totalPts));
-        totalPrice.setText(String.valueOf(totalPrx));
+      
 
             
          
@@ -268,7 +273,27 @@ public class UserCommandsListController implements Initializable {
 
 
         //********************************************** */
+          //set total price and total points
+          AchatsService achatsServ = new AchatsService();
+          List<Produit> produit = new ArrayList<>();
+          if(command != null){
+          produit = achatsServ.getAllProducts( command.getId() );
+          command_Id = command.getId();
+          user_Id =user.getId();
+          point =user.getPoint();
+          for(int i = 0 ; i < produit.size() ; i++){
+              totalPts += produit.get(i).getPrix_point_produit() * produit.get(i).getQuantite();
+              totalPrx += produit.get(i).getPrix_produit() * produit.get(i).getQuantite();
+          }
+          totalPoints.setText(String.valueOf(totalPts));
+          totalPrice.setText(String.valueOf(totalPrx));
+        }
+        else {
+            totalPoints.setText(String.valueOf(0));
+            totalPrice.setText(String.valueOf(0));
+        }
         // test pour l'affichage du paiment methode
+        
         System.out.println(command);
         if(command != null){
             Achats oneAchat = new Achats();
@@ -278,7 +303,9 @@ public class UserCommandsListController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            System.out.println("Payment_method: " + oneAchat.getPayment_method());
+            if(oneAchat != null){
+          //  System.out.println("Payment_method: " + oneAchat.getPayment_method());
+            if(oneAchat.getPayment_method()!=null){
             if(oneAchat.getPayment_method().equals("Points") ){
                 paymentQuestion.setVisible(false);
                 selectPaymentMethod.setVisible(false);
@@ -287,8 +314,8 @@ public class UserCommandsListController implements Initializable {
         
                 totalPointsValidate.setText(String.valueOf(totalPts));
             }
-        
-
+            }
+            }
 
         }
 
@@ -518,7 +545,129 @@ public class UserCommandsListController implements Initializable {
         
     }
 
+    @FXML
+    void validateCheckout(MouseEvent event) throws IOException, SQLException {
+     AchatsService achatsService = new AchatsService();
+     System.out.println("point"+point);
+     System.out.println("total"+totalPts);
+    Achats achat = new Achats();
+    achat = achatsService.getOneAchat(achatId);
+    if(achat.getPayment_method().equals("Points")){
+     if(point < totalPts){
+        TrayNotificationAlert.notif("Checkout", "Not enough point.",
+        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
 
+     }else{
+    point =point-totalPts;
+    achatsService.ValidateCheckoutPoints(command_Id ,achatId, user_Id , point);
+    TrayNotificationAlert.notif("Checkout", "Checkout done.",
+        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+    }
+}
+if(achat.getPayment_method().equals("Livraison")){
+    achatsService.ValidateCheckoutLivraison(command_Id, achatId);
+    TrayNotificationAlert.notif("Checkout", "Checkout done.",
+    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+}
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
+
+    Parent root = loader.load();
+    // Accéder à la pane content_area depuis ce controller
+    Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+    // Vider la pane et afficher le contenu de UserCommandsList.fxml
+    contentArea.getChildren().clear();
+    contentArea.getChildren().add(root);
+}
+
+@FXML
+void on_Livraison_methodPayment_click(MouseEvent event) throws IOException {
+    paymentQuestion.setVisible(false);
+    selectPaymentMethod.setVisible(false);
+    paymentValidate.setVisible(true);
+    paymentModelTitle.setText("3.  Validate  ");
+
+    totalPointsValidate.setText(String.valueOf(totalPrx));
+
+    AchatsService achatsService = new AchatsService();
+    achatsService.updatePaymentMethod(1, achatId, "Livraison");
+
+}
+
+
+@FXML
+void on_Stripe_methodPayment_click(MouseEvent event) throws IOException {
+    
+   String STRIPE_SECRET_KEY = "sk_test_51MgYOOFXYK38vFYwOPGPKxftWYpStBWSuhx2ltC4jYfuyWkTxrXbpuVAGx6VrBBehZQtX5uJFFA7os4WQTVCFORz00pGTPG1FH";
+   String STRIPE_PUBLIC_KEY = "pk_test_51MgYOOFXYK38vFYwIPidqQ0ZOb5oDmWKIqQMloHO4dMdBXZLsv9wHyqFn3w2Ould8hJwDSf3FxVb1WCzzDLGohH000x1WOS8gg";
+    // Set up the Stripe API key
+    Stripe.apiKey = STRIPE_SECRET_KEY;
+     // Get the credit card details from the text fields
+     String cardNumber = "4242424242424242";
+     int expMonth = 03;
+     int expYear = 45;
+     String cvc = "678";
+     String zip = "123456" ;// Get the zip code value
+
+      // Create a map of the credit card details
+      Map<String, Object> cardParams = new HashMap<>();
+      cardParams.put("number", cardNumber);
+      cardParams.put("exp_month", expMonth);
+      cardParams.put("exp_year", expYear);
+      cardParams.put("cvc", cvc);
+      cardParams.put("address_zip", zip); // Add the zip code to the cardParams map
+
+  // Create a Stripe token for the credit card details
+Token token = null;
+try {
+    token = Token.create(cardParams);
+} catch (StripeException e) {
+    e.printStackTrace();
+    // handle the error appropriately
+}
+
+// Create a charge for the payment
+Charge charge = null;
+try {
+    Map<String, Object> chargeParams = new HashMap<>();
+    chargeParams.put("amount", 1000);
+    chargeParams.put("currency", "usd");
+    chargeParams.put("source", token.getId()); // Use the token ID as the source for the charge
+    charge = Charge.create(chargeParams);
+} catch (StripeException e) {
+    System.out.println("Error creating charge: " + e.getMessage());
+    e.printStackTrace();
+}
+
+if (charge == null || charge.getFailureMessage() != null) {
+    System.out.println("Charge failed: " + charge.getFailureMessage());
+}
+
+    // handle the error appropriately
+
+// Display the results of the charge
+if (charge != null && "succeeded".equals(charge.getStatus())) {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setHeaderText("Payment successful!");
+    alert.setContentText("Charge ID: " + charge.getId());
+    alert.showAndWait();
+} else {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setHeaderText("Payment failed!");
+    alert.setContentText("Error message: " + charge.getFailureMessage());
+    alert.showAndWait();
+}
 
 
 }
+
+
+}
+
+
+
+
+
+
+
