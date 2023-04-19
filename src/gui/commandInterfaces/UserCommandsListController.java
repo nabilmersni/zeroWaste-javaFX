@@ -27,6 +27,13 @@ import services.CommandsService;
 import services.UserService;
 import utils.UserSession;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
+
 
 /**
  * FXML Controller class
@@ -106,6 +113,53 @@ public class UserCommandsListController implements Initializable {
     @FXML
     private HBox zipcodeInputErrorHbox;
 
+    @FXML
+    private Text address;
+
+    @FXML
+    private Text city;
+
+    @FXML
+    private Text fullname;
+
+    @FXML
+    private Text phone;
+
+    @FXML
+    private HBox addCheckoutBtn;
+
+    @FXML
+    private HBox updateCheckoutBtn;
+
+    @FXML
+    private Text totalPoints;
+
+    @FXML
+    private Text totalPrice;
+
+    @FXML
+    private HBox selectPaymentMethod;
+
+    @FXML
+    private HBox paymentQuestion;
+
+    @FXML
+    private HBox paymentValidate;
+
+    @FXML
+    private Text paymentModelTitle;
+
+    @FXML
+    private Text totalPointsValidate;
+
+
+
+    private int achatId = -1; 
+    
+    int totalPts=0;
+    float totalPrx = 0;
+
+
 
     /**
      * Initializes the controller class.
@@ -120,9 +174,25 @@ public class UserCommandsListController implements Initializable {
         phoneInputErrorHbox.setVisible(false);
         addressInputErrorHbox.setVisible(false);
         zipcodeInputErrorHbox.setVisible(false);
-    
+
+        updateCheckoutBtn.setVisible(false);
+        paymentValidate.setVisible(false);
+
+        //set total price and total points
+        AchatsService achatsServ = new AchatsService();
+        List<Produit> produit = new ArrayList<>();
+        produit = achatsServ.getAllProducts( 18 );
+        
+        for(int i = 0 ; i < produit.size() ; i++){
+            totalPts += produit.get(i).getPrix_point_produit() * produit.get(i).getQuantite();
+            totalPrx += produit.get(i).getPrix_produit() * produit.get(i).getQuantite();
+        }
+        totalPoints.setText(String.valueOf(totalPts));
+        totalPrice.setText(String.valueOf(totalPrx));
+
+            
          
-        //set one command details Model
+        //set one command details Model***************************************
          try {
             FXMLLoader fxmlLoader1 = new FXMLLoader();
             fxmlLoader1.setLocation(getClass().getResource("/gui/commandInterfaces/UsercommandsHeader.fxml"));
@@ -196,6 +266,32 @@ public class UserCommandsListController implements Initializable {
     }
         //END - set one command details Model
 
+
+        //********************************************** */
+        // test pour l'affichage du paiment methode
+        System.out.println(command);
+        if(command != null){
+            Achats oneAchat = new Achats();
+
+            try {
+                oneAchat = achatsServ.getAddressDetails(command.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Payment_method: " + oneAchat.getPayment_method());
+            if(oneAchat.getPayment_method().equals("Points") ){
+                paymentQuestion.setVisible(false);
+                selectPaymentMethod.setVisible(false);
+                paymentValidate.setVisible(true);
+                paymentModelTitle.setText("3.  Validate  ");
+        
+                totalPointsValidate.setText(String.valueOf(totalPts));
+            }
+        
+
+
+        }
+
     }
 
     @FXML
@@ -204,8 +300,57 @@ public class UserCommandsListController implements Initializable {
     }
 
     @FXML
-    void open_checkoutModel(MouseEvent event) {
-        checkoutModel.setVisible(true);
+    void open_checkoutModel(MouseEvent event) throws SQLException {
+        
+        //récupérer user connecté
+        User user = new User() ;
+        UserService userService = new UserService();
+
+         if (UserSession.getInstance().getEmail() == null ) {
+          
+                try {
+                    user = userService.getOneUser("nabilkdp0@gmail.com");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                // System.out.println(user.getId()); 
+       
+        } else {
+                try {
+                    user = userService.getOneUser(UserSession.getInstance().getEmail());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                // System.out.println(user.getId()); 
+
+        }
+        //récupérer la commande courante
+        CommandsService commandeservice = new CommandsService();
+        Commands command = new Commands();
+        command = commandeservice.getOneCommand(user.getId());
+           
+        //get checkout address details
+        Achats achat = new Achats();
+        AchatsService achatsService = new AchatsService();
+        achat = achatsService.getAddressDetails(command.getId());
+        if(achat == null){
+            paymentModel.setVisible(false);
+            addCheckoutBtn.setVisible(true);
+            checkoutModel.setVisible(true);
+        }else{
+            //set address details the open paymentModel
+            fullname.setText(achat.getFull_name());
+            address.setText(achat.getAddress());
+            city.setText(achat.getCity());
+            phone.setText(String.valueOf(achat.getTel()));
+            
+            //recuperer achatID (bech man3awdouch nrecuperio el userId + commande courante bech najmou nrecuperio el achat )
+            achatId = achat.getId();
+
+            paymentModel.setVisible(true);
+    
+        }
+        
     }
 
     @FXML
@@ -214,7 +359,7 @@ public class UserCommandsListController implements Initializable {
     }
 
     @FXML
-    void switchToPaymentModel(MouseEvent event) {
+    void switchToPaymentModel(MouseEvent event) throws SQLException { // add checkout btn
         Achats achat= new Achats();
         achat.setFull_name(fullnameInput.getText());
         achat.setEmail(emailInput.getText());
@@ -250,40 +395,130 @@ public class UserCommandsListController implements Initializable {
         command = commandeservice.getOneCommand(user.getId());
         achat.setCommande_id(command.getId());
        AchatsService achatsService = new AchatsService();
+       //ajouter checkout details(address) dans la base puis afficher payment model
        achatsService.Checkout(achat);
         checkoutModel.setVisible(false);
+
+        //set address details the open paymentModel
+        achat = achatsService.getAddressDetails(command.getId());
+
+        fullname.setText(achat.getFull_name());
+        address.setText(achat.getAddress());
+        city.setText(achat.getCity());
+        phone.setText(String.valueOf(achat.getTel()));
         paymentModel.setVisible(true);
+
+        //recuperer achatID (bech man3awdouch nrecuperio el userId + commande courante bech najmou nrecuperio el achat )
+        achatId = achat.getId();
     }
    
+
     @FXML
-    void DeleteCheckout(MouseEvent event) throws SQLException {
-        User user = new User() ;
-        
-        UserService userService = new UserService();
+    void DeleteCheckout(MouseEvent event) throws SQLException, IOException {
+      
+        AchatsService achatsService = new AchatsService();
+        achatsService.supprimerAddress(achatId);    
+        //afficher une notification et actualiser la page
+        TrayNotificationAlert.notif("Address", "Address deleted successfully.",
+                        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
-         if (UserSession.getInstance().getEmail() == null ) {
-          
-                try {
-                    user = userService.getOneUser("nabilkdp0@gmail.com");
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(user.getId()); 
-       
-        } else {
-                try {
-                    user = userService.getOneUser(UserSession.getInstance().getEmail());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(user.getId()); 
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
 
-        }
-        CommandsService commandeservice = new CommandsService();
-        Commands command = new Commands();
-        command = commandeservice.getOneCommand(user.getId());
+                Parent root = loader.load();
+                // Accéder à la pane content_area depuis ce controller
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+                // Vider la pane et afficher le contenu de UserCommandsList.fxml
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+    }
+
+
+    @FXML
+    void updateCheckout(MouseEvent event) throws SQLException { // open update checkout model
+        //set input data then open the checkout model
         Achats achat = new Achats();
         AchatsService achatsService = new AchatsService();
-        achatsService.supprimerAddress(command.getId());    
+        achat = achatsService.getOneAchat(achatId);
+        
+        fullnameInput.setText(achat.getFull_name());
+        emailInput.setText(achat.getEmail());
+        cityInput.setText(achat.getCity());
+        phoneInput.setText(String.valueOf(achat.getTel()));
+        addressInput.setText(achat.getAddress());
+        zipcodeInput.setText(String.valueOf(achat.getZip_code()));
+
+        paymentModel.setVisible(false);
+        addCheckoutBtn.setVisible(false);
+        updateCheckoutBtn.setVisible(true);
+        checkoutModel.setVisible(true);
+        
+        
     }
+
+    @FXML
+    void UpdateCheckoutBtn(MouseEvent event) { //update checkout (submit modifications) then back to payment model
+        Achats achat= new Achats();
+        achat.setFull_name(fullnameInput.getText());
+        achat.setEmail(emailInput.getText());
+        achat.setCity(cityInput.getText());
+        achat.setTel(Integer.parseInt(phoneInput.getText()));
+        achat.setAddress(addressInput.getText());
+        achat.setZip_code(Integer.parseInt(zipcodeInput.getText()));
+        achat.setId(achatId);
+
+        AchatsService achatsService = new AchatsService();
+        achatsService.updateCheckout(achat);
+
+        TrayNotificationAlert.notif("Checkout Address", "Address updated successfully.",
+            NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+            checkoutModel.setVisible(false);
+            //set address details the open paymentModel
+            fullname.setText(achat.getFull_name());
+            address.setText(achat.getAddress());
+            city.setText(achat.getCity());
+            phone.setText(String.valueOf(achat.getTel()));
+            paymentModel.setVisible(true);
+    }
+
+    @FXML
+    void on_zeroWastePoints_methodPayment_click(MouseEvent event) {
+        paymentQuestion.setVisible(false);
+        selectPaymentMethod.setVisible(false);
+        paymentValidate.setVisible(true);
+        paymentModelTitle.setText("3.  Validate  ");
+
+        totalPointsValidate.setText(String.valueOf(totalPts));
+
+        AchatsService achatsService = new AchatsService();
+        achatsService.updatePaymentMethod(1, achatId, "Points");
+    }
+
+
+    @FXML
+    void updatePaymentMethod(MouseEvent event) {
+        paymentValidate.setVisible(false);
+        paymentModelTitle.setText("2.  Payment");
+        paymentQuestion.setVisible(true);
+        selectPaymentMethod.setVisible(true);
+        
+        
+    }
+
+    @FXML
+    void deletePaymentMethod(MouseEvent event) {
+        paymentValidate.setVisible(false);
+        paymentModelTitle.setText("2.  Payment");
+        paymentQuestion.setVisible(true);
+        selectPaymentMethod.setVisible(true);
+        
+        AchatsService achatsService = new AchatsService();
+        achatsService.updatePaymentMethod(2, achatId, "null");
+        
+    }
+
+
+
+
 }

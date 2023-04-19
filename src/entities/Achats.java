@@ -16,6 +16,7 @@ public class Achats {
   private int validate;
   private int userDeleted;
   private int adminDeleted;
+  
   public static int achatModelTest=0 ;
   private static int commandeId ;
   private static String SearchValue ;

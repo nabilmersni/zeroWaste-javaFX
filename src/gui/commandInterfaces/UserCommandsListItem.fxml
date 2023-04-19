@@ -36,11 +36,11 @@
                         <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" text="pts" />
                      </children>
                      <HBox.margin>
-                        <Insets right="405.0" />
+                        <Insets right="384.0" />
                      </HBox.margin>
                   </HBox>
                   <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="\$" />
-                  <Text fx:id="prixp" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="120" />
+                  <Text fx:id="prixp" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandItem_cardPrice" text="120.9" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="459.0" translateY="-5.0">

@@ -21,6 +21,13 @@ public interface IAchatsService {
 
   public void Checkout(Achats achat);
   public void supprimerAddress(int achat_Id) throws SQLException ;
+  public Achats getAddressDetails(int commande_id) throws SQLException;
+  public void updateCheckout(Achats achat);
+
+  //1: set method name (update)*** 2: set null (delete)
+  //PaymentMethod: Points *** Stripe *** Livraison
+  public void updatePaymentMethod(int test, int achatId, String PaymentMethod); 
+
 
 
   

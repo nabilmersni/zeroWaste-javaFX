@@ -91,6 +91,7 @@ public class AchatsService implements IAchatsService {
         achats.setCity(rs.getString("city"));
         achats.setZip_code(rs.getInt("zip_code"));
         achats.setCommande_id(rs.getInt("commande_id"));
+        achats.setPayment_method(rs.getString("payment_method"));
 
     }
     ps.close();
@@ -267,47 +268,114 @@ public class AchatsService implements IAchatsService {
   }
 
 // 
-public void Checkout(Achats achat) {
-  try {
-    String req = "INSERT INTO `achats`(`commande_id`, `date_achat`, `full_name`, `email`, `address`, `tel`, `city`, `zip_code`, `validate`) VALUES (?,?,?,?,?,?,?,?,?)";
-    PreparedStatement ps = conx.prepareStatement(req);
-      ps.setInt(1, achat.getCommande_id());
+  public void Checkout(Achats achat) {
+    try {
+      String req = "INSERT INTO `achats`(`commande_id`, `date_achat`, `full_name`, `email`, `address`, `tel`, `city`, `zip_code`, `validate`) VALUES (?,?,?,?,?,?,?,?,?)";
+      PreparedStatement ps = conx.prepareStatement(req);
+        ps.setInt(1, achat.getCommande_id());
 
-      ps.setString(3, achat.getFull_name());
-      ps.setString(4, achat.getEmail());
-      ps.setString(5, achat.getAddress());
-      ps.setInt(6, achat.getTel());
-      ps.setString(7, achat.getCity());
-      ps.setInt(8, achat.getZip_code());
-      ps.setInt(9, 0);
+        ps.setString(3, achat.getFull_name());
+        ps.setString(4, achat.getEmail());
+        ps.setString(5, achat.getAddress());
+        ps.setInt(6, achat.getTel());
+        ps.setString(7, achat.getCity());
+        ps.setInt(8, achat.getZip_code());
+        ps.setInt(9, 0);
 
-      LocalDateTime currentDateTime = LocalDateTime.now();
-java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(currentDateTime);
-ps.setTimestamp(2, sqlTimestamp);
-System.out.println("sqlTimestamp"+sqlTimestamp);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(currentDateTime);
+        ps.setTimestamp(2, sqlTimestamp);
+        System.out.println("sqlTimestamp"+sqlTimestamp);
 
-
-      ps.executeUpdate();
-      System.out.println("checkout approved");
-      ps.close();
-  }catch (SQLException e) {
+        ps.executeUpdate();
+        System.out.println("checkout approved");
+        ps.close();
+    }catch (SQLException e) {
     System.out.println("Une erreur s'est produite lors de la récupération du achat : " + e.getMessage());
-  }
+    }
   
-
-}
-
-public void supprimerAddress(int achat_Id) throws SQLException {
-  String sql = "DELETE FROM achats WHERE commande_id = ?";
-  try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
-      pstmt.setInt(1, 24);
-      pstmt.executeUpdate();
-  } catch (SQLException e) {
-      System.out.println(e.getMessage());
   }
 
-}
-  
+
+  public void supprimerAddress(int achat_id) throws SQLException {
+    String sql = "DELETE FROM achats WHERE id = ?";
+    try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
+        pstmt.setInt(1, achat_id);
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+
+  }
+
+
+  public Achats getAddressDetails(int commande_id) throws SQLException {
+    String req = "SELECT * FROM `achats` where commande_id = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, commande_id);
+
+    ResultSet rs = ps.executeQuery();
+    Achats achats = null;
+    
+    while (rs.next()) {
+      achats = new Achats();
+        achats.setId(rs.getInt("id"));
+        achats.setFull_name(rs.getString("full_name"));
+        achats.setEmail(rs.getString("email"));
+        achats.setTel(rs.getInt("tel"));
+        achats.setAddress(rs.getString("address"));
+        achats.setCity(rs.getString("city"));
+        achats.setZip_code(rs.getInt("zip_code"));
+        achats.setCommande_id(rs.getInt("commande_id"));
+        achats.setDate_achat(rs.getString("date_achat"));
+        achats.setPayment_method(rs.getString("payment_method"));
+
+    }
+    ps.close();
+    return achats;
+  }
+
+
+  public void updateCheckout(Achats achat){
+    try {
+      String req = "UPDATE `achats` SET `full_name`=?,`email`=?,`address`=?,`tel`=?,`city`=?,`zip_code`=?  WHERE id=?";
+      PreparedStatement ps = conx.prepareStatement(req);
+        ps.setString(1, achat.getFull_name());
+        ps.setString(2, achat.getEmail());
+        ps.setString(3, achat.getAddress());
+        ps.setInt(4, achat.getTel());
+        ps.setString(5, achat.getCity());
+        ps.setInt(6, achat.getZip_code());
+        ps.setInt(7, achat.getId());
+        
+        ps.executeUpdate();
+        System.out.println("checkout address updated successfully");
+        ps.close();
+    }catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération de l'achat : " + e.getMessage());
+    }
+  }
+
+  public void updatePaymentMethod(int test, int achatId, String PaymentMethod){//1: set method name (update)*** 2: set null (delete)
+    try {
+      String req = "UPDATE `achats` SET `payment_method`=?  WHERE id=?";
+      PreparedStatement ps = conx.prepareStatement(req);
+      if(test == 1){
+        ps.setString(1, PaymentMethod);
+      }else{
+        ps.setString(1, null);
+      }
+ 
+        ps.setInt(2, achatId);
+        
+        ps.executeUpdate();
+        System.out.println("payment method updated successfully");
+        ps.close();
+    }catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération de l'achat : " + e.getMessage());
+    }
+
+  }
 
 
 }

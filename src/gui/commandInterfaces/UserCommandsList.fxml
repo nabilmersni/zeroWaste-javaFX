@@ -47,9 +47,9 @@
                      </HBox.margin>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="240" />
+                  <Text fx:id="totalPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="240" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" / " />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="500" />
+                  <Text fx:id="totalPoints" strokeType="OUTSIDE" strokeWidth="0.0" text="500" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="pts" />
                </children>
                <padding>
@@ -381,11 +381,23 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" layoutX="1.0" layoutY="450.0" prefHeight="49.0" prefWidth="760.0" translateY="-25.0">
+                  <HBox fx:id="addCheckoutBtn" alignment="CENTER" layoutX="11.0" layoutY="450.0" prefHeight="49.0" prefWidth="760.0" translateY="-25.0">
                      <children>
                         <HBox alignment="CENTER" onMouseClicked="#switchToPaymentModel" prefHeight="56.0" prefWidth="120.0" styleClass="checkoutContenueBtn" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="checkoutContenueBtnText" text="Contenue" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="30.0" right="30.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="updateCheckoutBtn" alignment="CENTER" layoutX="11.0" layoutY="450.0" prefHeight="49.0" prefWidth="760.0" translateY="-25.0">
+                     <children>
+                        <HBox alignment="CENTER" onMouseClicked="#UpdateCheckoutBtn" prefHeight="56.0" prefWidth="120.0" styleClass="checkoutContenueBtn" stylesheets="@../../assets/style/aliStyle.css">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="checkoutContenueBtnText" text="Update" />
                            </children>
                         </HBox>
                      </children>
@@ -401,9 +413,9 @@
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="760.0" style="-fx-background-color: #fff;" styleClass="categoriesModel-card">
                <children>
-                  <HBox alignment="CENTER_LEFT" onMouseClicked="#DeleteCheckout" prefHeight="84.0" prefWidth="760.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="760.0">
                      <children>
-                        <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="categoriesModel-card-title" text="1.  Address">
+                        <Text fx:id="paymentModelTitle" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="categoriesModel-card-title" text="2.  Payment">
                            <HBox.margin>
                               <Insets right="75.0" />
                            </HBox.margin>
@@ -477,7 +489,7 @@
                                        <children>
                                           <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="21.0" prefWidth="395.0">
                                              <children>
-                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_fullname" text="Braiekali" />
+                                                <Text fx:id="fullname" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_fullname" text="Braiekali" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="4.0" />
@@ -485,9 +497,9 @@
                                           </HBox>
                                           <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" prefWidth="351.0">
                                              <children>
-                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="ariana" />
+                                                <Text fx:id="address" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="ariana" />
                                                 <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text=", " />
-                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="Tunis" wrappingWidth="56.96799993515015" />
+                                                <Text fx:id="city" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="Tunis" wrappingWidth="56.96799993515015" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="1.0" />
@@ -496,7 +508,7 @@
                                           <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="21.0" prefWidth="395.0">
                                              <children>
                                                 <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="+216" />
-                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="55516530" />
+                                                <Text fx:id="phone" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="55516530" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -509,7 +521,7 @@
                                           <Insets right="30.0" />
                                        </padding>
                                        <children>
-                                          <HBox fx:id="editAddress" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                                          <HBox fx:id="editAddress" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#updateCheckout" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
                                              <children>
                                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -538,7 +550,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="230.0" prefHeight="83.0" prefWidth="760.0" stylesheets="@../../assets/style/aliStyle.css">
+                  <HBox fx:id="paymentQuestion" alignment="CENTER_LEFT" layoutX="1.0" layoutY="230.0" prefHeight="83.0" prefWidth="760.0" stylesheets="@../../assets/style/aliStyle.css">
                      <padding>
                         <Insets left="30.0" right="30.0" />
                      </padding>
@@ -546,7 +558,7 @@
                         <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="paymentMethodTitle" text="What payment method do you want to use?" />
                      </children>
                   </HBox>
-                  <HBox layoutY="313.0" prefHeight="63.0" prefWidth="760.0">
+                  <HBox fx:id="selectPaymentMethod" layoutY="313.0" prefHeight="63.0" prefWidth="760.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="80.0" prefWidth="136.0" styleClass="paymentCardContainer" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
@@ -560,7 +572,7 @@
                               <Insets right="146.5" />
                            </HBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="136.0" styleClass="paymentCardContainer" stylesheets="@../../assets/style/aliStyle.css">
+                        <HBox alignment="CENTER" onMouseClicked="#on_zeroWastePoints_methodPayment_click" prefHeight="100.0" prefWidth="136.0" styleClass="paymentCardContainer" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -572,7 +584,7 @@
                               <Insets right="146.5" />
                            </HBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="136.0" styleClass="paymentCardContainer" stylesheets="@../../assets/style/aliStyle.css">
+                        <HBox alignment="CENTER" onMouseClicked="#on_zeroWastePoints_methodPayment_click" prefHeight="100.0" prefWidth="136.0" styleClass="paymentCardContainer" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -585,6 +597,100 @@
                      <padding>
                         <Insets left="30.0" right="30.0" />
                      </padding>
+                  </HBox>
+                  <HBox fx:id="paymentValidate" layoutY="117.0" prefHeight="124.0" prefWidth="760.0" translateY="150.0">
+                     <padding>
+                        <Insets left="30.0" right="30.0" />
+                     </padding>
+                     <children>
+                        <VBox prefHeight="133.0" prefWidth="700.0" styleClass="paymentCoordonnee" stylesheets="@../../assets/style/aliStyle.css">
+                           <children>
+                              <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="44.0" prefWidth="700.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="74.0">
+                                       <children>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../assets/img/check.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress" text="2.  Payment" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <Line endX="540.0" startX="-100.0" stroke="#43882b" strokeWidth="1.5">
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </Line>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="700.0">
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="426.0">
+                                       <padding>
+                                          <Insets left="74.0" />
+                                       </padding>
+                                       <children>
+                                          <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="21.0" prefWidth="395.0">
+                                             <children>
+                                                <Text fx:id="paymentMethod" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_fullname" text="ZeroWaste Points" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="4.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" prefWidth="351.0">
+                                             <children>
+                                                <Text fx:id="address1" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="Total: " />
+                                                <Text fx:id="totalPointsValidate" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="1400" />
+                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text=" pts" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="1.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="276.0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets right="30.0" />
+                                       </padding>
+                                       <children>
+                                          <HBox fx:id="editAddress1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#updatePaymentMethod" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                                             <children>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../assets/img/edit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
+                                          <HBox fx:id="deleteAchat1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#deletePaymentMethod" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                                             <children>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../assets/img/trash.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
                   </HBox>
                </children>
             </Pane>
