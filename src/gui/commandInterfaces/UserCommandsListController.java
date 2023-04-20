@@ -244,6 +244,13 @@ public class UserCommandsListController implements Initializable {
     private int cvcTest = -1;
     private int zipTest = -1;
 
+    private int fullnameTest =-1;
+    private int cityTest =-1;
+    private int phoneTest=-1;
+    private int addressTest=-1;
+    private int zipcodeTest=-1;
+    private int emailTest=-1;
+    
     /**
      * Initializes the controller class.
      */
@@ -398,6 +405,12 @@ public class UserCommandsListController implements Initializable {
                         priceSymbole.setText("$");
                         paymentMethod.setText("Livraison");
                     }
+                    if(oneAchat.getPayment_method().equals("Stripe") ){
+                        paymentQuestion.setVisible(false);
+                        selectPaymentMethod.setVisible(false);
+                        stripeInputs.setVisible(true);
+                        backTo_selectPayment_btn.setVisible(true);
+                    }
                 }
             }
 
@@ -472,12 +485,66 @@ public class UserCommandsListController implements Initializable {
     @FXML
     void switchToPaymentModel(MouseEvent event) throws SQLException { // add checkout btn
         Achats achat= new Achats();
-        achat.setFull_name(fullnameInput.getText());
-        achat.setEmail(emailInput.getText());
-        achat.setCity(cityInput.getText());
-        achat.setTel(Integer.parseInt(phoneInput.getText()));
-        achat.setAddress(addressInput.getText());
-        achat.setZip_code(Integer.parseInt(zipcodeInput.getText()));
+        if (fullnameInput.getText().isEmpty()){
+            fullnameTest = 0;
+            fullnameInputErrorHbox.setVisible(true);
+
+        }else {
+            if(fullnameTest==1){
+                achat.setFull_name(fullnameInput.getText());
+
+            }
+        }
+
+        if (emailInput.getText().isEmpty()){
+            emailTest = 0;
+            emailInputErrorHbox.setVisible(true);
+
+        }else {
+            if(emailTest==1){
+                achat.setEmail(emailInput.getText());
+            }
+        }
+
+        if (cityInput.getText().isEmpty()){
+            cityTest = 0;
+            cityInputErrorHbox.setVisible(true);
+
+        }else {
+            if(cityTest==1){
+                achat.setCity(cityInput.getText());
+            }
+        }
+
+        if (phoneInput.getText().isEmpty()){
+            phoneTest = 0;
+            phoneInputErrorHbox.setVisible(true);
+        }else {
+            if(phoneTest==1){
+                achat.setTel(Integer.parseInt(phoneInput.getText()));
+            }
+        }
+
+        if (addressInput.getText().isEmpty()){
+            addressTest = 0;
+            addressInputErrorHbox.setVisible(true);
+
+        }else {
+            if(addressTest==1){
+                achat.setAddress(addressInput.getText());
+            }
+        }
+
+        if (zipcodeInput.getText().isEmpty()){
+            zipcodeTest = 0;
+            zipcodeInputErrorHbox.setVisible(true);
+
+        }else {
+            if(zipcodeTest==1){
+                achat.setZip_code(Integer.parseInt(zipcodeInput.getText()));
+            }
+        }
+
         CommandsService commandeservice = new CommandsService();
         //recuperation user
         User user = new User() ;
@@ -507,8 +574,9 @@ public class UserCommandsListController implements Initializable {
         achat.setCommande_id(command.getId());
        AchatsService achatsService = new AchatsService();
        //ajouter checkout details(address) dans la base puis afficher payment model
+       if (fullnameTest==1 && emailTest==1 && phoneTest==1 && cityTest==1 && addressTest==1 && zipcodeTest==1 ){
        achatsService.Checkout(achat);
-        checkoutModel.setVisible(false);
+       checkoutModel.setVisible(false);
 
         //set address details the open paymentModel
         achat = achatsService.getAddressDetails(command.getId());
@@ -522,7 +590,7 @@ public class UserCommandsListController implements Initializable {
         //recuperer achatID (bech man3awdouch nrecuperio el userId + commande courante bech najmou nrecuperio el achat )
         achatId = achat.getId();
     }
-   
+}
 
     @FXML
     void DeleteCheckout(MouseEvent event) throws SQLException, IOException {
@@ -636,6 +704,7 @@ public class UserCommandsListController implements Initializable {
         System.out.println("total"+totalPts);
         Achats achat = new Achats();
         achat = achatsService.getOneAchat(achatId);
+        if(achat.getPayment_method()!=null){
         if(achat.getPayment_method().equals("Points")){
             if(point < totalPts){
                 TrayNotificationAlert.notif("Checkout", "Not enough point.",
@@ -656,11 +725,16 @@ public class UserCommandsListController implements Initializable {
         }
 
         if(achat.getPayment_method().equals("Stripe")){
+            if(cardNumberTest==1 && mmTest == 1 && yyTest==1 && cvcTest==1 && zipTest==1 ){
             this.StripeFunction();
             achatsService.ValidateCheckoutLivraison(command_Id, achatId);
             TrayNotificationAlert.notif("Checkout", "Checkout done.",
                 NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-
+            }else {
+                TrayNotificationAlert.notif("Checkout", "Fill your card information",
+                NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
+                return ;
+            }
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/UserCommandsList.fxml"));
@@ -672,7 +746,11 @@ public class UserCommandsListController implements Initializable {
         // Vider la pane et afficher le contenu de UserCommandsList.fxml
         contentArea.getChildren().clear();
         contentArea.getChildren().add(root);
+    }else {
+        TrayNotificationAlert.notif("Validate Checkout", "choose your way of payment.",
+        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
     }
+}
 
     private void StripeFunction(){
         String STRIPE_SECRET_KEY = "sk_test_51MgYOOFXYK38vFYwOPGPKxftWYpStBWSuhx2ltC4jYfuyWkTxrXbpuVAGx6VrBBehZQtX5uJFFA7os4WQTVCFORz00pGTPG1FH";
@@ -716,7 +794,7 @@ public class UserCommandsListController implements Initializable {
             Charge charge = null;
             try {
                 Map<String, Object> chargeParams = new HashMap<>();
-                chargeParams.put("amount", 100 * totalPrx);
+                chargeParams.put("amount", 1000);
                 chargeParams.put("currency", "usd");
                 chargeParams.put("source", token.getId()); // Use the token ID as the source for the charge
                 charge = Charge.create(chargeParams);
@@ -944,6 +1022,98 @@ public class UserCommandsListController implements Initializable {
 
     }
 
+    //End stripe controle de saisie 
+
+    //controle de saisie form checkout
+    @FXML
+    void FullnameInputTyped(KeyEvent event) {
+        String nameText = ((TextField) event.getSource()).getText();
+        if (!nameText.isEmpty()) {
+            fullnameInputErrorHbox.setVisible(false);
+            fullnameTest = 1;
+        }
+    }
+
+    
+
+    @FXML
+    void cityInputTyped(KeyEvent event) {
+        String cityText = ((TextField) event.getSource()).getText();
+        if (!cityText.isEmpty()) {
+            cityInputErrorHbox.setVisible(false);
+            cityTest = 1;
+        }
+    }
+
+
+    @FXML
+    void phoneInputTyped(KeyEvent event) {
+        String telText = ((TextField) event.getSource()).getText();
+        if (!telText.matches("-?\\d{8}")) {
+            phoneInputError.setText("phone should be 8 digits");
+            phoneInputErrorHbox.setVisible(true);
+            phoneTest = 0;
+        } else {
+            int phone = Integer.parseInt(telText);
+            if (phone < 0) {
+                phoneInputError.setText("phone cannot be negative");
+                phoneInputErrorHbox.setVisible(true);
+                phoneTest = 0;
+            } else {
+                phoneInputErrorHbox.setVisible(false);
+                phoneTest = 1;
+            }
+        }
+
+    }
+
+
+    @FXML
+    void addressInputTyped(KeyEvent event) {
+        String addressText = ((TextField) event.getSource()).getText();
+        if (!addressText.isEmpty()) {
+            addressInputErrorHbox.setVisible(false);
+            addressTest = 1;
+        }
+    }
+
+    
+    @FXML
+    void zipcodeInputTyped(KeyEvent event) {
+        String zipcodeText = ((TextField) event.getSource()).getText();
+        if (!zipcodeText.matches("-?\\d+")) {
+           zipcodeInputError.setText("zipcode should be positive");
+           zipcodeInputErrorHbox.setVisible(true);
+           zipcodeTest = 0;
+        } else {
+            int zipcode = Integer.parseInt(zipcodeText);
+            if (zipcode < 0) {
+               zipcodeInputError.setText("zipcode cannot be negative");
+               zipcodeInputErrorHbox.setVisible(true);
+               zipcodeTest = 0;
+            } else {
+            
+               zipcodeInputErrorHbox.setVisible(false);
+               zipcodeTest = 1;
+            }
+        }
+    }
+
+    @FXML
+    void emailInputTyped(KeyEvent event) {
+        String emailText = ((TextField) event.getSource()).getText();
+        String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        if (!emailText.matches(emailPattern)) {
+            emailInputError.setText("Not a valid email try again");
+            emailInputErrorHbox.setVisible(true);
+            emailTest = 0;
+        } else {
+            emailInputErrorHbox.setVisible(false);
+            emailTest = 1;
+           
+        }
+    }
+    
 }
 
 

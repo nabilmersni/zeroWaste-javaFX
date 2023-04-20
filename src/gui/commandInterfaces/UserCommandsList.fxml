@@ -150,7 +150,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="fullnameInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="FullName" styleClass="product__add-input">
+                              <TextField fx:id="fullnameInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#FullnameInputTyped" prefHeight="40.0" promptText="FullName" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -189,7 +189,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="emailInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Email" styleClass="product__add-input">
+                              <TextField fx:id="emailInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#emailInputTyped" prefHeight="40.0" promptText="Email" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -235,7 +235,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="cityInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="City" styleClass="product__add-input">
+                              <TextField fx:id="cityInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#cityInputTyped" prefHeight="40.0" promptText="City" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -274,7 +274,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="phoneInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Phone" styleClass="product__add-input">
+                              <TextField fx:id="phoneInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#phoneInputTyped" prefHeight="40.0" promptText="Phone" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -320,7 +320,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="addressInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Address" styleClass="product__add-input">
+                              <TextField fx:id="addressInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#addressInputTyped" prefHeight="40.0" promptText="Address" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -359,7 +359,7 @@
                                     <Insets bottom="10.0" />
                                  </padding>
                               </HBox>
-                              <TextField fx:id="zipcodeInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Zip Code" styleClass="product__add-input">
+                              <TextField fx:id="zipcodeInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#zipcodeInputTyped" prefHeight="40.0" promptText="Zip Code" styleClass="product__add-input">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
