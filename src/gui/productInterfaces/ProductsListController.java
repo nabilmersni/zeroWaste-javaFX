@@ -2,13 +2,21 @@ package gui.productInterfaces;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
+import javax.mail.MessagingException;
+
+import entities.Achats;
 import entities.Categorie_produit;
 import entities.Produit;
+import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,17 +33,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import services.AchatsService;
 import services.Categorie_produitService;
 import services.ICategorie_produitService;
 import services.IProduitService;
 import services.ProduitService;
-
+import services.UserService;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
+import utils.SendMail;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
 
@@ -118,6 +128,8 @@ public class ProductsListController implements Initializable {
     @FXML
     private HBox submitOfferBtn;
 
+    @FXML
+    private ComboBox<String> couponCombobox;
     
 
     private int categId = -1;
@@ -128,6 +140,7 @@ public class ProductsListController implements Initializable {
     private int submitCouponTest = 0;
 
     private static int categoryModelShow = 0;
+    private String selectedOption=null;
 
     public static int getCategoryModelShow() {
         return categoryModelShow;
@@ -230,7 +243,27 @@ public class ProductsListController implements Initializable {
             productsListContainer.getChildren().clear();
             this.setProductGridPaneList();
         });
+        //Coupon Set email comboBox
+    UserService userService = new UserService();
+    List<User> EmailList = new ArrayList<>();
+    User user = new User();
+    try {
+        EmailList = userService.getAllUser();
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    for (int i =0 ; i<EmailList.size(); i++){
+        couponCombobox.getItems().add(EmailList.get(i).getEmail());
+    }
 
+
+    //filter by combobox values
+    couponCombobox.setOnAction(event -> {
+        selectedOption = couponCombobox.getValue();
+        System.out.println("Selected option: " + selectedOption);
+
+    });
     }
 
     @FXML
@@ -419,13 +452,57 @@ public class ProductsListController implements Initializable {
     }
 
     @FXML
-    void submit_coupon(MouseEvent event) {
+    void submit_coupon(MouseEvent event) throws MessagingException, SQLException {
 
-            offreModel.setVisible(false);
-            couponInput.clear();
+            int produit_id=Produit.getIdProduit();
+            System.out.println("produit id:"+produit_id);
+            String email= selectedOption;
+            System.out.println("email :"+email);
+          
+ if(selectedOption!=null){           
+AchatsService achatsService =new AchatsService();
+int length;
+int min;
+int max;
+Random random;
+int couponCode;
 
+     length = 6; // desired length of the coupon code
+     min = (int) Math.pow(10, length - 1); // minimum value of the code
+     max = (int) Math.pow(10, length) - 1; // maximum value of the code
+     random = new Random();
+     couponCode = random.nextInt(max - min + 1) + min;
+System.out.println("couponCode :"+couponCode);
+
+while(achatsService.VerifCoupon(couponCode)==1){
+    length = 6; // desired length of the coupon code
+    min = (int) Math.pow(10, length - 1); // minimum value of the code
+    max = (int) Math.pow(10, length) - 1; // maximum value of the code
+    random = new Random();
+    couponCode = random.nextInt(max - min + 1) + min;
+}
+achatsService.addCoupon(couponCode, produit_id, email);
+
+
+//email
+Map<String, String> data = new HashMap<>();
+data.put("emailSubject", "Use this coupon code and get a reduction on our site");
+data.put("titlePlaceholder", "Get this product for free");
+data.put("msgPlaceholder", "Here's the coupon code:");
+User user =new User();
+user.setEmail(email);
+user.setVerificationCode(couponCode);
+SendMail.send(user, data);
+TrayNotificationAlert.notif("Coupon", "Coupon sent successfully by mail",
+NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+offreModel.setVisible(false);
+
+}else {
+        TrayNotificationAlert.notif("Coupon", "Select an email",
+        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
     }
-
+  
+    }
     @FXML
     void couponTypedInput(KeyEvent event) {
         String couponText = couponInput.getText();

@@ -29,5 +29,8 @@ public interface IAchatsService {
   public void updatePaymentMethod(int test, int achatId, String PaymentMethod); 
   public void ValidateCheckoutPoints(int command_id , int achatId , int user_id, int point);
   public void ValidateCheckoutLivraison(int command_id , int achatId );
-  
+  public void addCoupon(int coupon_code, int produit_id,String email);
+  public int VerifCoupon(int coupon_code) throws SQLException ;
+  public int VerifUserCoupon(int coupon_code, String email) throws SQLException;
+  public void updateStatusCoupon(int coupon_code, String email);
 }

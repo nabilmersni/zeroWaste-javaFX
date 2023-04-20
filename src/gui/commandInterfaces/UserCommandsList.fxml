@@ -82,7 +82,7 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </HBox>
-            <TextField fx:id="nameInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Enter your promo code" styleClass="product__add-input">
+            <TextField fx:id="promoInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="213.0" promptText="Enter your promo code" styleClass="product__add-input">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
@@ -95,6 +95,11 @@
                   <Image url="@../../assets/img/discount.png" />
                </image>
             </ImageView>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#ApplyCoupon" prefHeight="40.0" prefWidth="75.0" styleClass="checkoutCard__btn" stylesheets="@../../assets/style/aliStyle.css" translateX="250.0" translateY="-72.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="checkoutCard__btnText" text="Apply" />
+               </children>
+            </HBox>
          </children>
       </VBox>
       <HBox fx:id="checkoutModel" alignment="CENTER" layoutX="-125.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1384.0" styleClass="categoriesModel">

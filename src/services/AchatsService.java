@@ -1,6 +1,7 @@
 package services;
 
 import entities.Achats;
+import entities.Coupon;
 import entities.Produit;
 
 import java.sql.Connection;
@@ -11,6 +12,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.firebase.auth.internal.DownloadAccountResponse.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -435,8 +438,72 @@ public void ValidateCheckoutLivraison(int command_id , int achatId ){
   }
 }
 
+//coupon
+
+public void addCoupon(int coupon_code, int produit_id,String email) {
+  try {
+    String req = "INSERT INTO `coupon`(`coupon_code`,`produit_id`,`email`) VALUES (?,?,?)";
+    PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, coupon_code);
+      ps.setInt(2, produit_id);
+      ps.setString(3, email);
+
+      
+      ps.executeUpdate();
+      System.out.println("Coupon added successfully");
+      ps.close();
+  }catch (SQLException e) {
+    System.out.println("Une erreur s'est produite lors de la récupération du coupon : " + e.getMessage());
+  }
+  
+}
+// verif Coupon
+  public int VerifCoupon(int coupon_code) throws SQLException {
+    String req = "SELECT * FROM `coupon` where coupon_code = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, coupon_code);
+
+    ResultSet rs = ps.executeQuery();
+    int found =0;
+    if (rs.next()) {
+     found=1;
+    }
+    ps.close();
+    return found;
+  }
+
+  public int VerifUserCoupon(int coupon_code, String email) throws SQLException {
+    String req = "SELECT * FROM `coupon` where coupon_code = ? AND email = ? AND status=0 ";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, coupon_code);
+    ps.setString(2 , email);
 
 
+    ResultSet rs = ps.executeQuery();
+    int found =0;
+    if (rs.next()) {
+     found=1;
+    }
+    ps.close();
+    return found;
+  }
+
+
+  public void updateStatusCoupon(int coupon_code, String email){
+    try {
+      String req = "UPDATE `coupon` SET `status`=1  where coupon_code = ? AND email = ? ";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, coupon_code);
+      ps.setString(2 , email);  
+        
+        ps.executeUpdate();
+        System.out.println("status updated successfully");
+        ps.close();
+    }catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du coupon : " + e.getMessage());
+    }
+
+  }
 }
 
 

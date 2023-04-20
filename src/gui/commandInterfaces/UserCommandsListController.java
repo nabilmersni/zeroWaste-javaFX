@@ -221,6 +221,9 @@ public class UserCommandsListController implements Initializable {
     private TextField zipInput;
 
     @FXML
+    private TextField promoInput;
+
+    @FXML
     private Text zipInputError;
 
     @FXML
@@ -250,6 +253,8 @@ public class UserCommandsListController implements Initializable {
     private int addressTest=-1;
     private int zipcodeTest=-1;
     private int emailTest=-1;
+
+    private int ApplyCouponVerified=-1;
     
     /**
      * Initializes the controller class.
@@ -703,6 +708,9 @@ public class UserCommandsListController implements Initializable {
         System.out.println("point"+point);
         System.out.println("total"+totalPts);
         Achats achat = new Achats();
+        if(ApplyCouponVerified==1){
+            achatsService.updatePaymentMethod(1, achatId, "Livraison");
+        }
         achat = achatsService.getOneAchat(achatId);
         if(achat.getPayment_method()!=null){
         if(achat.getPayment_method().equals("Points")){
@@ -1113,7 +1121,53 @@ public class UserCommandsListController implements Initializable {
            
         }
     }
+    //End contole de saisie checkout
+   
+    @FXML
+    void ApplyCoupon(MouseEvent event) throws IOException, SQLException { 
+        int couponCode=Integer.parseInt(promoInput.getText()) ;
+        User user = new User() ;
+        
+        UserService userService = new UserService();
+
+         if (UserSession.getInstance().getEmail() == null ) {
+          
+                try {
+                    user = userService.getOneUser("nabilkdp0@gmail.com");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+       
+        } else {
+                try {
+                    user = userService.getOneUser(UserSession.getInstance().getEmail());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(user.getId()); 
+
+        }
+        AchatsService achatsService=new AchatsService();
+      if(achatsService.VerifUserCoupon(couponCode , user.getEmail())==1) {
+        {
+            paymentQuestion.setVisible(false);
+            selectPaymentMethod.setVisible(false);
+            paymentValidate.setVisible(true);
+            paymentModelTitle.setText("3.  Validate  ");
+    totalPrx=0;
+            totalPointsValidate.setText(String.valueOf(totalPrx));
+            priceSymbole.setText("$");
+            paymentMethod.setText("Livraison");
+            achatsService.updateStatusCoupon(couponCode , user.getEmail());
+            achatsService.updatePaymentMethod(1, achatId, "Livraison");
+     ApplyCouponVerified=1;
+
+        }
+       
     
+    }
+    }
 }
 
 

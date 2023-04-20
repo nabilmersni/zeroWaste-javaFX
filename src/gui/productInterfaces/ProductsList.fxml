@@ -216,14 +216,14 @@
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="submitOfferBtnText" text="Submit coupon" />
                      </children>
                   </HBox>
-                  <VBox fx:id="couponForm" layoutX="-2.0" layoutY="148.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="441.0">
+                  <VBox fx:id="couponForm" layoutX="-2.0" layoutY="148.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="441.0" stylesheets="@../../assets/style/aliStyle.css">
                      <padding>
                         <Insets left="20.0" right="16.0" />
                      </padding>
                      <children>
                         <HBox prefHeight="6.0" prefWidth="538.0">
                            <children>
-                              <Text fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-input-label" text="Phone">
+                              <Text fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-input-label" text="Email">
                                  <HBox.margin>
                                     <Insets right="2.0" />
                                  </HBox.margin>
@@ -233,11 +233,7 @@
                               <Insets bottom="10.0" />
                            </padding>
                         </HBox>
-                        <TextField fx:id="couponInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#couponTypedInput" prefHeight="40.0" prefWidth="225.0" promptText="Phone" styleClass="product__add-input">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </TextField>
+                        <ComboBox fx:id="couponCombobox" prefHeight="43.0" prefWidth="223.0" promptText="Select email" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css" />
                         <HBox fx:id="couponInputErrorHbox" prefHeight="28.0" prefWidth="405.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
                               <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
