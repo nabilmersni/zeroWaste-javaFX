@@ -13,7 +13,7 @@
 }
 
 .signUp__container {
-  -fx-background-color: #DEFEE6;
+  -fx-background-color: #defee6;
 }
 
 .left {
@@ -25,7 +25,7 @@
   -fx-font-size: 40px;
   -fx-font-family: primaryFont;
   -fx-font-weight: 800;
-  -fx-fill: #97D158;
+  -fx-fill: #97d158;
 }
 
 .signUp__from__container {
@@ -39,7 +39,7 @@
 .SignUp__input__label {
   -fx-font-size: 12px;
   -fx-font-weight: 600;
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
 }
 
 .SignUp__input {
@@ -51,8 +51,8 @@
   -fx-background-color: rgba(151, 209, 88, 0.178);
   -fx-alignment: CENTER-LEFT;
   -fx-padding: 0 0 0 25px;
-  -fx-text-fill: #10036A;
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #10036a;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 600;
   -fx-font-size: 14px;
   -fx-prompt-text-fill: rgba(91, 168, 144, 0.51);
@@ -74,7 +74,7 @@
   -fx-font-size: 15px;
   -fx-background-color: rgba(151, 209, 88, 0.178);
   -fx-padding: 10px 20px;
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 800;
   -fx-background-radius: 1000px;
   -fx-border-radius: 1000px;
@@ -82,31 +82,31 @@
   -fx-cursor: hand;
 }
 .SignUp__btn:hover {
-  -fx-background-color: #43882B;
-  -fx-text-fill: #DEFEE6;
+  -fx-background-color: #43882b;
+  -fx-text-fill: #defee6;
 }
 
 .form__member {
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 600;
 }
 .form__member__link {
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 800;
 }
 
 .logoutBtn {
-  -fx-background-color: #97D158;
+  -fx-background-color: #97d158;
   -fx-background-radius: 1000px;
   -fx-cursor: hand;
 }
 .logoutBtn__text {
-  -fx-fill: #DEFEE6;
+  -fx-fill: #defee6;
   -fx-font-weight: 800;
   -fx-font-size: 17px;
 }
 .logoutBtn:hover {
-  -fx-background-color: #43882B;
+  -fx-background-color: #43882b;
 }
 
 .google-btn {
@@ -115,7 +115,7 @@
   -fx-cursor: hand;
 }
 .google-btn__text {
-  -fx-fill: #43882B;
+  -fx-fill: #43882b;
   -fx-font-weight: 800;
   -fx-font-size: 17px;
 }
@@ -123,7 +123,7 @@
   -fx-background-color: rgba(25, 141, 35, 0.5);
 }
 .google-btn:hover .google-btn__text {
-  -fx-fill: #DEFEE6;
+  -fx-fill: #defee6;
 }
 
 .dash__container-card {
@@ -237,7 +237,7 @@
 }
 
 .home__msg {
-  -fx-fill: #5BA890;
+  -fx-fill: #5ba890;
   -fx-font-weight: 800;
   -fx-font-size: 24px;
 }
@@ -256,7 +256,7 @@
 }
 
 .profileImgBorder {
-  -fx-background-color: #DEFEE6;
+  -fx-background-color: #defee6;
   -fx-background-radius: 1000px;
   -fx-border-radius: 1000px;
 }
@@ -268,16 +268,16 @@
 }
 
 .profileData {
-  -fx-fill: #10036A;
+  -fx-fill: #10036a;
   -fx-font-weight: 600;
   -fx-font-size: 14px;
 }
 
 .changePass__btn {
   -fx-font-size: 15px;
-  -fx-background-color: #DEFEE6;
+  -fx-background-color: #defee6;
   -fx-padding: 10px 20px;
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 800;
   -fx-background-radius: 1000px;
   -fx-border-radius: 1000px;
@@ -285,8 +285,8 @@
   -fx-cursor: hand;
 }
 .changePass__btn:hover {
-  -fx-background-color: #97D158;
-  -fx-text-fill: #DEFEE6;
+  -fx-background-color: #97d158;
+  -fx-text-fill: #defee6;
 }
 
 .balance__card {
@@ -305,7 +305,7 @@
 }
 .balance__card__points {
   -fx-fill: #10036a;
-  -fx-fill: #32594A;
+  -fx-fill: #32594a;
   -fx-font-weight: 700;
   -fx-font-size: 18px;
 }
@@ -332,14 +332,14 @@
 }
 .profile__card__title {
   -fx-fill: #10036a;
-  -fx-fill: #32594A;
+  -fx-fill: #32594a;
   -fx-font-weight: 700;
   -fx-font-size: 18px;
 }
 
 .donHisValue {
   -fx-fill: #10036a;
-  -fx-fill: #32594A;
+  -fx-fill: #32594a;
   -fx-font-weight: 700;
   -fx-font-size: 16px;
 }
@@ -352,12 +352,12 @@
   -fx-padding: 10px;
 }
 .fundItem__title {
-  -fx-fill: #5BA890;
+  -fx-fill: #5ba890;
   -fx-font-weight: 700;
   -fx-font-size: 23px;
 }
 .fundItem__tag {
-  -fx-fill: #5BA890;
+  -fx-fill: #5ba890;
   -fx-font-weight: 700;
 }
 .fundItem__tag--2 {
@@ -366,7 +366,7 @@
 .fundItem__btn {
   -fx-background-color: rgba(151, 209, 88, 0.178);
   -fx-padding: 8px 18;
-  -fx-text-fill: #43882B;
+  -fx-text-fill: #43882b;
   -fx-font-weight: 700;
   -fx-background-radius: 1000px;
   -fx-border-radius: 1000px;
@@ -375,6 +375,6 @@
   -fx-font-size: 8px;
 }
 .fundItem__btn:hover {
-  -fx-background-color: #43882B;
-  -fx-text-fill: #DEFEE6;
-}/*# sourceMappingURL=nabilStyle.css.map */
+  -fx-background-color: #43882b;
+  -fx-text-fill: #defee6;
+} /*# sourceMappingURL=nabilStyle.css.map */

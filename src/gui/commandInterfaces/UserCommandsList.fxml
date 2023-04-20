@@ -598,7 +598,7 @@
                         <Insets left="30.0" right="30.0" />
                      </padding>
                   </HBox>
-                  <HBox fx:id="paymentValidate" layoutY="117.0" prefHeight="124.0" prefWidth="760.0" translateX="-1000.0" translateY="150.0">
+                  <HBox fx:id="paymentValidate" layoutY="117.0" prefHeight="124.0" prefWidth="760.0" translateY="150.0">
                      <padding>
                         <Insets left="30.0" right="30.0" />
                      </padding>
@@ -647,7 +647,7 @@
                                              <children>
                                                 <Text fx:id="address1" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="Total: " />
                                                 <Text fx:id="totalPointsValidate" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text="1400" />
-                                                <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text=" pts" />
+                                                <Text fx:id="priceSymbole" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="verifiedAddress_details" text=" pts" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="1.0" />
@@ -690,6 +690,137 @@
                               </HBox>
                            </children>
                         </VBox>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="stripeInputs" layoutY="436.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="100.0" prefWidth="760.0" style="-fx-background-color: #fff;" stylesheets="@../../assets/style/aliStyle.css" translateY="-130.0">
+                     <padding>
+                        <Insets left="30.0" right="30.0" />
+                     </padding>
+                     <children>
+                        <VBox prefHeight="153.0" prefWidth="272.0">
+                           <children>
+                              <TextField fx:id="cardNumberInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#cardNumberInputTyped" prefHeight="40.0" promptText="cardNumber" styleClass="product__add-input">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox fx:id="cardNumberInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+                                 <children>
+                                    <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                                    <Text fx:id="cardNumberInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="card number can not be empty !" wrappingWidth="220.614013671875">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="70.0">
+                           <children>
+                              <TextField fx:id="mmInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#mmInputTyped" prefHeight="40.0" prefWidth="134.0" promptText="MM" styleClass="product__add-input">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox fx:id="mmInputErrorHbox" prefHeight="108.0" prefWidth="72.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+                                 <children>
+                                    <Text fx:id="mmInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="MM can not be empty !" wrappingWidth="98.0880126953125">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="70.0">
+                           <children>
+                              <TextField fx:id="yyInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#yyInputTyped" prefHeight="40.0" prefWidth="134.0" promptText="YY" styleClass="product__add-input">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox fx:id="yyInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+                                 <children>
+                                    <Text fx:id="yyInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="YY can not be empty !" wrappingWidth="101.0880126953125">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="110.0">
+                           <children>
+                              <TextField fx:id="cvcInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#cvcInputTyped" prefHeight="40.0" prefWidth="134.0" promptText="CVC" styleClass="product__add-input">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox fx:id="cvcInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+                                 <children>
+                                    <Text fx:id="cvcInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="CVC can not be empty !" wrappingWidth="91.0880126953125">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="150.0">
+                           <children>
+                              <TextField fx:id="zipInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyTyped="#zipInputTyped" prefHeight="40.0" prefWidth="134.0" promptText="Zip" styleClass="product__add-input">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <HBox fx:id="zipInputErrorHbox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+                                 <children>
+                                    <Text fx:id="zipInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Zip can not be empty !" wrappingWidth="132.0880126953125">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="backTo_selectPayment_btn" alignment="CENTER" layoutX="30.0" layoutY="250.0" onMouseClicked="#backTo_selectPayment" prefHeight="35.0" prefWidth="48.0" styleClass="checkoutContenueBtn">
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/back.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </HBox>
                </children>

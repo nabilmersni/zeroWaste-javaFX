@@ -9,11 +9,9 @@
       "name": "ZeroWaste",
       "request": "launch",
       "mainClass": "zerowaste.ZeroWaste",
-      "projectName": "zeroWaste-javaFX_659b168b",
+      "projectName": "zeroWaste-javaFX_168b9766",
       "vmArgs": "--module-path \"C:/Java/javafx-sdk-19.0.2.1/lib\" --add-modules javafx.controls,javafx.fxml"
-
     },
-   
     {
       "type": "java",
       "name": "Current File",
