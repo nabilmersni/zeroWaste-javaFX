@@ -122,6 +122,7 @@ public class ProduitService implements IProduitService {
         produit.setImage(rs.getString("image"));
         produit.setCategorie_produit_id(rs.getInt("categorie_produit_id"));
         produit.setPrix_point_produit(rs.getInt("prix_point_produit"));
+        produit.setRemise(rs.getInt("remise"));
     }
     ps.close();
     return produit;

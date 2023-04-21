@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
+
+import org.apache.commons.math3.stat.interval.AgrestiCoullInterval;
+
 import com.itextpdf.awt.geom.Point;
 
 import entities.Achats;
 import entities.Commands;
 import entities.Produit;
 import entities.User;
+import entities.Coupon;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import services.AchatsService;
 import services.CommandsService;
+import services.ProduitService;
 import services.UserService;
 import utils.UserSession;
 
@@ -231,6 +237,12 @@ public class UserCommandsListController implements Initializable {
 
     @FXML
     private HBox backTo_selectPayment_btn;
+    
+    @FXML
+    private HBox couponModel;
+
+    @FXML
+    private Text oneFreeProduct;
 
 
 
@@ -255,6 +267,10 @@ public class UserCommandsListController implements Initializable {
     private int emailTest=-1;
 
     private int ApplyCouponVerified=-1;
+    private float totalPrxWithCoupon =-1;
+
+    int couponCode = -1;
+    String email = null;
     
     /**
      * Initializes the controller class.
@@ -280,6 +296,8 @@ public class UserCommandsListController implements Initializable {
         zipInputErrorHbox.setVisible(false);
         stripeInputs.setVisible(false);
         backTo_selectPayment_btn.setVisible(false);
+
+        couponModel.setVisible(false);
             
          
         //set one command details Model***************************************
@@ -367,9 +385,26 @@ public class UserCommandsListController implements Initializable {
           user_Id =user.getId();
           point =user.getPoint();
           for(int i = 0 ; i < produit.size() ; i++){
+            float prixApresOffre = 0;
+
+       
+            if (produit.get(i).getRemise() == 0) {
+                totalPrx += produit.get(i).getPrix_produit() * produit.get(i).getQuantite();
+            } else {
+              
+                prixApresOffre = (float) (produit.get(i).getPrix_produit()
+                        - (produit.get(i).getPrix_produit() * produit.get(i).getRemise() / 100.0));
+                      
+                totalPrx += prixApresOffre * produit.get(i).getQuantite();
+                         
+                // String prixApresOffreStr = String.format("%.1f", prixApresOffre);
+                // priceAfterOffer.setText(prixApresOffreStr);
+            }
+        
               totalPts += produit.get(i).getPrix_point_produit() * produit.get(i).getQuantite();
-              totalPrx += produit.get(i).getPrix_produit() * produit.get(i).getQuantite();
+              
           }
+          Achats.setTotalCommandPrice(totalPrx);
           totalPoints.setText(String.valueOf(totalPts));
           totalPrice.setText(String.valueOf(totalPrx));
         }
@@ -674,6 +709,8 @@ public class UserCommandsListController implements Initializable {
         paymentModelTitle.setText("3.  Validate  ");
 
         totalPointsValidate.setText(String.valueOf(totalPts));
+        priceSymbole.setText("pts");
+        paymentMethod.setText("ZeroWaste Points");
 
         AchatsService achatsService = new AchatsService();
         achatsService.updatePaymentMethod(1, achatId, "Points");
@@ -728,6 +765,9 @@ public class UserCommandsListController implements Initializable {
 
         if(achat.getPayment_method().equals("Livraison")){
             achatsService.ValidateCheckoutLivraison(command_Id, achatId);
+            if(ApplyCouponVerified == 1){
+                achatsService.updateStatusCoupon(couponCode , email);
+            }
             TrayNotificationAlert.notif("Checkout", "Checkout done.",
                 NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
         }
@@ -823,7 +863,16 @@ public class UserCommandsListController implements Initializable {
         paymentValidate.setVisible(true);
         paymentModelTitle.setText("3.  Validate  ");
 
-        totalPointsValidate.setText(String.valueOf(totalPrx));
+        if(totalPrxWithCoupon == -1){
+            totalPointsValidate.setText(String.valueOf(totalPrx));
+        
+        }else{
+            totalPointsValidate.setText(String.valueOf(totalPrxWithCoupon));
+        
+        }
+        priceSymbole.setText("$");
+        paymentMethod.setText("Livraison");
+        
 
         AchatsService achatsService = new AchatsService();
         achatsService.updatePaymentMethod(1, achatId, "Livraison");
@@ -1020,8 +1069,13 @@ public class UserCommandsListController implements Initializable {
             backTo_selectPayment_btn.setVisible(false);
             paymentModelTitle.setText("3.  Validate  ");
     
-            totalPointsValidate.setText(String.valueOf(totalPrx));
-            priceSymbole.setText("$");
+            if(totalPrxWithCoupon == -1){
+                totalPointsValidate.setText(String.valueOf(totalPrx));
+            
+            }else{
+                totalPointsValidate.setText(String.valueOf(totalPrxWithCoupon));
+            
+            }priceSymbole.setText("$");
             paymentMethod.setText("Stripe");
             paymentValidate.setVisible(true);
             System.out.println("cargdNumberText: " +cardNumberInput.getText());
@@ -1125,7 +1179,7 @@ public class UserCommandsListController implements Initializable {
    
     @FXML
     void ApplyCoupon(MouseEvent event) throws IOException, SQLException { 
-        int couponCode=Integer.parseInt(promoInput.getText()) ;
+         couponCode=Integer.parseInt(promoInput.getText()) ;
         User user = new User() ;
         
         UserService userService = new UserService();
@@ -1134,6 +1188,7 @@ public class UserCommandsListController implements Initializable {
           
                 try {
                     user = userService.getOneUser("nabilkdp0@gmail.com");
+                    email = user.getEmail();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -1142,6 +1197,7 @@ public class UserCommandsListController implements Initializable {
         } else {
                 try {
                     user = userService.getOneUser(UserSession.getInstance().getEmail());
+                    email = user.getEmail();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -1150,23 +1206,64 @@ public class UserCommandsListController implements Initializable {
         }
         AchatsService achatsService=new AchatsService();
       if(achatsService.VerifUserCoupon(couponCode , user.getEmail())==1) {
-        {
-            paymentQuestion.setVisible(false);
-            selectPaymentMethod.setVisible(false);
-            paymentValidate.setVisible(true);
-            paymentModelTitle.setText("3.  Validate  ");
-    totalPrx=0;
-            totalPointsValidate.setText(String.valueOf(totalPrx));
-            priceSymbole.setText("$");
-            paymentMethod.setText("Livraison");
-            achatsService.updateStatusCoupon(couponCode , user.getEmail());
-            achatsService.updatePaymentMethod(1, achatId, "Livraison");
+            //paymentQuestion.setVisible(false);
+            //selectPaymentMethod.setVisible(false);
+            //paymentValidate.setVisible(true);
+            //paymentModelTitle.setText("3.  Validate  ");
+    //totalPrx=0;
+            //priceSymbole.setText("$");
+            //paymentMethod.setText("Livraison");
+           
+            //achatsService.updatePaymentMethod(1, achatId, "Livraison");
      ApplyCouponVerified=1;
+     
+    // totalPoints.setText("0");
+    Coupon oneCoupon = new Coupon();
+    
+    oneCoupon = achatsService.getOneCoupon(couponCode);
 
-        }
+    Produit p = new Produit();
+    ProduitService produitService = new ProduitService();
+    p = produitService.getOneProduct(oneCoupon.getProduit_id());
+    if(p.getRemise() == 0){
+        totalPrx -= p.getPrix_produit();
+        totalPrice.setText("" + totalPrx);
+        totalPointsValidate.setText(String.valueOf(totalPrx));
+            
+        totalPrx += p.getPrix_produit();
+    
+    }else{
+       float prixApresOffre = (float) (p.getPrix_produit()
+                        - (p.getPrix_produit() * p.getRemise() / 100.0));
+                
+        totalPrx -= prixApresOffre;
+        totalPrxWithCoupon =totalPrx ; 
+        totalPrice.setText("" + totalPrx);
+        totalPointsValidate.setText(String.valueOf(totalPrx));
+            
+        totalPrx += prixApresOffre;
+    }
+    promoInput.setStyle("-fx-background-color: #97d1582d; -fx-text-fill: #43882b;");                
+    
+    // System.out.println("totalPrx" + Achats.getTotalCommandPrice()); 
+    oneFreeProduct.setText(p.getNom_produit());
+    couponModel.setVisible(true);
        
     
+    }else {
+        promoInput.setStyle("-fx-border-color: #dc284c; -fx-text-fill: #dc284c;");
+    
+        TrayNotificationAlert.notif("Coupon", "coupon invalid.",
+        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
     }
+
+
+    }
+
+    @FXML
+    void close_couponModel(MouseEvent event){
+        couponModel.setVisible(false);
+
     }
 }
 

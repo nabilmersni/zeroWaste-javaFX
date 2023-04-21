@@ -474,13 +474,13 @@ int couponCode;
      couponCode = random.nextInt(max - min + 1) + min;
 System.out.println("couponCode :"+couponCode);
 
-while(achatsService.VerifCoupon(couponCode)==1){
+/*while(achatsService.VerifCoupon(couponCode)==1){
     length = 6; // desired length of the coupon code
     min = (int) Math.pow(10, length - 1); // minimum value of the code
     max = (int) Math.pow(10, length) - 1; // maximum value of the code
     random = new Random();
     couponCode = random.nextInt(max - min + 1) + min;
-}
+}*/
 achatsService.addCoupon(couponCode, produit_id, email);
 
 
@@ -503,6 +503,7 @@ offreModel.setVisible(false);
     }
   
     }
+
     @FXML
     void couponTypedInput(KeyEvent event) {
         String couponText = couponInput.getText();

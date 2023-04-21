@@ -20,8 +20,17 @@ public class Achats {
   public static int achatModelTest=0 ;
   private static int commandeId ;
   private static String SearchValue ;
+  public static float totalCommandPrice=0 ;
 
  
+  public static float getTotalCommandPrice() {
+    return totalCommandPrice;
+  }
+
+  public static void setTotalCommandPrice(float totalCommandPrice) {
+    Achats.totalCommandPrice = totalCommandPrice;
+  }
+
   public static String getSearchValue() {
     return SearchValue;
   }

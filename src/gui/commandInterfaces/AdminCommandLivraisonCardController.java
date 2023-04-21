@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Achats;
+import entities.Produit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,6 +50,9 @@ public class AdminCommandLivraisonCardController {
     private Text total;
 
     @FXML
+    private Text totalPt;
+
+    @FXML
     private Text zipcode;
 
     public void setCommandLivraison() {
@@ -67,6 +71,19 @@ public class AdminCommandLivraisonCardController {
          email.setText(achat.getEmail());
          phone.setText(""+achat.getTel());
          zipcode.setText(""+achat.getZip_code());
+
+         //set the total price command
+         List<Produit> produitList = achatService.getAllProducts(achat.getCommande_id());
+         float totalPrx = 0;
+         int totalPts = 0;
+         for(int i =0; i< produitList.size() ; i++){
+            totalPrx += produitList.get(i).getPrix_produit() * produitList.get(i).getQuantite() ;
+            totalPts += produitList.get(i).getPrix_point_produit() * produitList.get(i).getQuantite() ; 
+         }
+         total.setText(""+totalPrx);
+         totalPt.setText(""+totalPts);
+
+
 
        } catch (SQLException e) {
            // TODO Auto-generated catch block

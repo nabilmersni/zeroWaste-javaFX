@@ -844,3 +844,8 @@
 .paymentCardContainer:hover {
   -fx-background-color: #defee6;
 }
+
+.couponText {
+  -fx-font-size: 17px;
+  -fx-font-weight: 700;
+}

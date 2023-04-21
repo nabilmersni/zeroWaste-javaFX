@@ -119,7 +119,8 @@ public class AchatsService implements IAchatsService {
             produit.setPrix_produit(resultSet.getFloat("prix_produit"));
             produit.setImage(resultSet.getString("image"));
             produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
-            produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));        
+            produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+            produit.setRemise(resultSet.getInt("remise"));        
             produitList.add(produit);
         }
         preparedStatement.close();
@@ -385,7 +386,7 @@ public class AchatsService implements IAchatsService {
   public void ValidateCheckoutPoints(int command_id , int achatId , int user_id, int point){
     try {
       String req = "UPDATE `commands` SET `status`=1  WHERE id=?";
-      String req2 = "UPDATE `achats` SET `validate`=1  WHERE id=?";
+      String req2 = "UPDATE `achats` SET `validate`=1, `date_achat`=?  WHERE id=?";
       String req3 = "UPDATE `user` SET `point`=?  WHERE id=?";
 
       PreparedStatement ps = conx.prepareStatement(req);
@@ -395,7 +396,11 @@ public class AchatsService implements IAchatsService {
 
         ps.setInt( 1 , command_id);
     
-        ps2.setInt(1, achatId);
+        ps2.setInt(2, achatId);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(currentDateTime);
+        ps2.setTimestamp(1, sqlTimestamp);
+        System.out.println("sqlTimestamp"+sqlTimestamp);
 
         ps3.setInt(1,point );
         ps3.setInt(2, user_id);
@@ -504,6 +509,30 @@ public void addCoupon(int coupon_code, int produit_id,String email) {
     }
 
   }
+
+
+  public Coupon getOneCoupon(int coupon_code) throws SQLException {
+    String req = "SELECT * FROM `coupon` where coupon_code = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, coupon_code);
+
+    ResultSet rs = ps.executeQuery();
+    Coupon coupon = new Coupon();
+    
+    while (rs.next()) {
+        coupon.setId(rs.getInt("id"));
+        coupon.setProduit_id(rs.getInt("produit_id"));
+        coupon.setStatus(rs.getInt("status"));
+        coupon.setEmail(rs.getString("email"));
+        
+    }
+    ps.close();
+    return coupon;
+  }
+
+
+
+
 }
 
 

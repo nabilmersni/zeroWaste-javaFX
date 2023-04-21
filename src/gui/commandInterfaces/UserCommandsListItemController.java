@@ -54,6 +54,19 @@ public class UserCommandsListItemController {
 
     @FXML
     private Text quantitep;
+
+    @FXML
+    private Text dollar;
+
+    @FXML
+    private Text priceAfterOffer;
+
+    @FXML
+    private Text priceBeforeOffer;
+
+    @FXML
+    private HBox priceAfterOfferHbox;
+
     @FXML
     private HBox deletep;
     @FXML
@@ -66,7 +79,29 @@ public class UserCommandsListItemController {
  
     nomp.setText(produit.getNom_produit());
     pointp.setText(""+produit.getPrix_point_produit());
-    prixp.setText(""+produit.getPrix_produit());
+
+    float prixApresOffre = 0;
+
+       
+        if (produit.getRemise() == 0) {
+            priceAfterOfferHbox.setVisible(false);
+            prixp.setVisible(true);
+            dollar.setVisible(true);
+            prixp.setText(""+produit.getPrix_produit());
+        } else {
+            prixp.setVisible(false);
+            dollar.setVisible(false);
+            priceAfterOfferHbox.setVisible(true);
+
+            priceBeforeOffer.setText("" + produit.getPrix_produit());
+
+            prixApresOffre = (float) (produit.getPrix_produit()
+                    - (produit.getPrix_produit() * produit.getRemise() / 100.0));
+            
+            String prixApresOffreStr = String.format("%.1f", prixApresOffre);
+            priceAfterOffer.setText(prixApresOffreStr);
+        }
+    
     quantitep.setText(""+produit.getQuantite());     
 
     CommandsProduitService commandsProduitService = new CommandsProduitService();
@@ -99,7 +134,7 @@ public class UserCommandsListItemController {
         
         //incrementerProduit Btn click
         plus.setOnMouseClicked(event -> {
-            plus.setVisible(false);
+            // plus.setVisible(false);
             //HBox clickedButton = (HBox) event.getSource();
             //clickedButton.setStyle("-fx-background-color: red;");
             //     System.out.println("ID du produit a ete incrimenté : " + produit.getId());

@@ -65,6 +65,9 @@
                         <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails-title" text="Total: " />
                         <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="\$ " />
                         <Text fx:id="total" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="400" />
+                        <Text fx:id="total1" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text=" / " />
+                        <Text fx:id="totalPt" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text="400" />
+                        <Text fx:id="total21" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="commandLivDetails" text=" pts" />
                      </children>
                   </HBox>
                </children>

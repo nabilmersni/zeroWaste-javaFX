@@ -832,5 +832,47 @@
             </Pane>
          </children>
       </HBox>
+      <HBox fx:id="couponModel" alignment="CENTER" layoutX="-125.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1384.0" styleClass="categoriesModel">
+         <children>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="468.0" style="-fx-background-color: #fff;" styleClass="categoriesModel-card">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="760.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/img/gift1.gif" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_couponModel" prefHeight="30.0" prefWidth="30.0" styleClass="categoriesModel-card-exitBtn" translateX="190.0" translateY="-15.0">
+                           <children>
+                              <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/img/cross.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="30.0" right="30.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="24.0" layoutY="120.0" prefHeight="60.0" prefWidth="496.0" styleClass="couponText">
+                     <children>
+                        <Text fill="#97d158" strokeType="OUTSIDE" strokeWidth="0.0" text="One free product : " />
+                        <Text fx:id="oneFreeProduct" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" text="test" wrappingWidth="345.68988037109375" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
    </children>
 </Pane>

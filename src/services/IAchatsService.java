@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import entities.Achats;
+import entities.Coupon;
 import entities.Produit;
 
 public interface IAchatsService {
@@ -33,4 +34,7 @@ public interface IAchatsService {
   public int VerifCoupon(int coupon_code) throws SQLException ;
   public int VerifUserCoupon(int coupon_code, String email) throws SQLException;
   public void updateStatusCoupon(int coupon_code, String email);
+
+  public Coupon getOneCoupon(int coupon_code) throws SQLException ;
+
 }
