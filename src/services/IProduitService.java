@@ -30,4 +30,6 @@ public interface IProduitService {
 
   public List<Produit> getPromotionalProducts();
 
+  public List<Produit> searchProductByImage(String etiquette, double score);
+
 }

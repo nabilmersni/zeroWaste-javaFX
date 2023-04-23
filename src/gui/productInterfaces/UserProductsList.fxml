@@ -30,7 +30,7 @@
                   <Insets left="37.0" right="40.0" />
                </padding>
             </TextField>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="searchByImage" stylesheets="@../../assets/style/aliStyle.css" translateX="47.0">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#SearchByImage" prefHeight="40.0" prefWidth="40.0" styleClass="searchByImage" stylesheets="@../../assets/style/aliStyle.css" translateX="47.0">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" translateX="-2.0">
                      <image>

@@ -43,6 +43,14 @@ import tray.notification.NotificationType;
 import utils.TrayNotificationAlert;
 import javafx.util.Duration;
 
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.vision.v1.*;
+import com.google.common.collect.ImmutableList;
+import com.google.protobuf.ByteString;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+
 /**
  * FXML Controller class
  *
@@ -132,6 +140,9 @@ public class AddProductCardController implements Initializable {
     private int priceTest = 0;
     private int pointsTest = 0;
     private int photoTest = 0;
+    private String etiquette = null;
+
+    private double score;
 
     /**
      * Initializes the controller class.
@@ -281,6 +292,8 @@ public class AddProductCardController implements Initializable {
         } else {
             photoTest = 1;
             produit.setImage(imageName);
+            produit.setEtiquette(etiquette);
+            produit.setScore(score);
         }
 
         if (nomTest == 1 && descriptionTest == 1 && categoryTest == 1 && numberTest == 1 && priceTest == 1
@@ -331,7 +344,63 @@ public class AddProductCardController implements Initializable {
             // pour le controle de saisie
             photoTest = 1;
             photoInputErrorHbox.setVisible(false);
+
+            // *************************get image object and score
+            // *************************************/
+            ImageAnnotatorClient client;
+
+            try {
+                // Load the credentials file
+                GoogleCredentials credentials = GoogleCredentials
+                        .fromStream(new FileInputStream("src/utils/google_cloud_credentials.json"));
+
+                // Build the ImageAnnotatorSettings object with the credentials provider
+                ImageAnnotatorSettings settings = ImageAnnotatorSettings.newBuilder()
+                        .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+                        .build();
+
+                // Create the client with the settings
+                client = ImageAnnotatorClient.create(settings);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            // Annotate the image
+            try {
+                // Load the image file
+                byte[] imageBytes = Files.readAllBytes(selectedImageFile.toPath());
+
+                ByteString byteString = ByteString.copyFrom(imageBytes);
+
+                // Create the image object
+                com.google.cloud.vision.v1.Image image2 = com.google.cloud.vision.v1.Image.newBuilder()
+                        .setContent(byteString).build();
+
+                // Create the feature object
+                Feature feature = Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION).build();
+
+                // Create the request object
+                AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image2)
+                        .build();
+
+                // Send the request and get the response
+                BatchAnnotateImagesResponse response = client.batchAnnotateImages(ImmutableList.of(request));
+
+                // Extract labels and objects from the response
+                List<LocalizedObjectAnnotation> objectAnnotations = response.getResponses(0)
+                        .getLocalizedObjectAnnotationsList();
+                etiquette = objectAnnotations.get(0).getName();
+                score = objectAnnotations.get(0).getScore();
+                System.out.println(objectAnnotations.get(0).getName() + " " + objectAnnotations.get(0).getScore());
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // Shut down the client
+                client.shutdown();
+            }
         }
+
     }
 
     @FXML
@@ -401,6 +470,8 @@ public class AddProductCardController implements Initializable {
         } else {
             photoTest = 1;
             produit.setImage(imageName);
+            produit.setEtiquette(etiquette);
+            produit.setScore(score);
         }
 
         if (nomTest == 1 && descriptionTest == 1 && categoryTest == 1 && numberTest == 1 && priceTest == 1

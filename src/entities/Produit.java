@@ -21,6 +21,9 @@ public class Produit {
 
     private static String sortByCateg = null;
     private static int sortByCategId = -1;
+    private static String searchImageEtiquette = null;
+
+    private static double searchImageScore = -1;
 
     public Produit() {
     }
@@ -162,4 +165,21 @@ public class Produit {
     public static void setSortByCategId(int sortByCategId) {
         Produit.sortByCategId = sortByCategId;
     }
+
+    public static String getSearchImageEtiquette() {
+        return searchImageEtiquette;
+    }
+
+    public static void setSearchImageEtiquette(String searchImageEtiquette) {
+        Produit.searchImageEtiquette = searchImageEtiquette;
+    }
+
+    public static double getSearchImageScore() {
+        return searchImageScore;
+    }
+
+    public static void setSearchImageScore(double searchImageScore) {
+        Produit.searchImageScore = searchImageScore;
+    }
+
 }

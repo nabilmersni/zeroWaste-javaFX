@@ -29,6 +29,29 @@ import services.IProduitService;
 import services.ProduitService;
 import javafx.scene.Node;
 
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.vision.v1.*;
+import com.google.common.collect.ImmutableList;
+import com.google.protobuf.ByteString;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Pair;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * FXML Controller class
  *
@@ -101,6 +124,10 @@ public class UserProductsListController implements Initializable {
             if (Produit.getSortByCateg().equals("promo")) {
                 promotionaProductsData = "promo";
                 getPromotionalItemsBtn.getStyleClass().add("promotionalItemsBtnSelected");
+            }
+
+            if (Produit.getSearchImageScore() != -1) {
+
             }
 
         }
@@ -229,15 +256,28 @@ public class UserProductsListController implements Initializable {
             if (categId != -1) {
                 // filter by category
                 produits = produitService.sortProducts(0, categId);
+                categId = -1;
+                Produit.setSortByCategId(-1);
             } else if (priceComboboxData != null) {
                 // sort by price
                 produits = produitService.sortProductsUser("price", priceComboboxData);
+                priceComboboxData = null;
+                Produit.setSortByCateg(null);
             } else if (pointsComboboxData != null) {
                 // sort by points
                 produits = produitService.sortProductsUser("points", pointsComboboxData);
+                pointsComboboxData = null;
+                Produit.setSortByCateg(null);
             } else if (promotionaProductsData != null) {
-                // sort by points
+                // show promotional products only
                 produits = produitService.getPromotionalProducts();
+                promotionaProductsData = null;
+                Produit.setSortByCateg(null);
+            } else if (Produit.getSearchImageScore() != -1) {
+                // search by image
+                produits = produitService.searchProductByImage(Produit.getSearchImageEtiquette(),
+                        Produit.getSearchImageScore());
+                Produit.setSearchImageScore(-1);
             } else {
                 produits = produitService.getAllProducts();
             }
@@ -307,6 +347,92 @@ public class UserProductsListController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    void SearchByImage(MouseEvent event) {
+        System.out.println("annotation.getName()");
+        ImageAnnotatorClient client;
+
+        try {
+            // Load the credentials file
+            GoogleCredentials credentials = GoogleCredentials
+                    .fromStream(new FileInputStream("src/utils/google_cloud_credentials.json"));
+
+            // Build the ImageAnnotatorSettings object with the credentials provider
+            ImageAnnotatorSettings settings = ImageAnnotatorSettings.newBuilder()
+                    .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+                    .build();
+
+            // Create the client with the settings
+            client = ImageAnnotatorClient.create(settings);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Créer un nouveau FileChooser
+        FileChooser fileChooser = new FileChooser();
+
+        // Configurer le FileChooser pour n'afficher que les fichiers d'image
+        fileChooser.setTitle("Sélectionnez une image");
+        fileChooser.getExtensionFilters()
+                .addAll(new ExtensionFilter("Fichiers d'image", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+
+        // Afficher la boîte de dialogue de sélection de fichier et attendre la
+        // sélection de l'utilisateur
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        // Vérifier si un fichier a été sélectionné
+        if (selectedFile != null) {
+            // Charger le fichier et exécuter le code d'annotation
+
+            // Annotate the image
+            try {
+                // Load the image file
+                byte[] imageBytes = Files.readAllBytes(selectedFile.toPath());
+
+                ByteString byteString = ByteString.copyFrom(imageBytes);
+
+                // Create the image object
+                com.google.cloud.vision.v1.Image image = com.google.cloud.vision.v1.Image.newBuilder()
+                        .setContent(byteString).build();
+
+                // Create the feature object
+                Feature feature = Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION).build();
+
+                // Create the request object
+                AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image)
+                        .build();
+
+                // Send the request and get the response
+                BatchAnnotateImagesResponse response = client.batchAnnotateImages(ImmutableList.of(request));
+
+                // Extract labels and objects from the response
+                List<LocalizedObjectAnnotation> objectAnnotations = response.getResponses(0)
+                        .getLocalizedObjectAnnotationsList();
+                Produit.setSearchImageEtiquette(objectAnnotations.get(0).getName());
+                Produit.setSearchImageScore(objectAnnotations.get(0).getScore());
+                System.out.println(objectAnnotations.get(0).getName() + " " + objectAnnotations.get(0).getScore());
+
+                Parent fxml;
+                try {
+                    fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/UserProductsList.fxml"));
+                    content_area.getChildren().removeAll();
+                    content_area.getChildren().setAll(fxml);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // for (LocalizedObjectAnnotation annotation : objectAnnotations) {
+                // System.out.println(annotation.getName() + " " + annotation.getScore());
+                // }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // Shut down the client
+                client.shutdown();
+            }
+        }
     }
 
 }

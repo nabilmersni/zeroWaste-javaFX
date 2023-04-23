@@ -68,7 +68,7 @@ public class ProduitService implements IProduitService {
   @Override
   public void ajouter(Produit produit) {
     try {
-      String req = "INSERT INTO `produit`(`nom_produit`, `description`, `quantite`, `prix_produit`, `image`, `categorie_produit_id`, `prix_point_produit`) VALUES (?,?,?,?,?,?,?)";
+      String req = "INSERT INTO `produit`(`nom_produit`, `description`, `quantite`, `prix_produit`, `image`, `categorie_produit_id`, `prix_point_produit`, `etiquette`, `score` ) VALUES (?,?,?,?,?,?,?,?,?)";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setString(1, produit.getNom_produit());
       ps.setString(2, produit.getDescription());
@@ -77,6 +77,8 @@ public class ProduitService implements IProduitService {
       ps.setString(5, produit.getImage());
       ps.setInt(6, produit.getCategorie_produit_id());
       ps.setInt(7, produit.getPrix_point_produit());
+      ps.setString(8, produit.getEtiquette());
+      ps.setDouble(9, produit.getScore());
       ps.executeUpdate();
       System.out.println("Product added successfully");
       ps.close();
@@ -130,7 +132,7 @@ public class ProduitService implements IProduitService {
   @Override
   public void updateProduct(Produit produit) {
     try {
-      String req = "UPDATE `produit` SET `nom_produit`=?,`description`=?,`quantite`=?,`prix_produit`=?,`image`=?,`categorie_produit_id`=?,`prix_point_produit`=? WHERE id=?";
+      String req = "UPDATE `produit` SET `nom_produit`=?,`description`=?,`quantite`=?,`prix_produit`=?,`image`=?,`categorie_produit_id`=?,`prix_point_produit`=? , `etiquette`=?, `score`=? WHERE id=?";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setString(1, produit.getNom_produit());
       ps.setString(2, produit.getDescription());
@@ -139,7 +141,9 @@ public class ProduitService implements IProduitService {
       ps.setString(5, produit.getImage());
       ps.setInt(6, produit.getCategorie_produit_id());
       ps.setInt(7, produit.getPrix_point_produit());
-      ps.setInt(8, produit.getId());
+      ps.setString(8, produit.getEtiquette());
+      ps.setDouble(9, produit.getScore());
+      ps.setInt(10, produit.getId());
       ps.executeUpdate();
       System.out.println("Product updated successfully");
       ps.close();
@@ -291,6 +295,40 @@ public class ProduitService implements IProduitService {
     try {
       String query = "SELECT * FROM produit WHERE remise != 0 ORDER BY id DESC  ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      // Parcours du résultat de la requête
+      while (resultSet.next()) {
+        Produit produit = new Produit();
+        produit.setId(resultSet.getInt("id"));
+        produit.setNom_produit(resultSet.getString("nom_produit"));
+        produit.setDescription(resultSet.getString("description"));
+        produit.setQuantite(resultSet.getInt("quantite"));
+        produit.setPrix_produit(resultSet.getFloat("prix_produit"));
+        produit.setImage(resultSet.getString("image"));
+        produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+        produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+        produit.setRemise(resultSet.getFloat("remise"));
+
+        productList.add(produit);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return productList;
+
+  }
+
+  public List<Produit> searchProductByImage(String etiquette, double score) {
+    List<Produit> productList = new ArrayList<>();
+    try {
+      String query = "SELECT * FROM produit WHERE etiquette=? and score=? ORDER BY id DESC ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setString(1, etiquette);
+      preparedStatement.setDouble(2, score);
       ResultSet resultSet = preparedStatement.executeQuery();
 
       // Parcours du résultat de la requête
