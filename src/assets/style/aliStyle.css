@@ -849,3 +849,48 @@
   -fx-font-size: 17px;
   -fx-font-weight: 700;
 }
+
+.searchText {
+  -fx-font-size: 17px;
+  -fx-font-weight: 700;
+}
+
+.searchByImage {
+  -fx-background-radius: 0 20px 20px 0;
+  -fx-border-radius: 0 20px 20px 0;
+  -fx-background-color: #97d158;
+  -fx-cursor: hand;
+}
+
+.searchByImage:hover {
+  -fx-background-color: #82c837;
+}
+
+.productList_BoxContainer {
+  -fx-background-color: #fff;
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
+  color: rgb(222, 254, 230);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 15, 0.1, 0, 0);
+}
+
+.onlyOfferItemsBtn,
+.reviewsFilterBtn {
+  -fx-background-color: #fff;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-cursor: hand;
+}
+
+.onlyOfferItemsBtn:hover {
+  -fx-background-color: #defee6;
+}
+
+.reviewsFilterBtn:hover {
+  -fx-background-color: #defee633;
+}
+
+.onlyOfferItemsBtnText {
+  -fx-font-size: 17px;
+  -fx-font-weight: 600;
+}

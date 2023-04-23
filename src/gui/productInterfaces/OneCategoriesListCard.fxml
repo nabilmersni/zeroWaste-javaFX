@@ -22,7 +22,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="271.0">
          <children>
-            <Text fx:id="nomCategorie" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="one-categoryCard-Name" text="ecologique" wrappingWidth="89.78800201416016" />
+            <Text fx:id="nomCategorie" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="one-categoryCard-Name" text="ecologique ecologique ecologique ecologique" wrappingWidth="262.78800201416016" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="73.0">

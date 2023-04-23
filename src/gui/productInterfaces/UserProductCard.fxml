@@ -14,9 +14,9 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
          <children>
-            <ImageView fx:id="img" fitHeight="147.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img" fitHeight="151.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../assets/img/sac.png" />
+                  <Image url="@../../assets/img/eco-modified%20(3).png" />
                </image>
             </ImageView>
          </children>

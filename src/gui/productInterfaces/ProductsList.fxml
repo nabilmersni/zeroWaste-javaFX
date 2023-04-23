@@ -58,7 +58,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Button>
-            <ComboBox fx:id="categoryInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="Categories" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
+            <ComboBox fx:id="categoryInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="146.0" promptText="Categories" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -98,7 +98,7 @@
             </ImageView>
          </children>
       </HBox>
-      <HBox fx:id="categoriesModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel">
+      <HBox fx:id="categoriesModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel" translateX="-1000.0">
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #fff;" styleClass="categoriesModel-card">
                <children>
@@ -136,12 +136,12 @@
             </Pane>
          </children>
       </HBox>
-      <HBox fx:id="qrCodeImgModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_QrCodeModel" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel">
+      <HBox fx:id="qrCodeImgModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_QrCodeModel" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel" translateX="-1000.0">
          <children>
             <ImageView fx:id="qrCodeImg" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
-      <HBox fx:id="offreModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel">
+      <HBox fx:id="offreModel" alignment="CENTER" layoutX="-266.0" layoutY="-78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" styleClass="categoriesModel" translateX="-1000.0">
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="366.0" prefWidth="450.0" style="-fx-background-color: #fff;" styleClass="categoriesModel-card">
                <children>
@@ -233,7 +233,7 @@
                               <Insets bottom="10.0" />
                            </padding>
                         </HBox>
-                        <ComboBox fx:id="couponCombobox" prefHeight="43.0" prefWidth="223.0" promptText="Select email" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css" />
+                        <ComboBox fx:id="couponCombobox" minHeight="-Infinity" prefHeight="43.0" prefWidth="223.0" promptText="Select email" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css" />
                         <HBox fx:id="couponInputErrorHbox" prefHeight="28.0" prefWidth="405.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
                            <children>
                               <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
