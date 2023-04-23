@@ -52,6 +52,66 @@ public class DonHistoryService implements IDonHistoryService  {
     
     }
 
+    @Override
+    public List<DonHistory> getFundrisingHistory(int id)  {
+      List<DonHistory> donHistoryList = new ArrayList<>();
+      try {
+          String query = "SELECT * FROM don_history where funds_id_id=? ";
+          PreparedStatement preparedStatement = conx.prepareStatement(query);
+          preparedStatement.setInt(1, id);
+          ResultSet resultSet = preparedStatement.executeQuery();
+    
+          // Parcours du résultat de la requête
+          while (resultSet.next()) {
+            DonHistory donHistory = new DonHistory();
+              donHistory.setId(resultSet.getInt("id"));
+              donHistory.setUserId(resultSet.getInt("user_id_id"));
+              donHistory.setFundId(resultSet.getInt("funds_id_id"));
+              donHistory.setComment(resultSet.getString("comment"));
+              donHistory.setDonationPrice(resultSet.getFloat("donation_price"));
+              donHistory.setDateDonation(resultSet.getDate("date_donation"));
+    
+              donHistoryList.add(donHistory);
+          }
+          preparedStatement.close();
+  
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+      
+      return donHistoryList;
+    
+    }
+
+    @Override
+    public DonHistory hasDonated(int userId, int fundId) {
+      DonHistory donation = null;
+    try {
+        String query = "SELECT * FROM don_history WHERE user_id_id = ? AND funds_id_id = ?";
+        PreparedStatement preparedStatement = conx.prepareStatement(query);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, fundId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            donation = new DonHistory();
+            donation.setId(resultSet.getInt("id"));
+            donation.setUserId(resultSet.getInt("user_id_id"));
+            donation.setFundId(resultSet.getInt("funds_id_id"));
+            donation.setComment(resultSet.getString("comment"));
+            donation.setDonationPrice(resultSet.getFloat("donation_price"));
+            donation.setDateDonation(resultSet.getDate("date_donation"));
+        }
+
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return donation;
+  }
+
     public DonHistory getOneHistory(int idHistory) throws SQLException {
       String req = "SELECT * FROM `don_history` where id = ?";
       PreparedStatement ps = conx.prepareStatement(req);
@@ -119,6 +179,24 @@ public class DonHistoryService implements IDonHistoryService  {
           ps.setFloat(4, donHistory.getDonationPrice());
           ps.setDate(5, donHistory.getDateDonation());  
           ps.setInt(6, donHistory.getId());
+          ps.executeUpdate();
+          System.out.println("history updated successfully");
+          ps.close();
+      }catch (SQLException e) {
+        System.out.println("Une erreur s'est produite lors de la modification du history : " + e.getMessage());
+      }
+      
+    }
+
+    @Override
+    public void updateHistoryAmount(DonHistory donHistory) {
+      try {
+        String req = "UPDATE `don_history` SET `comment`=?, `donation_price`=?,`date_donation`=? WHERE id=?";
+        PreparedStatement ps = conx.prepareStatement(req);
+          ps.setString(1, donHistory.getComment());
+          ps.setFloat(2, donHistory.getDonationPrice());
+          ps.setDate(3, donHistory.getDateDonation());  
+          ps.setInt(4, donHistory.getId());
           ps.executeUpdate();
           System.out.println("history updated successfully");
           ps.close();

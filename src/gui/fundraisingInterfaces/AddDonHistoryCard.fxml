@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1040.0" prefWidth="630.0" styleClass="addProductCard" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fundraisingInterfaces.AddDonHistoryCardController">
+   <children>
+      <HBox prefHeight="53.0" prefWidth="570.0">
+         <children>
+            <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-title" text="Raise a fund">
+               <font>
+                  <Font name="Montserrat ExtraBold" size="19.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="16.0" top="26.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="33.0" prefWidth="570.0">
+         <children>
+            <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-desc" text="Add details of your fundraising ">
+               <font>
+                  <Font name="Montserrat Regular" size="13.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets bottom="27.0" left="16.0" />
+         </padding>
+      </HBox>
+      <Line endX="488.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0">
+         <VBox.margin>
+            <Insets bottom="27.0" left="16.0" right="16.0" />
+         </VBox.margin>
+      </Line>
+      <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="102.0" prefWidth="570.0">
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+         <children>
+            <HBox prefHeight="6.0" prefWidth="538.0">
+               <children>
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-input-label" text="Amount">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="#e43f52" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="etoile" text="*">
+                     <font>
+                        <Font name="Montserrat Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+            <TextField fx:id="amount" promptText="amount" styleClass="product__add-input">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <HBox fx:id="amountInputErrorBox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+               <children>
+                  <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                  <Text fx:id="amountInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount is required!">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="183.0" prefWidth="570.0">
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+         <children>
+            <HBox prefHeight="6.0" prefWidth="538.0">
+               <children>
+                  <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__add-input-label" text="Comment">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="#e43f52" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="etoile" text="*">
+                     <font>
+                        <Font name="Montserrat Regular" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+            <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" promptText="Your comment" styleClass="product__add-input-textArea" />
+            <HBox fx:id="commentInputErrorBox" prefHeight="67.0" prefWidth="598.0" styleClass="form_errors-product" stylesheets="@../../assets/style/aliStyle.css">
+               <children>
+                  <Text fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form_errors-product-point" text=".  " translateY="-15.0" wrappingWidth="23.18400001525879" />
+                  <Text fx:id="commentInputError" fill="#dc284c" strokeType="OUTSIDE" strokeWidth="0.0" text="Comment is required!">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
+      <Line endX="498.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0">
+         <VBox.margin>
+            <Insets bottom="30.0" left="16.0" />
+         </VBox.margin>
+      </Line>
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="630.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <children>
+            <Button fx:id="donateBtn" mnemonicParsing="false" onMouseClicked="#addHistory" styleClass="product__add-new-productBtn" text="Donate now" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </padding>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="630.0" />
+   </children>
+</VBox>

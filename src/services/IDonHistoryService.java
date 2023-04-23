@@ -20,4 +20,12 @@ public interface IDonHistoryService {
     public DonHistory getOneHistory(int id) throws SQLException;
     
     public void updateHistory(DonHistory funds) ;
+
+    public List<DonHistory> getFundrisingHistory(int id);
+
+    public void updateHistoryAmount(DonHistory donHistory);
+
+    public DonHistory hasDonated(int userId, int fundId);
+
+    
 }

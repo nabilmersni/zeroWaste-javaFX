@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import services.IFundrisingService;
 import services.FundrisingService;
@@ -31,6 +32,9 @@ public class OneFundListCardController {
     private HBox editFund;
 
     @FXML
+    private HBox showFund;
+
+    @FXML
     private Text fundName;
     
     @FXML
@@ -43,7 +47,7 @@ public class OneFundListCardController {
     private Text dateDon;
 
     @FXML
-    private Text dateDonLimite;
+    private Text status;
 
 
     
@@ -60,9 +64,15 @@ public class OneFundListCardController {
        // String etat = fundrisingSer(fun.getCategorie_produit_id());
        // categoryProduit.setText(categoryName);
         descriptionDon.setText(""+fundrising.getDescription_don());
-        objectif.setText(""+fundrising.getObjectif());
-        dateDon.setText(""+fundrising.getDate_don());
-        dateDonLimite.setText(""+fundrising.getDate_don_limite());
+        objectif.setText(fundrising.getTotal() + " TND raised of " + fundrising.getObjectif() + " TND");
+        dateDon.setText(fundrising.getDate_don() + " - "+ fundrising.getDate_don_limite());
+        status.setText(fundrising.getEtat());
+
+        if (fundrising.getEtat().equals("Completed")) {
+            status.setFill(Color.RED);
+        } 
+
+        
         //deleteProduit btn click
         deleteFund.setId(String.valueOf(fundrising.getId()));
 
@@ -113,8 +123,24 @@ public class OneFundListCardController {
                 e.printStackTrace();
             }
         });
-        //END editProduit btn click
 
+        showFund.setId(String.valueOf(fundrising.getId()));
+
+        showFund.setOnMouseClicked(event -> {
+            Fundrising.setIdFund(fundrising.getId());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ParticipantsList.fxml"));
+            try {
+                Parent root = loader.load();
+                // Accéder à la pane content_area depuis le controller de OneFundListCard.fxml
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+                // Vider la pane et afficher le contenu de AddFund.fxml
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
     

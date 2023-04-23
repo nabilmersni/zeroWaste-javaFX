@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import services.FundrisingService;
@@ -26,7 +27,7 @@ public class UserFundrisingsListController implements Initializable {
     private Pane FundsPane;
 
     @FXML
-    private GridPane fundsListContainer;
+    private VBox fundsListContainer;
     
     /**
      * Initializes the controller class.
@@ -46,7 +47,7 @@ public class UserFundrisingsListController implements Initializable {
     
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("UserFundrisingCard.fxml"));
-                VBox oneFundCard = fxmlLoader.load();
+                HBox oneFundCard = fxmlLoader.load();
                 UserFundrisingCardController fundCardController = fxmlLoader.getController();
                 fundCardController.setFundData(funds.get(i));
                 
@@ -54,7 +55,7 @@ public class UserFundrisingsListController implements Initializable {
                     column=0;
                     ++row;
                 }
-                fundsListContainer.add(oneFundCard, column++, row);
+                fundsListContainer.getChildren().add(oneFundCard);
                 //GridPane.setMargin(oneProductCard, new Insets(10));
                 GridPane.setMargin(oneFundCard, new Insets(0, 20, 20, 10));
               //  oneProductCard.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.09), 25, 0.1, 0, 0);");
@@ -65,7 +66,5 @@ public class UserFundrisingsListController implements Initializable {
         }
     
     }    
-
-
     
 }

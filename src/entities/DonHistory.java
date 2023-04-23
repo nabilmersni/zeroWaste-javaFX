@@ -73,12 +73,11 @@ public class DonHistory {
         this.date_donation = date_donation;
     }
 
-    // @Override
-    // public String toString() {
-    //     return "Produit [nom_produit=" + nom_produit + ", description=" + description + ", quantite=" + quantite
-    //             + ", prix_produit=" + prix_produit + ", image=" + image + ", categorie_produit_id="
-    //             + categorie_produit_id + ", prix_point_produit=" + prix_point_produit + "]";
-    // }
+     @Override
+     public String toString() {
+         return "DonHistory [user_id=" + user_id + ", fund_id=" + fund_id + ", donation_price=" + donation_price
+                 + ", comment=" + comment + ", date_donation=" + date_donation + "]";
+     }
 
     public void setId(int id) {
         this.id = id;

@@ -19,5 +19,9 @@ public interface IFundrisingService {
     
     public Fundrising getOneFund(int id) throws SQLException;
     
-    public void updateFunds(Fundrising funds) ;
+    public void updateFunds(Fundrising funds);
+
+    public void updateTotal(Fundrising funds);
+
+    public void updateEtat(Fundrising funds);
 }

@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="800.0" styleClass="product-card" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fundraisingInterfaces.OneFundListCardController">
@@ -25,39 +24,35 @@
             <Insets left="20.0" />
          </HBox.margin>
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="599.0">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="599.0">
                <children>
-                  <Label text="Titre du don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
-                  <Text fx:id="fundName" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
+                  <Text fx:id="fundName" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="Help Sami beat cancer" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="599.0">
                <children>
-                  <Label text="Description don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
-                  <Text fx:id="descriptionDon" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
+                  <Text fx:id="descriptionDon" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" text="Lorem ipsumLorem ipsumLorem ipsum" />
                </children>
             </HBox>
-
-            <HBox alignment="CENTER_RIGHT" spacing="50" prefHeight="10.0" prefWidth="200.0" translateX="-50">
-               <Label text="Date don: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
-               <Text fx:id="dateDon" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" />
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="599.0">
+               <Text fx:id="status" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" text="Status" />
             </HBox>
-            <HBox alignment="CENTER_RIGHT" spacing="50" prefHeight="10.0" prefWidth="200.0" translateX="-50">
-               <Label text="Date don Limite: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
-               <Text fx:id="dateDonLimite" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" />
-            </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="599.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="599.0">
                <children>
                   <Label />
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="250.0">
                      <children>
-                        <Label text="Objectif: " style="-fx-font-size: 14px; -fx-font-weight: 800;" styleClass="product__card-categ" textFill="#32594a" />
-                        <Text fx:id="objectif" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" />
+                        <Text fx:id="objectif" fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product__card-stock" text="100 TND raised of 500 TND" />
                      </children>
                   </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="599.0">
+               <children>
+                  <Text fx:id="dateDon" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="product-price-text" text="17-06-2023 - 17-06-2023" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="306.0">
                      <children>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                        <HBox fx:id="showFund" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
                            <children>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

@@ -40,9 +40,8 @@ public class FundrisingService implements IFundrisingService  {
               funds.setDate_don(resultSet.getDate("date_don"));
               funds.setDate_don_limite(resultSet.getDate("date_don_limite"));
               funds.setEtat(resultSet.getString("etat"));
-           
               funds.setObjectif(resultSet.getInt("objectif"));
-            //  funds.setTotal(resultSet.getInt("total"));
+              funds.setTotal(resultSet.getInt("total"));
     
               fundstList.add(funds);
           }
@@ -71,6 +70,7 @@ public class FundrisingService implements IFundrisingService  {
         fundrising.setObjectif(rs.getFloat("objectif"));
         fundrising.setDate_don(rs.getDate("date_don"));
         fundrising.setDate_don_limite(rs.getDate("date_don_limite"));
+        fundrising.setTotal(rs.getFloat("total"));
       }
       ps.close();
       return fundrising;
@@ -130,6 +130,38 @@ public class FundrisingService implements IFundrisingService  {
           ps.setInt(8, funds.getId());
           ps.executeUpdate();
           System.out.println("funds updated successfully");
+          ps.close();
+      }catch (SQLException e) {
+        System.out.println("Une erreur s'est produite lors de la modification du fund : " + e.getMessage());
+      }
+      
+    }
+
+    @Override
+    public void updateTotal(Fundrising funds) {
+      try {
+        String req = "UPDATE `fundrising` SET `total`=? WHERE id=?";
+        PreparedStatement ps = conx.prepareStatement(req);
+          ps.setFloat(1, funds.getTotal());
+          ps.setInt(2, funds.getId());
+          ps.executeUpdate();
+          System.out.println("Total updated successfully");
+          ps.close();
+      }catch (SQLException e) {
+        System.out.println("Une erreur s'est produite lors de la modification du fund : " + e.getMessage());
+      }
+      
+    }
+
+    @Override
+    public void updateEtat(Fundrising funds) {
+      try {
+        String req = "UPDATE `fundrising` SET `etat`=? WHERE id=?";
+        PreparedStatement ps = conx.prepareStatement(req);
+          ps.setString(1, "Completed");
+          ps.setInt(2, funds.getId());
+          ps.executeUpdate();
+          System.out.println("Status updated successfully");
           ps.close();
       }catch (SQLException e) {
         System.out.println("Une erreur s'est produite lors de la modification du fund : " + e.getMessage());

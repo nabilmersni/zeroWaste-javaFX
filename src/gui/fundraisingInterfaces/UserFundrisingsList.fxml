@@ -11,13 +11,11 @@
 
 <Pane fx:id="FundsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1236.0" styleClass="userProductsContainer" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.fundraisingInterfaces.UserFundrisingsListController">
    <children>
-      <ScrollPane layoutX="252.0" layoutY="77.0" prefHeight="524.0" prefWidth="969.0" styleClass="product-card-scrollPane" stylesheets="@../../assets/style/aliStyle.css">
+      <ScrollPane hbarPolicy="NEVER" layoutX="100.0" layoutY="25.0" prefHeight="600.0" prefWidth="1005.0" styleClass="user_listScrollPane" stylesheets="@../../assets/style/nabilStyle.css">
          <content>
-            <GridPane fx:id="fundsListContainer">
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
+            <VBox fx:id="fundsListContainer" spacing="10">
+              
+            </VBox>
          </content>
       </ScrollPane>
    </children>

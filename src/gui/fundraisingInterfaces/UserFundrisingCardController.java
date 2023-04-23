@@ -1,19 +1,23 @@
 package gui.fundraisingInterfaces;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import entities.DonHistory;
 import entities.Fundrising;
 import entities.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import services.DonHistoryService;
 import services.FundrisingService;
@@ -40,6 +44,9 @@ public class UserFundrisingCardController implements Initializable {
     private Text total;
 
     @FXML
+    private Text date;
+
+    @FXML
     private Text titreDon;
 
     @FXML
@@ -64,42 +71,41 @@ public class UserFundrisingCardController implements Initializable {
     }
 
 
-    public void setFundData(Fundrising fundrising) {
-        // Instancier le service de fund
+    public void setFundData(Fundrising fundrising){
+        // Instancier le service de produit
         IFundrisingService fundrisingService = new FundrisingService();
-
-        Image image = new Image(getClass().getResource("/assets/FundraisingUploads/" + fundrising.getImage_don()).toExternalForm());
+        
+        Image image = new Image(
+           getClass().getResource("/assets/FundraisingUploads/" + fundrising.getImage_don()).toExternalForm());
         img.setImage(image);
 
-        try {
-            fund = fundrisingService.getOneFund(fundrising.getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
+       titreDon.setText(fundrising.getTitre_don());
+        objectif.setText(fundrising.getTotal() + " TND raised of " + fundrising.getObjectif() + " TND");
+        date.setText(fundrising.getDate_don().toString() + " - " + fundrising.getDate_don_limite().toString());
+
+        if (fundrising.getEtat().equals("Completed")) {
+            add_historyBtn.setVisible(false);
         }
         
-        titreDon.setText(fundrising.getTitre_don());
-        total.setText("" + fundrising.getTotal());
-        descriptionDon.setText("" + fundrising.getDescription_don());
-        objectif.setText("" + fundrising.getObjectif());
-    }
+       add_historyBtn.setId(String.valueOf(fundrising.getId()));
 
-    @FXML
-    void addHistory(MouseEvent event) throws SQLException {
+       add_historyBtn.setOnMouseClicked(event -> {
+           System.out.println("ID du fund à donaqsdqsd : " + fundrising.getId());
+           Fundrising.setIdFund(fundrising.getId());
+           
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("AddDonHistoryCard.fxml"));
+           try {
+               Parent root = loader.load();
+               // Accéder à la pane content_area depuis le controller de OneFundListCard.fxml
+               Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
-        DonHistory donHistory = new DonHistory();
-        donHistory.setUserId(currentUser.getId());
-        donHistory.setFundId(fund.getId());
-        donHistory.setComment("Testing");
-        donHistory.setDonationPrice(100);
-        java.util.Date utilDate = new java.util.Date();
-        Date currentDate = new Date(utilDate.getTime());
-        donHistory.setDateDonation(currentDate);
-
-        // Instancier le service de produit
-        IDonHistoryService donHistoryService = new DonHistoryService();
-
-        donHistoryService.addHistory(donHistory);
-
+               // Vider la pane et afficher le contenu de AddFund.fxml
+               contentArea.getChildren().clear();
+               contentArea.getChildren().add(root);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       });
     }
 
 }
