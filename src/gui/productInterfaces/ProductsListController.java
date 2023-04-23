@@ -130,7 +130,6 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private ComboBox<String> couponCombobox;
-    
 
     private int categId = -1;
 
@@ -140,7 +139,7 @@ public class ProductsListController implements Initializable {
     private int submitCouponTest = 0;
 
     private static int categoryModelShow = 0;
-    private String selectedOption=null;
+    private String selectedOption = null;
 
     public static int getCategoryModelShow() {
         return categoryModelShow;
@@ -162,8 +161,6 @@ public class ProductsListController implements Initializable {
         submitCouponBtn.setVisible(false);
         couponInputErrorHbox.setVisible(false);
         backToReductionBtn.setVisible(false);
-
-        
 
         if (ProductsListController.getCategoryModelShow() == 0) {
             categoriesModel.setVisible(false);
@@ -243,27 +240,26 @@ public class ProductsListController implements Initializable {
             productsListContainer.getChildren().clear();
             this.setProductGridPaneList();
         });
-        //Coupon Set email comboBox
-    UserService userService = new UserService();
-    List<User> EmailList = new ArrayList<>();
-    User user = new User();
-    try {
-        EmailList = userService.getAllUser();
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-    for (int i =0 ; i<EmailList.size(); i++){
-        couponCombobox.getItems().add(EmailList.get(i).getEmail());
-    }
+        // Coupon Set email comboBox
+        UserService userService = new UserService();
+        List<User> EmailList = new ArrayList<>();
+        User user = new User();
+        try {
+            EmailList = userService.getAllUser();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for (int i = 0; i < EmailList.size(); i++) {
+            couponCombobox.getItems().add(EmailList.get(i).getEmail());
+        }
 
+        // filter by combobox values
+        couponCombobox.setOnAction(event -> {
+            selectedOption = couponCombobox.getValue();
+            System.out.println("Selected option: " + selectedOption);
 
-    //filter by combobox values
-    couponCombobox.setOnAction(event -> {
-        selectedOption = couponCombobox.getValue();
-        System.out.println("Selected option: " + selectedOption);
-
-    });
+        });
     }
 
     @FXML
@@ -378,7 +374,6 @@ public class ProductsListController implements Initializable {
 
     }
 
-
     @FXML
     void close_QrCodeModel(MouseEvent event) {
         qrCodeImgModel.setVisible(false);
@@ -454,54 +449,55 @@ public class ProductsListController implements Initializable {
     @FXML
     void submit_coupon(MouseEvent event) throws MessagingException, SQLException {
 
-            int produit_id=Produit.getIdProduit();
-            System.out.println("produit id:"+produit_id);
-            String email= selectedOption;
-            System.out.println("email :"+email);
-          
- if(selectedOption!=null){           
-AchatsService achatsService =new AchatsService();
-int length;
-int min;
-int max;
-Random random;
-int couponCode;
+        int produit_id = Produit.getIdProduit();
+        System.out.println("produit id:" + produit_id);
+        String email = selectedOption;
+        System.out.println("email :" + email);
 
-     length = 6; // desired length of the coupon code
-     min = (int) Math.pow(10, length - 1); // minimum value of the code
-     max = (int) Math.pow(10, length) - 1; // maximum value of the code
-     random = new Random();
-     couponCode = random.nextInt(max - min + 1) + min;
-System.out.println("couponCode :"+couponCode);
+        if (selectedOption != null) {
+            AchatsService achatsService = new AchatsService();
+            int length;
+            int min;
+            int max;
+            Random random;
+            int couponCode;
 
-/*while(achatsService.VerifCoupon(couponCode)==1){
-    length = 6; // desired length of the coupon code
-    min = (int) Math.pow(10, length - 1); // minimum value of the code
-    max = (int) Math.pow(10, length) - 1; // maximum value of the code
-    random = new Random();
-    couponCode = random.nextInt(max - min + 1) + min;
-}*/
-achatsService.addCoupon(couponCode, produit_id, email);
+            length = 6; // desired length of the coupon code
+            min = (int) Math.pow(10, length - 1); // minimum value of the code
+            max = (int) Math.pow(10, length) - 1; // maximum value of the code
+            random = new Random();
+            couponCode = random.nextInt(max - min + 1) + min;
+            System.out.println("couponCode :" + couponCode);
 
+            /*
+             * while(achatsService.VerifCoupon(couponCode)==1){
+             * length = 6; // desired length of the coupon code
+             * min = (int) Math.pow(10, length - 1); // minimum value of the code
+             * max = (int) Math.pow(10, length) - 1; // maximum value of the code
+             * random = new Random();
+             * couponCode = random.nextInt(max - min + 1) + min;
+             * }
+             */
+            achatsService.addCoupon(couponCode, produit_id, email);
 
-//email
-Map<String, String> data = new HashMap<>();
-data.put("emailSubject", "Use this coupon code and get a reduction on our site");
-data.put("titlePlaceholder", "Get this product for free");
-data.put("msgPlaceholder", "Here's the coupon code:");
-User user =new User();
-user.setEmail(email);
-user.setVerificationCode(couponCode);
-SendMail.send(user, data);
-TrayNotificationAlert.notif("Coupon", "Coupon sent successfully by mail",
-NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
-offreModel.setVisible(false);
+            // email
+            Map<String, String> data = new HashMap<>();
+            data.put("emailSubject", "Use this coupon code and get a reduction on our site");
+            data.put("titlePlaceholder", "Get this product for free");
+            data.put("msgPlaceholder", "Here's the coupon code:");
+            User user = new User();
+            user.setEmail(email);
+            user.setVerificationCode(couponCode);
+            SendMail.send(user, data);
+            TrayNotificationAlert.notif("Coupon", "Coupon sent successfully by mail",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+            offreModel.setVisible(false);
 
-}else {
-        TrayNotificationAlert.notif("Coupon", "Select an email",
-        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
-    }
-  
+        } else {
+            TrayNotificationAlert.notif("Coupon", "Select an email",
+                    NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
+        }
+
     }
 
     @FXML
@@ -548,7 +544,7 @@ offreModel.setVisible(false);
         IProduitService produitService = new ProduitService();
         List<Produit> productList = produitService.getAllProducts();
 
-         // Créer la première ligne pour les en-têtes des colonnes
+        // Créer la première ligne pour les en-têtes des colonnes
         Row headerRow = sheet.createRow(0);
         headerRow.createCell(0).setCellValue("ID");
         headerRow.createCell(1).setCellValue("Nom");
@@ -573,7 +569,6 @@ offreModel.setVisible(false);
         for (int i = 0; i < headerRow.getLastCellNum(); i++) {
             sheet.autoSizeColumn(i);
         }
-        
 
         // Ouvrir une boîte de dialogue de sélection de fichier
         FileChooser fileChooser = new FileChooser();

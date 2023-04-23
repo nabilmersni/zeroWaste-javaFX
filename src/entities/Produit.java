@@ -18,13 +18,15 @@ public class Produit {
 
     private static int idProduit;
     private static String searchValue;
-   
+
+    private static String sortByCateg = null;
+    private static int sortByCategId = -1;
 
     public Produit() {
     }
 
-    public Produit(String nom_produit, String description, int quantite, float prix_produit, String image, int categorie_produit_id, int prix_point_produit) 
-    {
+    public Produit(String nom_produit, String description, int quantite, float prix_produit, String image,
+            int categorie_produit_id, int prix_point_produit) {
         this.nom_produit = nom_produit;
         this.description = description;
         this.quantite = quantite;
@@ -129,7 +131,6 @@ public class Produit {
         this.id = id;
     }
 
-    
     public static String getSearchValue() {
         return searchValue;
     }
@@ -146,5 +147,19 @@ public class Produit {
         Produit.idProduit = idProduit;
     }
 
-    
+    public static String getSortByCateg() {
+        return sortByCateg;
+    }
+
+    public static void setSortByCateg(String sortByCateg) {
+        Produit.sortByCateg = sortByCateg;
+    }
+
+    public static int getSortByCategId() {
+        return sortByCategId;
+    }
+
+    public static void setSortByCategId(int sortByCategId) {
+        Produit.sortByCategId = sortByCategId;
+    }
 }

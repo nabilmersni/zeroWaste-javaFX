@@ -886,6 +886,10 @@
   -fx-background-color: #defee6;
 }
 
+.promotionalItemsBtnSelected {
+  -fx-background-color: #defee6;
+}
+
 .reviewsFilterBtn:hover {
   -fx-background-color: #defee633;
 }

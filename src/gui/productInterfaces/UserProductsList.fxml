@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="ProductsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1236.0" styleClass="userProductsContainer" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.productInterfaces.UserProductsListController">
+<Pane fx:id="content_area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1236.0" styleClass="userProductsContainer" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.productInterfaces.UserProductsListController">
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="77.0" prefWidth="1225.0">
          <children>
@@ -25,7 +25,7 @@
                   <Image url="@../../assets/img/magnifier.png" />
                </image>
             </ImageView>
-            <TextField fx:id="productSearchInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="265.0" styleClass="product__list-searchInput" translateX="87.0">
+            <TextField fx:id="productSearchInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#searchProduct" prefWidth="265.0" styleClass="product__list-searchInput" translateX="87.0">
                <padding>
                   <Insets left="37.0" right="40.0" />
                </padding>
@@ -39,7 +39,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="239.0" styleClass="onlyOfferItemsBtn" translateX="220.0">
+            <HBox fx:id="getPromotionalItemsBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#getPromotionalItems" prefHeight="40.0" prefWidth="239.0" styleClass="onlyOfferItemsBtn" translateX="220.0">
                <children>
                   <Text fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="onlyOfferItemsBtnText" text="Promotional items only" />
                </children>
@@ -279,12 +279,12 @@
                         <Text fill="#7b88ff" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="searchText" text="Sort by:" />
                      </children>
                   </HBox>
-                  <ComboBox fx:id="categoryInput1" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="197.0" promptText="Prices" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
+                  <ComboBox fx:id="priceInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="197.0" promptText="Prices" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="categoryInput2" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="197.0" promptText="Points" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
+                  <ComboBox fx:id="pointsInput" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="197.0" promptText="Points" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
