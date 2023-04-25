@@ -6,15 +6,18 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import entities.User;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
@@ -22,6 +25,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -40,8 +45,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import javafx.scene.input.MouseEvent;
+import nl.captcha.Captcha;
+import javafx.scene.shape.Rectangle;
 
-public class LogInController {
+public class LogInController implements Initializable {
 
     @FXML
     private TextField emailField;
@@ -65,6 +72,15 @@ public class LogInController {
     private AnchorPane googleBTN;
 
     @FXML
+    private TextField captchaField;
+
+    @FXML
+    private ImageView captchaImg;
+
+    Captcha captcha;
+    Boolean captchaTest = true;
+
+    @FXML
     void logIn(ActionEvent event) throws IOException {
 
         String email = emailField.getText();
@@ -73,10 +89,19 @@ public class LogInController {
         UserService userService = new UserService();
         User user;
 
+        if (captcha.isCorrect(captchaField.getText())) {
+            captchaTest = true;
+        } else {
+            captchaTest = false;
+            captcha = setCaptcha();
+        }
+
         try {
             user = userService.getOneUser(email);
-
-            if (user.getId() == -999) {
+            if (!captchaTest) {
+                TrayNotificationAlert.notif("Login", "Invalid captcha.",
+                        NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
+            } else if (user.getId() == -999) {
                 TrayNotificationAlert.notif("Login", "Invalid credentials.",
                         NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
             } else {
@@ -213,6 +238,35 @@ public class LogInController {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        captcha = setCaptcha();
+    }
+
+    public Captcha setCaptcha() {
+        Captcha captchaV = new Captcha.Builder(250, 150)
+                .addText()
+                .addBackground()
+                .addNoise()
+                // .gimp()
+                .addBorder()
+                .build();
+
+        // System.out.println(captchaV.getImage());
+        WritableImage image = SwingFXUtils.toFXImage(captchaV.getImage(), null);
+
+        captchaImg.setImage(image);
+
+        // Rectangle clip = new Rectangle(
+        // captchaImg.getFitWidth(), captchaImg.getFitHeight());
+        // clip.setArcWidth(100);
+        // clip.setArcHeight(100);
+
+        // captchaImg.setClip(clip);
+
+        return captchaV;
     }
 
 }
