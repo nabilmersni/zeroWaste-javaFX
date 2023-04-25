@@ -45,6 +45,12 @@ import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 import facebook4j.FacebookException;
 
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.SendMail;
+import utils.TrayNotificationAlert;
+import javafx.util.Duration;
+
 /**
  * FXML Controller class
  *
@@ -707,19 +713,33 @@ public class UserProductDetailsCardController implements Initializable {
     }
 
     @FXML
-    void partageFacebook(MouseEvent event) {
+    void partageFacebook(MouseEvent event) throws SQLException {
+        Produit produit = new Produit();
+        ProduitService produitService = new ProduitService();
+        produit = produitService.getOneProduct(Produit.getIdProduit());
+
         String appId = "232528662540085";
         String appSecret = "60988e9928012f06c205e07717bb4196";
-        String accessTokenString = "EAACT381qg9IBAKAFRippdS4KyLHH5wYXhkskxPQ75wmQflNqD4ZAMMjqOblZAYNZAmEuLog2bA6cwEkwaU7UTDdKS3JDc7d7PZCZCxWlLwcVFDbrAtFMBfLCSVYVSBW9dnJ7ZCOoflxRy39nyCZC4EIZAMkPHN42sY8P2EKA8jcZBTWKcwq86uIZAAhSY9MVTbj4rZCl6zX0kiNGeQwz8AzbO6M";
+        String accessTokenString = "EAADTe8xUrzUBALc1rb6aaElV1pappD7JSyoXACZAK83fZBP6OcsTKxVDvUIR5fq8q7kx5EBPiUiNU6CzWJBFLqxDZAQCmgm4YSlqXYrNsmeAbZBzTTIdYiZBprB0Gl7ubxoZAH4FPs9D5IwhmmHlMutCZCB7fhJcto7V1JtK5v33kgFYeopUIwYl1ZCJHFJqVP1zQdlmh1YJe9RegTMJ3Avu";
 
         Facebook facebook = new FacebookFactory().getInstance();
         facebook.setOAuthAppId(appId, appSecret);
         facebook.setOAuthAccessToken(new AccessToken(accessTokenString, null));
 
+        String msg = "A new product is available on ZeroWaste" + "\n***Product Name: " + produit.getNom_produit()
+                + "\n***Product Description: "
+                + produit.getDescription()
+                + "\n***Product Price: "
+                + produit.getPrix_produit() + "\n***Product Points: "
+                + produit.getPrix_point_produit();
         try {
-            facebook.postStatusMessage("Mon message à partager sur Facebook !");
+            facebook.postStatusMessage(msg);
+            TrayNotificationAlert.notif("Product", "Product shared successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
         } catch (FacebookException e) {
             e.printStackTrace();
+            TrayNotificationAlert.notif("Product", "token was changed.",
+                    NotificationType.ERROR, AnimationType.POPUP, Duration.millis(2500));
         }
 
     }
