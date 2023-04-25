@@ -12,7 +12,7 @@
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="131.0">
          <children>
-            <ImageView fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/ProductUploads/00e617f9-2cdc-4914-8f0e-b1697a7f370d.png" />
                </image>

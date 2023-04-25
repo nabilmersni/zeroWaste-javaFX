@@ -1,6 +1,7 @@
 package services;
 
 import entities.Produit;
+import entities.Reviews;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -412,6 +413,37 @@ public class ProduitService implements IProduitService {
     }
 
     return total;
+  }
+
+  public List<Reviews> getAllComments(int productId) {
+    List<Reviews> reviewList = new ArrayList<>();
+    try {
+      String query = "SELECT * FROM reviews WHERE product_id = ? ORDER BY id DESC ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, productId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      // Parcours du résultat de la requête
+      while (resultSet.next()) {
+        Reviews review = new Reviews();
+        review.setId(resultSet.getInt("id"));
+        review.setUser_id(resultSet.getInt("user_id"));
+        review.setProduct_id(resultSet.getInt("product_id"));
+        review.setTitle(resultSet.getString("title"));
+        review.setComment(resultSet.getString("comment"));
+        review.setValue(resultSet.getInt("value"));
+        review.setDate_ajout(resultSet.getDate("date_ajout"));
+
+        reviewList.add(review);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return reviewList;
+
   }
 
 }

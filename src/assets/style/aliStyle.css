@@ -1057,3 +1057,13 @@
   -fx-font-size: 18px;
   -fx-font-weight: 700;
 }
+
+.comment_desc {
+  -fx-font-size: 14px;
+  -fx-font-weight: 500;
+}
+
+.comment_dateAjout {
+  -fx-font-size: 16px;
+  -fx-font-weight: 600;
+}

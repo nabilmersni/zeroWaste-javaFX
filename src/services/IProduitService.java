@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import entities.Produit;
+import entities.Reviews;
 
 public interface IProduitService {
 
@@ -38,4 +39,5 @@ public interface IProduitService {
 
   public int getTotalProductReviewsByStar(int productId, int value);
 
+  public List<Reviews> getAllComments(int produitId);
 }

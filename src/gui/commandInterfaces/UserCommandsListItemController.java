@@ -15,6 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -73,12 +75,19 @@ public class UserCommandsListItemController {
     @FXML
     private HBox moin;
 
+    @FXML
+    private ImageView img;
+
     public void setCommandProduit(Produit produit, int command_id) {
 
         nomp.setText(produit.getNom_produit());
         pointp.setText("" + produit.getPrix_point_produit());
 
         float prixApresOffre = 0;
+
+        Image image = new Image(
+                getClass().getResource("/assets/ProductUploads/" + produit.getImage()).toExternalForm());
+        img.setImage(image);
 
         if (produit.getRemise() == 0) {
             priceAfterOfferHbox.setVisible(false);

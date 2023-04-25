@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import entities.Categorie_produit;
 import entities.Produit;
+import entities.Reviews;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -277,6 +278,11 @@ public class UserProductDetailsCardController implements Initializable {
         reviews_total_box.setText("" + totalReviews);
 
         float totalPercentStar = 0;
+        float percent5 = 0;
+        float percent4 = 0;
+        float percent3 = 0;
+        float percent2 = 0;
+        float percent1 = 0;
         if (totalReviews == 0) {
             reviewsBox_star1.setImage(starImage);
             reviewsBox_star2.setImage(starImage);
@@ -284,6 +290,18 @@ public class UserProductDetailsCardController implements Initializable {
             reviewsBox_star4.setImage(starImage);
             reviewsBox_star5.setImage(starImage);
             percentReviews.setText("" + 0);
+
+            percentBy5.setText("0");
+            percentBy4.setText("0");
+            percentBy3.setText("0");
+            percentBy2.setText("0");
+            percentBy1.setText("0");
+            rangeTotal5.setPrefWidth(0);
+            rangeTotal4.setPrefWidth(0);
+            rangeTotal3.setPrefWidth(0);
+            rangeTotal2.setPrefWidth(0);
+            rangeTotal1.setPrefWidth(0);
+
         }
 
         int totalCountBy5 = produitService.getTotalProductReviewsByStar(produitId, 5);
@@ -304,23 +322,23 @@ public class UserProductDetailsCardController implements Initializable {
             rangeTotal2.setPrefWidth(totalCountBy2 * 114 / totalReviews);
             rangeTotal1.setPrefWidth(totalCountBy1 * 114 / totalReviews);
 
-            float percent5 = (float) (totalCountBy5 * 100 / totalReviews);
+            percent5 = (float) (totalCountBy5 * 100 / totalReviews);
             String percent5Str = String.format("%.1f", percent5);
             percentBy5.setText(percent5Str);
 
-            float percent4 = (float) (totalCountBy4 * 100 / totalReviews);
+            percent4 = (float) (totalCountBy4 * 100 / totalReviews);
             String percent4Str = String.format("%.1f", percent4);
             percentBy4.setText(percent4Str);
 
-            float percent3 = (float) (totalCountBy3 * 100 / totalReviews);
+            percent3 = (float) (totalCountBy3 * 100 / totalReviews);
             String percent3Str = String.format("%.1f", percent3);
             percentBy3.setText(percent3Str);
 
-            float percent2 = (float) (totalCountBy2 * 100 / totalReviews);
+            percent2 = (float) (totalCountBy2 * 100 / totalReviews);
             String percent2Str = String.format("%.1f", percent2);
             percentBy2.setText(percent2Str);
 
-            float percent1 = (float) (totalCountBy1 * 100 / totalReviews);
+            percent1 = (float) (totalCountBy1 * 100 / totalReviews);
             String percent1Str = String.format("%.1f", percent1);
             percentBy1.setText(percent1Str);
 
@@ -603,13 +621,13 @@ public class UserProductDetailsCardController implements Initializable {
                 reviewsBox_star51.setImage(star1);
             }
             if (totalPercentStar >= 4.2 && totalPercentStar < 4.3) {
-                reviewsBox_star51.setImage(star9);
+                reviewsBox_star51.setImage(star2);
             }
             if (totalPercentStar >= 4.3 && totalPercentStar < 4.4) {
-                reviewsBox_star51.setImage(star9);
+                reviewsBox_star51.setImage(star3);
             }
             if (totalPercentStar >= 4.4 && totalPercentStar < 4.5) {
-                reviewsBox_star51.setImage(star9);
+                reviewsBox_star51.setImage(star4);
             }
             if (totalPercentStar >= 4.5 && totalPercentStar < 4.6) {
                 reviewsBox_star51.setImage(star5);
@@ -642,6 +660,34 @@ public class UserProductDetailsCardController implements Initializable {
 
         // END - set comments details
 
+        Reviews review = new Reviews();
+        produitService = new ProduitService();
+
+        List<Reviews> reviewsList = produitService.getAllComments(Produit.getIdProduit());
+
+        // Set comments List
+        int CommentColumn = 0;
+        int CommentRow = 1;
+        try {
+            for (int i = 0; i < reviewsList.size(); i++) {
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/gui/productInterfaces/UserCommentItem.fxml"));
+                VBox commentItem = fxmlLoader.load();
+                UserCommentItemController userCommentItemController = fxmlLoader.getController();
+                userCommentItemController.setReviewData(reviewsList.get(i));
+
+                if (CommentColumn == 1) {
+                    CommentColumn = 0;
+                    ++CommentRow;
+                }
+                commentsListContainer.add(commentItem, CommentColumn++, CommentRow);
+                GridPane.setMargin(commentItem, new Insets(0, 10, 15, 10));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // try {
 
         // // Ajouter productContainer à la première ligne de AddproductContainer
@@ -656,6 +702,7 @@ public class UserProductDetailsCardController implements Initializable {
         // } catch (IOException e) {
         // e.printStackTrace();
         // }
+        // END - Set comments List
 
     }
 
