@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="content_area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="1236.0" styleClass="userProductsContainer" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.productInterfaces.UserProductDetailsController">
+   <children>
+      <ScrollPane layoutX="13.0" layoutY="12.0" prefHeight="599.0" prefWidth="1213.0" styleClass="product-card-scrollPane" stylesheets="@../../assets/style/aliStyle.css">
+         <content>
+            <GridPane fx:id="productDetailsContainer">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <HBox fx:id="addReviewsModel" alignment="CENTER" layoutX="-256.0" layoutY="-81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="713.0" prefWidth="1374.0" styleClass="categoriesModel" stylesheets="@../../assets/style/aliStyle.css" translateX="-1240.0" translateY="-5.0">
+         <children>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="385.0" styleClass="productAddedToCart__card" stylesheets="@../../assets/style/aliStyle.css">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="74.0" prefWidth="350.0" stylesheets="@../../assets/style/aliStyle.css">
+                     <children>
+                        <Text fx:id="addedCartModelText" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="productAddedToCart__text" text="Product Added To Cart Successfully" textAlignment="CENTER" wrappingWidth="269.402099609375" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="350.0" stylesheets="@../../assets/style/aliStyle.css">
+                     <children>
+                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="214.0" styleClass="contenuShoppingBtn">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="contenuShoppingText" text="Contenue Shopping" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="68.0" prefWidth="350.0" stylesheets="@../../assets/style/aliStyle.css">
+                     <children>
+                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="105.0" styleClass="contenuShoppingBtn">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="contenuShoppingText" text="Order" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</Pane>

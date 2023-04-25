@@ -283,6 +283,7 @@ public class UserProductsListController implements Initializable {
             }
         } else {
             produits = produitService.searchProducts(Produit.getSearchValue());
+            Produit.setSearchValue(null);
         }
 
         // product list ------------------------------------------------

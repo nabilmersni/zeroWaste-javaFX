@@ -32,4 +32,10 @@ public interface IProduitService {
 
   public List<Produit> searchProductByImage(String etiquette, double score);
 
+  public void addProductToFavoriteList(int produitId, int userId);
+
+  public int getTotalProductReviews(int productId);
+
+  public int getTotalProductReviewsByStar(int productId, int value);
+
 }

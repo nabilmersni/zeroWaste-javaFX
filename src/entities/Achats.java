@@ -1,6 +1,5 @@
 package entities;
 
-
 public class Achats {
 
   private int id;
@@ -16,13 +15,21 @@ public class Achats {
   private int validate;
   private int userDeleted;
   private int adminDeleted;
-  
-  public static int achatModelTest=0 ;
-  private static int commandeId ;
-  private static String SearchValue ;
-  public static float totalCommandPrice=0 ;
+  private int status;
 
- 
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
+  public static int achatModelTest = 0;
+  private static int commandeId;
+  private static String SearchValue;
+  public static float totalCommandPrice = 0;
+
   public static float getTotalCommandPrice() {
     return totalCommandPrice;
   }
@@ -56,7 +63,7 @@ public class Achats {
   }
 
   private static int achatId;
-  
+
   public Achats(int id, int commande_id, String date_achat, String full_name, String email, String address, int tel,
       String city, int zip_code, String payment_method, int validate, int userDeleted, int adminDeleted) {
     this.id = id;
@@ -188,5 +195,5 @@ public class Achats {
         + zip_code + ", payment_method=" + payment_method + ", validate=" + validate + ", userDeleted=" + userDeleted
         + ", adminDeleted=" + adminDeleted + "]";
   }
-  
+
 }

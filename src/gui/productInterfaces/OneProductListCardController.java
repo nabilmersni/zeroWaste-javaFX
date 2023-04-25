@@ -81,7 +81,6 @@ public class OneProductListCardController {
     public void setProductData(Produit produit) {
         float prixApresOffre = 0;
 
-       
         if (produit.getRemise() == 0) {
             priceAfterOfferHbox.setVisible(false);
             priceHbox.setVisible(true);
@@ -167,42 +166,41 @@ public class OneProductListCardController {
         });
         // END editProduit btn click
 
-       // qrCodeProduit btn click
-       editProduit.setId(String.valueOf(produit.getId()));
+        // qrCodeProduit btn click
+        editProduit.setId(String.valueOf(produit.getId()));
 
-       qrCodeProduit.setOnMouseClicked(event -> {
-           System.out.println("ID du produit à générer qr Code : " + produit.getId());
-           Produit.setIdProduit(produit.getId());
+        qrCodeProduit.setOnMouseClicked(event -> {
+            System.out.println("ID du produit à générer qr Code : " + produit.getId());
+            Produit.setIdProduit(produit.getId());
 
-           String text = "Product ID: " + produit.getId() + "\nProduct Name: " + produit.getNom_produit()
-                   + "\nProduct Description: " + produit.getDescription() + "\nProduct Price: "
-                   + produit.getPrix_produit() + "\nProduct Points: " + produit.getPrix_point_produit()
-                   + "\nProduct Category: " + produitService.getCategory(produit.getCategorie_produit_id());
-           // Créer un objet QRCodeWriter pour générer le QR code
-           QRCodeWriter qrCodeWriter = new QRCodeWriter();
-           // Générer la matrice de bits du QR code à partir du texte saisi
-           BitMatrix bitMatrix;
-           try {
-               bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
-               // Convertir la matrice de bits en image BufferedImage
-               BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
-               // Enregistrer l'image en format PNG
-               // File outputFile = new File("qrcode.png");
-               // ImageIO.write(bufferedImage, "png", outputFile);
-               // Afficher l'image dans l'interface utilisateur
+            String text = "Product ID: " + produit.getId() + "\nProduct Name: " + produit.getNom_produit()
+                    + "\nProduct Description: " + produit.getDescription() + "\nProduct Price: "
+                    + produit.getPrix_produit() + "\nProduct Points: " + produit.getPrix_point_produit()
+                    + "\nProduct Category: " + produitService.getCategory(produit.getCategorie_produit_id());
+            // Créer un objet QRCodeWriter pour générer le QR code
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            // Générer la matrice de bits du QR code à partir du texte saisi
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
+                // Convertir la matrice de bits en image BufferedImage
+                BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+                // Enregistrer l'image en format PNG
+                // File outputFile = new File("qrcode.png");
+                // ImageIO.write(bufferedImage, "png", outputFile);
+                // Afficher l'image dans l'interface utilisateur
 
-               ImageView qrCodeImg = (ImageView) ((Node) event.getSource()).getScene().lookup("#qrCodeImg");
-               qrCodeImg.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+                ImageView qrCodeImg = (ImageView) ((Node) event.getSource()).getScene().lookup("#qrCodeImg");
+                qrCodeImg.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
 
-               HBox qrCodeImgModel = (HBox) ((Node) event.getSource()).getScene().lookup("#qrCodeImgModel");
-               qrCodeImgModel.setVisible(true);
-           } catch (WriterException e) {
-               e.printStackTrace();
-           }
+                HBox qrCodeImgModel = (HBox) ((Node) event.getSource()).getScene().lookup("#qrCodeImgModel");
+                qrCodeImgModel.setVisible(true);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
 
-       });
-       // END qrCodeProduit btn click
-
+        });
+        // END qrCodeProduit btn click
 
         // offreProduit btn click
         offerProduit.setId(String.valueOf(produit.getId()));

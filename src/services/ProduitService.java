@@ -174,6 +174,7 @@ public class ProduitService implements IProduitService {
         produit.setImage(resultSet.getString("image"));
         produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
         produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+        produit.setRemise(resultSet.getFloat("remise"));
 
         productList.add(produit);
       }
@@ -217,7 +218,7 @@ public class ProduitService implements IProduitService {
         produit.setImage(resultSet.getString("image"));
         produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
         produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
-
+        produit.setRemise(resultSet.getFloat("remise"));
         productList.add(produit);
       }
       preparedStatement.close();
@@ -278,6 +279,7 @@ public class ProduitService implements IProduitService {
         produit.setImage(resultSet.getString("image"));
         produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
         produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+        produit.setRemise(resultSet.getFloat("remise"));
 
         productList.add(produit);
       }
@@ -354,6 +356,62 @@ public class ProduitService implements IProduitService {
 
     return productList;
 
+  }
+
+  public void addProductToFavoriteList(int produitId, int userId) {
+    try {
+      String req = "INSERT INTO `product_favoris`(`user_id`, `product_id` ) VALUES (?,?)";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, userId);
+      ps.setInt(2, produitId);
+      ps.executeUpdate();
+      System.out.println("Product added to fav list successfully");
+      ps.close();
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de l'ajout' du produit au fav list : " + e.getMessage());
+    }
+
+  }
+
+  public int getTotalProductReviews(int productId) {
+    int total = 0;
+    try {
+      String query = "SELECT count(*) FROM reviews WHERE product_id = ? ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, productId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        total = resultSet.getInt(1);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return total;
+  }
+
+  public int getTotalProductReviewsByStar(int productId, int value) {
+    int total = 0;
+    try {
+      String query = "SELECT count(*) FROM reviews WHERE product_id = ? and value = ? ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, productId);
+      preparedStatement.setInt(2, value);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        total = resultSet.getInt(1);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return total;
   }
 
 }

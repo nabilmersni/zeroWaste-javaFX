@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -46,7 +47,7 @@ import com.itextpdf.text.pdf.TextField;
  *
  * @author ALI
  */
-public class AdminCommandsListItemController  {
+public class AdminCommandsListItemController {
 
     @FXML
     private Text date_achat;
@@ -58,15 +59,24 @@ public class AdminCommandsListItemController  {
     @FXML
     private HBox qrCodeCommand;
 
+    @FXML
+    private HBox progressCommand;
+
+    @FXML
+    private Label progress;
+
     public void setCommandData(Achats achat) {
         // Instancier le service de achat
         IAchatsService achatService = new AchatsService();
 
+        if (achat.getStatus() == 1) {
+            progress.setText("Validated");
+        }
+
         date_achat.setText(achat.getDate_achat());
-        
 
         // deleteCommand btn click
-        //deleteCommand.setId(String.valueOf(achat.getId()));
+        // deleteCommand.setId(String.valueOf(achat.getId()));
 
         deleteCommand.setOnMouseClicked(event -> {
             System.out.println("ID du commande à supprimer : " + achat.getId());
@@ -90,17 +100,15 @@ public class AdminCommandsListItemController  {
             }
             // end
         });
-        //END deleteCommand btn click
+        // END deleteCommand btn click
 
-
-
-         // showCommand btn click
-        //showCommand.setId(String.valueOf(achat.getId()));
+        // showCommand btn click
+        // showCommand.setId(String.valueOf(achat.getId()));
 
         detailsCommand.setOnMouseClicked(event -> {
             System.out.println("ID du commande est affichée : " + achat.getId());
 
-            Achats.achatModelTest =1;
+            Achats.achatModelTest = 1;
             Achats.setCommandeId(achat.getCommande_id());
             Achats.setAchatId(achat.getId());
 
@@ -108,7 +116,6 @@ public class AdminCommandsListItemController  {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commandInterfaces/AdminCommandsList.fxml"));
             try {
                 Parent root = loader.load();
-
 
                 // Accéder à la pane content_area depuis ce controller
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
@@ -121,9 +128,9 @@ public class AdminCommandsListItemController  {
             }
             // end
         });
-        //END showCommand btn click
+        // END showCommand btn click
 
- // qrCodeProduit btn click
+        // qrCodeProduit btn click
         qrCodeCommand.setOnMouseClicked(event -> {
             System.out.println("ID du achat à générer qr Code : " + achat.getId());
             Achats.setAchatId(achat.getId());
@@ -131,7 +138,7 @@ public class AdminCommandsListItemController  {
             String text = "achat ID: " + achat.getId() + "\n commande id: " + achat.getCommande_id()
                     + "\nAddress: " + achat.getAddress() + "\n Date achat: "
                     + achat.getDate_achat() + "\nFull name: " + achat.getFull_name()
-                    + "\nEmail: " + achat.getEmail()  + "\nPhone: " + achat.getTel();
+                    + "\nEmail: " + achat.getEmail() + "\nPhone: " + achat.getTel();
             // Créer un objet QRCodeWriter pour générer le QR code
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             // Générer la matrice de bits du QR code à partir du texte saisi
@@ -156,9 +163,27 @@ public class AdminCommandsListItemController  {
 
         });
         // END qrCodeProduit btn click
+
+        // update Command status btn click
+        // showCommand.setId(String.valueOf(achat.getId()));
+
+        progressCommand.setOnMouseClicked(event -> {
+            System.out.println("ID du commande est affichée : " + achat.getId());
+
+            // Achats.achatModelTest = 1;
+            // Achats.setCommandeId(achat.getCommande_id());
+            Achats.setAchatId(achat.getId());
+
+            // ImageView qrCodeImg = (ImageView) ((Node)
+            // event.getSource()).getScene().lookup("#qrCodeImg");
+            // qrCodeImg.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+
+            HBox commandStatusModel = (HBox) ((Node) event.getSource()).getScene().lookup("#commandStatusModel");
+            commandStatusModel.setVisible(true);
+            // end
+        });
+        // END update Command status btn click
+
     }
-    
-   
-    
 
 }
