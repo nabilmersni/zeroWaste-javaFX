@@ -26,7 +26,12 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.nio.file.Files;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 import services.UserService;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import utils.UserInputValidation;
 import zerowaste.ZeroWaste;
 import javafx.scene.Node;
 
@@ -106,20 +111,24 @@ public class UpdateUserCardController implements Initializable {
         userToUpdate.setImgUrl(imageName);
 
         try {
-            userService.update(userToUpdate);
-            UsersListController.setupdateUserModelShow(0);
-            UserProfileController.setupdateUserModelShow(0);
+            if (UserInputValidation.updateAccountValidator(userToUpdate)) {
+                userService.update(userToUpdate);
+                UsersListController.setupdateUserModelShow(0);
+                UserProfileController.setupdateUserModelShow(0);
 
-            if (FxmlToLoad.equals("UserDashboard.fxml")) {
-                Parent root = FXMLLoader.load(getClass().getResource("/gui/UserDashboard.fxml"));
-                ZeroWaste.stage.getScene().setRoot(root);
-            } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlToLoad));
-                Parent root = loader.load();
-                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+                if (FxmlToLoad.equals("UserDashboard.fxml")) {
+                    Parent root = FXMLLoader.load(getClass().getResource("/gui/UserDashboard.fxml"));
+                    ZeroWaste.stage.getScene().setRoot(root);
+                } else {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlToLoad));
+                    Parent root = loader.load();
+                    Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
-                contentArea.getChildren().clear();
-                contentArea.getChildren().add(root);
+                    contentArea.getChildren().clear();
+                    contentArea.getChildren().add(root);
+                }
+                TrayNotificationAlert.notif("Update account", "Account updated successfully.",
+                        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
             }
 
         } catch (SQLException e) {

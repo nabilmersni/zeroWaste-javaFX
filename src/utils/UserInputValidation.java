@@ -8,6 +8,7 @@ import javafx.util.Duration;
 import services.UserService;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserInputValidation {
 
@@ -208,4 +209,77 @@ public class UserInputValidation {
         return true;
     }
 
+    public static boolean changePasswordValidator(User user, String oldPassword, String password, String rePassword) {
+
+        if (password.equals("") || rePassword.equals("")) {
+
+            TrayNotificationAlert.notif("change password", "Please fill out all required fields.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (!BCrypt.checkpw(oldPassword, user.getPassword().replace("$2y$", "$2a$"))) {
+            TrayNotificationAlert.notif("change password", "Please verify your old password",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (password.length() < 8) {
+
+            TrayNotificationAlert.notif("change password", "Your password must be at least 8 characters long.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (!password.equals(rePassword)) {
+
+            TrayNotificationAlert.notif("change password", "Passwords do NOT match.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean updateAccountValidator(User user) {
+        if (user.getFullname().equals("") || user.getTel().equals("")) {
+
+            TrayNotificationAlert.notif("Update Account", "Please fill out all required fields.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        Pattern fullnamePattern = Pattern.compile(".*\\d.*");
+        if (fullnamePattern.matcher(user.getFullname()).matches()) {
+
+            TrayNotificationAlert.notif("Update Account", "Your name cannot contain a number.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        if (user.getFullname().length() < 3) {
+
+            TrayNotificationAlert.notif("Update Account", "not a valid fullname.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        Pattern telPattern = Pattern.compile("[0-9]+");
+        if (!(telPattern.matcher(user.getTel()).matches() && user.getTel().length() >= 8)) {
+
+            TrayNotificationAlert.notif("Update Account", "not a valid phone number.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+            return false;
+        }
+
+        return true;
+    }
 }

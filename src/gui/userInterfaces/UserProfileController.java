@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,10 +24,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import services.UserService;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import utils.TrayNotificationAlert;
+import utils.UserInputValidation;
 import utils.UserSession;
 import javafx.scene.Node;
 import java.awt.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserProfileController implements Initializable {
 
@@ -63,6 +70,21 @@ public class UserProfileController implements Initializable {
     @FXML
     private ImageView userItemUpdateBtnImg;
 
+    @FXML
+    private HBox changePassModel;
+
+    @FXML
+    private Button confirmChangePassBtn;
+
+    @FXML
+    private PasswordField newPassField;
+
+    @FXML
+    private PasswordField newRepassField;
+
+    @FXML
+    private PasswordField oldPassField;
+
     User user;
     private static int updateUserModelShow = 0;
 
@@ -76,7 +98,7 @@ public class UserProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        changePassModel.setVisible(false);
         UserService userService = new UserService();
         try {
             // user = userService.getOneUser(UserSession.getInstance().getEmail());
@@ -129,7 +151,31 @@ public class UserProfileController implements Initializable {
 
     @FXML
     void changePass(ActionEvent event) {
+        changePassModel.setVisible(true);
+    }
 
+    @FXML
+    void confirmChangePass(MouseEvent event) {
+
+        if (UserInputValidation.changePasswordValidator(user, oldPassField.getText(),
+                newPassField.getText(),
+                newRepassField.getText())) {
+            UserService userService = new UserService();
+            try {
+                user.setPassword(BCrypt.hashpw(newPassField.getText(), BCrypt.gensalt()));
+                userService.update(user);
+                changePassModel.setVisible(false);
+                TrayNotificationAlert.notif("change password", "password changed successfully.",
+                        NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    void close_ChangePassModel(MouseEvent event) {
+        changePassModel.setVisible(false);
     }
 
     @FXML
