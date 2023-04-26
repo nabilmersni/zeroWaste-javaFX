@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import entities.Categorie_produit;
 import entities.Produit;
@@ -39,6 +40,7 @@ import utils.UserSession;
 import javafx.scene.Node;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import facebook4j.Facebook;
@@ -379,7 +381,20 @@ public class UserProductDetailsController implements Initializable {
         review.setProduct_id(Produit.getIdProduit());
         review.setTitle(titleInput.getText());
         review.setComment(commentInput.getText());
+
         review.setValue(value);
+
+        String comment = commentInput.getText();
+        if (containsBadWords(comment)) {
+            // Le commentaire contient des mots inappropriés, ne pas l'ajouter à la review
+            // Afficher un message à l'utilisateur pour lui demander de modifier son
+            // commentaire
+            TrayNotificationAlert.notif("Bad Word Detected", "you should not use bad words.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+            return;
+        } else {
+            review.setComment(comment);
+        }
 
         ProduitService produitService = new ProduitService();
         if (value != 0) {
@@ -401,6 +416,24 @@ public class UserProductDetailsController implements Initializable {
                     NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
 
         }
+    }
+
+    public boolean containsBadWords(String comment) {
+        try {
+            File file = new File("src/utils/badwords.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String badWord = scanner.nextLine();
+                if (comment.toLowerCase().contains(badWord.toLowerCase())) {
+                    scanner.close();
+                    return true;
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
