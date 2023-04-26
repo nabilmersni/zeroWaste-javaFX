@@ -27,6 +27,10 @@ public class Produit {
 
     private static int listAchat = 0;
 
+    private static int valueReviews = 0;
+
+    private static int ReviewId = 0;
+
     public Produit() {
     }
 
@@ -190,6 +194,22 @@ public class Produit {
 
     public static void setListAchat(int listAchat) {
         Produit.listAchat = listAchat;
+    }
+
+    public static int getValueReviews() {
+        return valueReviews;
+    }
+
+    public static void setValueReviews(int valueReviews) {
+        Produit.valueReviews = valueReviews;
+    }
+
+    public static int getReviewId() {
+        return ReviewId;
+    }
+
+    public static void setReviewId(int reviewId) {
+        ReviewId = reviewId;
     }
 
 }

@@ -92,6 +92,9 @@ public class UserProductDetailsController implements Initializable {
     private HBox submitBtn;
 
     @FXML
+    private HBox updateBtnContainer;
+
+    @FXML
     private TextField titleInput;
 
     @FXML
@@ -106,6 +109,10 @@ public class UserProductDetailsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addReviewsModel.setVisible(false);
+        updateBtnContainer.setVisible(false);
+
+        value = Produit.getValueReviews();
+        Produit.setValueReviews(0);
 
         try {
 
@@ -434,6 +441,49 @@ public class UserProductDetailsController implements Initializable {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @FXML
+    void update_review(MouseEvent event) {
+        Reviews review = new Reviews();
+
+        review.setId(Produit.getReviewId());
+        review.setTitle(titleInput.getText());
+        review.setComment(commentInput.getText());
+        review.setValue(Produit.getValueReviews());
+
+        String comment = commentInput.getText();
+        if (containsBadWords(comment)) {
+            // Le commentaire contient des mots inappropriés, ne pas l'ajouter à la review
+            // Afficher un message à l'utilisateur pour lui demander de modifier son
+            // commentaire
+            TrayNotificationAlert.notif("Bad Word Detected", "you should not use bad words.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+            return;
+        } else {
+            review.setComment(comment);
+        }
+
+        ProduitService produitService = new ProduitService();
+        if (Produit.getValueReviews() != 0) {
+            produitService.updateReview(review);
+
+            Parent fxml;
+            try {
+                fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/UserProductDetails.fxml"));
+                content_area.getChildren().removeAll();
+                content_area.getChildren().setAll(fxml);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TrayNotificationAlert.notif("Review", "Review added successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+        } else {
+            TrayNotificationAlert.notif("Review", "you should select a value.",
+                    NotificationType.WARNING, AnimationType.POPUP, Duration.millis(2500));
+
+        }
     }
 
 }

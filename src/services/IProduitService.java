@@ -50,4 +50,8 @@ public interface IProduitService {
   public List<Produit> getProductAchete(int userId);
 
   public void addReview(Reviews review);
+
+  public void supprimerReview(int idReview) throws SQLException;
+
+  public Reviews getOneUserReview(int userId, int productId);
 }

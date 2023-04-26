@@ -556,4 +556,58 @@ public class ProduitService implements IProduitService {
 
   }
 
+  public void supprimerReview(int idReview) throws SQLException {
+    String sql = "DELETE FROM reviews WHERE id = ?";
+    try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
+      pstmt.setInt(1, idReview);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public Reviews getOneUserReview(int userId, int productId) {
+    Reviews review = null;
+
+    try {
+      String req = "SELECT * FROM `reviews` where user_id = ? and product_id =? ";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, userId);
+      ps.setInt(2, productId);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (rs.next()) {
+        review = new Reviews();
+        review.setId(rs.getInt("id"));
+        review.setTitle(rs.getString("title"));
+        review.setComment(rs.getString("comment"));
+        review.setValue(rs.getInt("value"));
+      }
+      ps.close();
+
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du review : " + e.getMessage());
+    }
+    return review;
+  }
+
+  public void updateReview(Reviews review) {
+    try {
+      String req = "UPDATE `reviews` SET `title`=?,`comment`=?,`value`=? WHERE id=?";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setString(1, review.getTitle());
+      ps.setString(2, review.getComment());
+      ps.setInt(3, review.getValue());
+      ps.setInt(4, review.getId());
+
+      ps.executeUpdate();
+      System.out.println("Review updated successfully");
+      ps.close();
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du review : " + e.getMessage());
+    }
+
+  }
+
 }

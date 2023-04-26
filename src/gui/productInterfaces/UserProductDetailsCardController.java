@@ -685,7 +685,14 @@ public class UserProductDetailsCardController implements Initializable {
 
         // END - set comments details
 
-        Reviews review = new Reviews();
+        Reviews rv = new Reviews();
+        ProduitService ps = new ProduitService();
+        rv = ps.getOneUserReview(user.getId(), Produit.getIdProduit());
+        System.out.println(rv);
+        if (rv != null) {
+
+            addNewReviewBtn.setVisible(false);
+        }
         produitService = new ProduitService();
 
         List<Reviews> reviewsList = produitService.getAllComments(Produit.getIdProduit());
