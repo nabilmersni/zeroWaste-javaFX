@@ -7,8 +7,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
@@ -216,7 +218,7 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="nav-icon">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#open_notifModel" prefHeight="50.0" prefWidth="50.0" styleClass="nav-icon">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="10.0">
                      <image>
@@ -225,7 +227,7 @@
                   </ImageView>
                   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="20.0" styleClass="nav-notif-bg" translateX="-8.0" translateY="-14.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3" translateY="-1.0">
+                        <Text fx:id="totalNotif" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3" translateY="-1.0">
                            <font>
                               <Font name="Montserrat ExtraBold" size="15.0" />
                            </font>
@@ -457,5 +459,18 @@
             </AnchorPane>
          </children>
       </Pane>
+      <VBox fx:id="notifModel" alignment="CENTER" prefHeight="264.0" prefWidth="403.0" styleClass="notifContainer" translateX="850.0" translateY="65.0">
+         <children>
+            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="383.0" styleClass="product-card-scrollPane" stylesheets="@../assets/style/aliStyle.css">
+               <content>
+                  <GridPane fx:id="notifContainer">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

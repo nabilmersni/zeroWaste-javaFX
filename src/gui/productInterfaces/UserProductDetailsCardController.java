@@ -244,7 +244,7 @@ public class UserProductDetailsCardController implements Initializable {
         // System.out.println(produit);
 
         try {
-            found = produitService.productInFavList(produit.getId());
+            found = produitService.productInFavList(produit.getId(), user.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -782,7 +782,7 @@ public class UserProductDetailsCardController implements Initializable {
         }
 
         try {
-            found = produitService.productInFavList(produit.getId());
+            found = produitService.productInFavList(produit.getId(), user.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

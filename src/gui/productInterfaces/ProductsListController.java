@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 
 import entities.Achats;
 import entities.Categorie_produit;
+import entities.Notification;
 import entities.Produit;
 import entities.User;
 import javafx.fxml.FXML;
@@ -398,6 +399,13 @@ public class ProductsListController implements Initializable {
 
             TrayNotificationAlert.notif("Product", "Offer added successfully.",
                     NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+            Notification notif = new Notification();
+
+            notif.setContent("New Offer");
+            notif.setProduct_id(Produit.getIdProduit());
+
+            produitService.AddNewNotif(notif);
 
             offreModel.setVisible(false);
             reductionInput.clear();

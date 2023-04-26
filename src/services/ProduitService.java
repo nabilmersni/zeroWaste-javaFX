@@ -2,12 +2,14 @@ package services;
 
 import entities.Produit;
 import entities.Reviews;
+import entities.Notification;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -479,10 +481,11 @@ public class ProduitService implements IProduitService {
 
   }
 
-  public int productInFavList(int productID) throws SQLException {
-    String req = "SELECT * FROM `product_favoris` where product_id = ?";
+  public int productInFavList(int productID, int userId) throws SQLException {
+    String req = "SELECT * FROM `product_favoris` where product_id = ? and user_id=? ";
     PreparedStatement ps = conx.prepareStatement(req);
     ps.setInt(1, productID);
+    ps.setInt(2, userId);
 
     ResultSet rs = ps.executeQuery();
     int found = 0;
@@ -608,6 +611,95 @@ public class ProduitService implements IProduitService {
       System.out.println("Une erreur s'est produite lors de la récupération du review : " + e.getMessage());
     }
 
+  }
+
+  public List<Notification> getUserNotifications(int userId) {
+    List<Notification> notifList = new ArrayList<>();
+    try {
+      String query = "SELECT * FROM notification n WHERE NOT EXISTS " +
+          "(SELECT * FROM user_notification un " +
+          "WHERE un.notification_id = n.id AND un.user_id = ?)";
+
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, userId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      // Parcours du résultat de la requête
+      while (resultSet.next()) {
+        Notification notif = new Notification();
+        notif.setId(resultSet.getInt("id"));
+        notif.setProduct_id(resultSet.getInt("product_id"));
+        notif.setContent(resultSet.getString("content"));
+        notif.setDate(resultSet.getString("date"));
+
+        notifList.add(notif);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return notifList;
+
+  }
+
+  public void MakeAsReadNotif(int userId, int notifId) {
+    try {
+      String req = "INSERT INTO `user_notification`(`user_id`, `notification_id` ) VALUES (?,?)";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, userId);
+      ps.setInt(2, notifId);
+
+      ps.executeUpdate();
+      System.out.println("notif marked as read successfully");
+      ps.close();
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du notif : " + e.getMessage());
+    }
+
+  }
+
+  public void AddNewNotif(Notification notif) {
+    try {
+      String req = "INSERT INTO `notification`(`product_id`, `content`, `date` ) VALUES (?,?,?)";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setInt(1, notif.getProduct_id());
+      ps.setString(2, notif.getContent());
+
+      LocalDateTime currentDateTime = LocalDateTime.now();
+      java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(currentDateTime);
+      ps.setTimestamp(3, sqlTimestamp);
+
+      ps.executeUpdate();
+      System.out.println("notif added successfully");
+      ps.close();
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du notif : " + e.getMessage());
+    }
+
+  }
+
+  public int getTotalNotif(int userId) {
+    int total = 0;
+    try {
+      String query = "SELECT count(*) FROM notification n WHERE NOT EXISTS " +
+          "(SELECT * FROM user_notification un " +
+          "WHERE un.notification_id = n.id AND un.user_id = ?)";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, userId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        total = resultSet.getInt(1);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return total;
   }
 
 }

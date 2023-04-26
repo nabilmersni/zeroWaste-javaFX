@@ -3,6 +3,7 @@ package services;
 import java.sql.SQLException;
 import java.util.List;
 
+import entities.Notification;
 import entities.Produit;
 import entities.Reviews;
 
@@ -43,7 +44,7 @@ public interface IProduitService {
 
   public List<Produit> getProductFavList(int userId);
 
-  public int productInFavList(int productID) throws SQLException;
+  public int productInFavList(int productID, int userId) throws SQLException;
 
   public void removeProductFromFavoriteList(int idProduit, int userID) throws SQLException;
 
@@ -54,4 +55,13 @@ public interface IProduitService {
   public void supprimerReview(int idReview) throws SQLException;
 
   public Reviews getOneUserReview(int userId, int productId);
+
+  public List<Notification> getUserNotifications(int userId);
+
+  public void MakeAsReadNotif(int userId, int notifId);
+
+  public void AddNewNotif(Notification notif);
+
+  public int getTotalNotif(int userId);
+
 }

@@ -373,6 +373,17 @@
   -fx-cursor: hand;
 }
 
+.markasread {
+  -fx-background-color: #32bb6f;
+  -fx-background-radius: 10px;
+  -fx-border-radius: 10px;
+  -fx-cursor: hand;
+}
+
+.markasread:hover {
+  -fx-background-color: #2ba160;
+}
+
 .add-categoryCard-btn:hover {
   -fx-background-color: #397425;
 }
@@ -1070,4 +1081,11 @@
 
 .star {
   -fx-cursor: hand;
+}
+
+.notifContainer {
+  -fx-background-color: #fff;
+  -fx-background-radius: 10px;
+  -fx-border-radius: 10px;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.09), 35, 0.1, 0, 0);
 }

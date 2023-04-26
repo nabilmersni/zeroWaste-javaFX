@@ -3,13 +3,17 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import entities.Notification;
 import entities.Produit;
 import entities.User;
+import gui.productInterfaces.NotifItemController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
@@ -17,13 +21,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import services.ProduitService;
 import services.UserService;
 import utils.UserSession;
 import zerowaste.ZeroWaste;
@@ -120,6 +127,9 @@ public class UserDashboardController implements Initializable {
     private Text navFullname1;
 
     @FXML
+    private Text totalNotif;
+
+    @FXML
     private Circle donHisImg;
 
     @FXML
@@ -128,12 +138,23 @@ public class UserDashboardController implements Initializable {
     @FXML
     private Text userPointText;
 
+    @FXML
+    private GridPane notifContainer;
+
+    @FXML
+    private VBox notifModel;
+
+    private int notifModel_isOpen = 0;
+
+    User user = null;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        User user;
+        notifModel.setVisible(false);
+
         UserService userService = new UserService();
 
         try {
@@ -161,6 +182,34 @@ public class UserDashboardController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        ProduitService ps = new ProduitService();
+        totalNotif.setText("" + ps.getTotalNotif(user.getId()));
+        List<Notification> notifList = ps.getUserNotifications(user.getId());
+        int column = 0;
+        int row = 1;
+        try {
+            for (int i = 0; i < notifList.size(); i++) {
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/gui/productInterfaces/NotifItem.fxml"));
+                HBox notifItem = fxmlLoader.load();
+                NotifItemController notifController = fxmlLoader.getController();
+                notifController.setNotifData(notifList.get(i));
+
+                if (column == 1) {
+                    column = 0;
+                    ++row;
+                }
+                notifContainer.add(notifItem, column++, row);
+                // GridPane.setMargin(notifItem, new Insets(10));
+                GridPane.setMargin(notifItem, new Insets(0, 20, 20, 10));
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -559,6 +608,22 @@ public class UserDashboardController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    void open_notifModel(MouseEvent event) {
+        // notifModel.setVisible(true);
+        if (notifModel_isOpen == 0) {
+            notifModel.setVisible(true);
+            notifModel_isOpen = 1;
+            return;
+        }
+
+        if (notifModel_isOpen == 1) {
+            notifModel.setVisible(false);
+            notifModel_isOpen = 0;
+        }
+
     }
 
 }
