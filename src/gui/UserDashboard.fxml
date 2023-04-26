@@ -177,7 +177,7 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox fx:id="sideBarLogout" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="70.0">
+            <HBox fx:id="sideBarLogout" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="65.0">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>

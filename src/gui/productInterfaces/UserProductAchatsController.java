@@ -48,7 +48,7 @@ import facebook4j.FacebookException;
  *
  * @author ALI
  */
-public class UserProductFavorisController implements Initializable {
+public class UserProductAchatsController implements Initializable {
 
     @FXML
     private Pane content_area;
@@ -93,11 +93,11 @@ public class UserProductFavorisController implements Initializable {
 
         ProduitService produitService = new ProduitService();
         List<Produit> produits = new ArrayList<>();
-        // produits = produitService.getProductAchete(user.getId());
+        produits = produitService.getProductAchete(user.getId());
         // for (int i = 0; i < produits.size(); i++) {
         // System.out.println("produit acheté: " + produits.get(i));
         // }
-        produits = produitService.getProductFavList(user.getId());
+        // produits = produitService.getProductFavList(user.getId());
         int column = 0;
         int row = 1;
         try {

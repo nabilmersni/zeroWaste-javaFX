@@ -80,6 +80,9 @@ public class UserProductDetailsCardController implements Initializable {
     private HBox offreRow;
 
     @FXML
+    private HBox addNewReviewBtn;
+
+    @FXML
     private HBox rangeTotal1;
 
     @FXML
@@ -797,6 +800,12 @@ public class UserProductDetailsCardController implements Initializable {
                     NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
         }
 
+    }
+
+    @FXML
+    void open_addReviewModel(MouseEvent event) throws SQLException {
+        HBox addReviewsModel = (HBox) ((Node) event.getSource()).getScene().lookup("#addReviewsModel");
+        addReviewsModel.setVisible(true);
     }
 
 }

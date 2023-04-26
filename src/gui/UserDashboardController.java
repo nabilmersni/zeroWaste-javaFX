@@ -498,7 +498,7 @@ public class UserDashboardController implements Initializable {
 
     @FXML
     void open_achatList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/userInterfaces/UserProfile.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/productInterfaces/UserProductAchats.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 

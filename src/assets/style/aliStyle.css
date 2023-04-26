@@ -1067,3 +1067,7 @@
   -fx-font-size: 16px;
   -fx-font-weight: 600;
 }
+
+.star {
+  -fx-cursor: hand;
+}

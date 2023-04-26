@@ -46,4 +46,8 @@ public interface IProduitService {
   public int productInFavList(int productID) throws SQLException;
 
   public void removeProductFromFavoriteList(int idProduit, int userID) throws SQLException;
+
+  public List<Produit> getProductAchete(int userId);
+
+  public void addReview(Reviews review);
 }

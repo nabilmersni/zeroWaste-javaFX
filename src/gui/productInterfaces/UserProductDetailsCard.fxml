@@ -426,7 +426,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="308.0">
                            <children>
-                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="200.0" styleClass="addReview__btn">
+                              <HBox fx:id="addNewReviewBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#open_addReviewModel" prefHeight="45.0" prefWidth="200.0" styleClass="addReview__btn">
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="addReview__btnText" text="Add Your Review" />
                                  </children>

@@ -503,4 +503,57 @@ public class ProduitService implements IProduitService {
       System.out.println(e.getMessage());
     }
   }
+
+  public List<Produit> getProductAchete(int userId) {
+    List<Produit> productList = new ArrayList<>();
+    try {
+      String query = "SELECT DISTINCT p.* FROM produit p JOIN commands_produit cp ON p.id = cp.produit_id JOIN commands c On cp.commande_id = c.id JOIN achats a ON c.id = a.commande_id  WHERE c.user_id=? ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, userId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      // Parcours du résultat de la requête
+      while (resultSet.next()) {
+        Produit produit = new Produit();
+        produit.setId(resultSet.getInt("id"));
+        produit.setNom_produit(resultSet.getString("nom_produit"));
+        produit.setDescription(resultSet.getString("description"));
+        produit.setQuantite(resultSet.getInt("quantite"));
+        produit.setPrix_produit(resultSet.getFloat("prix_produit"));
+        produit.setImage(resultSet.getString("image"));
+        produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+        produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+        produit.setRemise(resultSet.getFloat("remise"));
+
+        productList.add(produit);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return productList;
+
+  }
+
+  public void addReview(Reviews review) {
+    try {
+      String req = "INSERT INTO `reviews`(`title`, `comment`, `user_id`, `product_id`, `value` ) VALUES (?,?,?,?,?)";
+      PreparedStatement ps = conx.prepareStatement(req);
+      ps.setString(1, review.getTitle());
+      ps.setString(2, review.getComment());
+      ps.setInt(3, review.getUser_id());
+      ps.setInt(4, review.getProduct_id());
+      ps.setInt(5, review.getValue());
+
+      ps.executeUpdate();
+      System.out.println("reviews added successfully");
+      ps.close();
+    } catch (SQLException e) {
+      System.out.println("Une erreur s'est produite lors de la récupération du review : " + e.getMessage());
+    }
+
+  }
+
 }

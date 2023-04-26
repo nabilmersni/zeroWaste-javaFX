@@ -25,6 +25,8 @@ public class Produit {
 
     private static double searchImageScore = -1;
 
+    private static int listAchat = 0;
+
     public Produit() {
     }
 
@@ -180,6 +182,14 @@ public class Produit {
 
     public static void setSearchImageScore(double searchImageScore) {
         Produit.searchImageScore = searchImageScore;
+    }
+
+    public static int getListAchat() {
+        return listAchat;
+    }
+
+    public static void setListAchat(int listAchat) {
+        Produit.listAchat = listAchat;
     }
 
 }
