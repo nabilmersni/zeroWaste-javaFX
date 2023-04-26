@@ -193,7 +193,12 @@ public class UserProductDetailsCardController implements Initializable {
     @FXML
     private ImageView reviewsBox_star11;
 
+    @FXML
+    private ImageView favBtn;
+
     private User user = null;
+
+    private int found = 0;
 
     /**
      * Initializes the controller class.
@@ -233,7 +238,18 @@ public class UserProductDetailsCardController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(produit);
+        // System.out.println(produit);
+
+        try {
+            found = produitService.productInFavList(produit.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (found == 1) {
+            Image fullFavImage = new Image("/assets/img/FullFav.png");
+            favBtn.setImage(fullFavImage);
+        }
 
         title.setText(produit.getNom_produit());
 
@@ -745,9 +761,41 @@ public class UserProductDetailsCardController implements Initializable {
     }
 
     @FXML
-    void addToFavoriteList(MouseEvent event) {
+    void addToFavoriteList(MouseEvent event) throws SQLException {
+        // set product details
         ProduitService produitService = new ProduitService();
-        produitService.addProductToFavoriteList(Produit.getIdProduit(), user.getId());
+        Produit produit = new Produit();
+        try {
+            produit = produitService.getOneProduct(Produit.getIdProduit());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            found = produitService.productInFavList(produit.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (found == 0) {
+            produitService.addProductToFavoriteList(Produit.getIdProduit(), user.getId());
+
+            Image FavImage = new Image("/assets/img/FullFav.png");
+            favBtn.setImage(FavImage);
+
+            TrayNotificationAlert.notif("Product", "Product added to your favorite List successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+        }
+        if (found == 1) {
+
+            produitService.removeProductFromFavoriteList(Produit.getIdProduit(), user.getId());
+
+            Image fullFavImage = new Image("/assets/img/Fav.png");
+            favBtn.setImage(fullFavImage);
+
+            TrayNotificationAlert.notif("Product", "Product removed from your favorite list successfully.",
+                    NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+        }
 
     }
 

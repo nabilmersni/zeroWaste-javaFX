@@ -28,7 +28,7 @@
                   <Image url="@../assets/img/logo.png" />
                </image>
             </ImageView>
-            <VBox maxWidth="-Infinity" minHeight="-Infinity" prefHeight="349.0" prefWidth="130.0" translateY="110.0">
+            <VBox maxWidth="-Infinity" minHeight="-Infinity" prefHeight="470.0" prefWidth="65.0" translateY="20.0">
                <children>
                   <HBox fx:id="dashboardBtn" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#open_dashboard" prefHeight="50.0" prefWidth="60.0">
                      <children>
@@ -103,6 +103,24 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
+                  <HBox fx:id="favBtn" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#open_favList" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links">
+                     <children>
+                        <ImageView fx:id="favIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/img/like.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                   <HBox fx:id="collectBtn" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#open_collectList" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links">
                      <children>
                         <ImageView fx:id="collectIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -139,9 +157,27 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
+                  <HBox fx:id="achatBtn" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#open_achatList" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links">
+                     <children>
+                        <ImageView fx:id="achatIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" translateX="5.0">
+                           <image>
+                              <Image url="@../assets/img/shopping-bag.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="25.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
             </VBox>
-            <HBox fx:id="sideBarLogout" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="185.0">
+            <HBox fx:id="sideBarLogout" alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#logout" prefHeight="50.0" prefWidth="200.0" styleClass="nav-links" translateY="70.0">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -39,7 +39,7 @@
                                  <children>
                                     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#addToFavoriteList" prefHeight="40.0" prefWidth="40.0" styleClass="productDetails__favBtn">
                                        <children>
-                                          <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="favBtn" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../assets/img/fav.png" />
                                              </image>

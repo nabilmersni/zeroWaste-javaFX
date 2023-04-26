@@ -40,4 +40,10 @@ public interface IProduitService {
   public int getTotalProductReviewsByStar(int productId, int value);
 
   public List<Reviews> getAllComments(int produitId);
+
+  public List<Produit> getProductFavList(int userId);
+
+  public int productInFavList(int productID) throws SQLException;
+
+  public void removeProductFromFavoriteList(int idProduit, int userID) throws SQLException;
 }

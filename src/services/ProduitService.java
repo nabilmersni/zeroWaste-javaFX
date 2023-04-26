@@ -446,4 +446,61 @@ public class ProduitService implements IProduitService {
 
   }
 
+  public List<Produit> getProductFavList(int userId) {
+    List<Produit> productList = new ArrayList<>();
+    try {
+      String query = "SELECT * FROM produit p JOIN product_favoris f ON p.id = f.product_id WHERE f.user_id=? ";
+      PreparedStatement preparedStatement = conx.prepareStatement(query);
+      preparedStatement.setInt(1, userId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+
+      // Parcours du résultat de la requête
+      while (resultSet.next()) {
+        Produit produit = new Produit();
+        produit.setId(resultSet.getInt("id"));
+        produit.setNom_produit(resultSet.getString("nom_produit"));
+        produit.setDescription(resultSet.getString("description"));
+        produit.setQuantite(resultSet.getInt("quantite"));
+        produit.setPrix_produit(resultSet.getFloat("prix_produit"));
+        produit.setImage(resultSet.getString("image"));
+        produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+        produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
+        produit.setRemise(resultSet.getFloat("remise"));
+
+        productList.add(produit);
+      }
+      preparedStatement.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return productList;
+
+  }
+
+  public int productInFavList(int productID) throws SQLException {
+    String req = "SELECT * FROM `product_favoris` where product_id = ?";
+    PreparedStatement ps = conx.prepareStatement(req);
+    ps.setInt(1, productID);
+
+    ResultSet rs = ps.executeQuery();
+    int found = 0;
+    if (rs.next()) {
+      found = 1;
+    }
+    ps.close();
+    return found;
+  }
+
+  public void removeProductFromFavoriteList(int idProduit, int userID) throws SQLException {
+    String sql = "DELETE FROM product_favoris WHERE product_id = ? and user_id=?";
+    try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
+      pstmt.setInt(1, idProduit);
+      pstmt.setInt(2, userID);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
 }
