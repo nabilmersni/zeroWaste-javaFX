@@ -55,6 +55,74 @@ public class FundrisingService implements IFundrisingService  {
     
     }
 
+    @Override
+    public List<Fundrising> getCompletedFunds()  {
+      List<Fundrising> fundstList = new ArrayList<>();
+      try {
+          String query = "SELECT * FROM fundrising where etat = ? ";
+          PreparedStatement ps = conx.prepareStatement(query);
+          ps.setString(1, "Completed");
+          ResultSet resultSet = ps.executeQuery();
+    
+          // Parcours du résultat de la requête
+          while (resultSet.next()) {
+              Fundrising funds = new Fundrising();
+              funds.setId(resultSet.getInt("id"));
+              funds.setTitre_don(resultSet.getString("titre_don"));
+              funds.setDescription_don(resultSet.getString("description_don"));
+              funds.setImage(resultSet.getString("image_don"));
+              funds.setDate_don(resultSet.getDate("date_don"));
+              funds.setDate_don_limite(resultSet.getDate("date_don_limite"));
+              funds.setEtat(resultSet.getString("etat"));
+              funds.setObjectif(resultSet.getInt("objectif"));
+              funds.setTotal(resultSet.getInt("total"));
+    
+              fundstList.add(funds);
+          }
+          ps.close();
+  
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+      
+      return fundstList;
+    
+    }
+
+    @Override
+    public List<Fundrising> getInProgressFunds()  {
+      List<Fundrising> fundstList = new ArrayList<>();
+      try {
+          String query = "SELECT * FROM fundrising where etat = ? ";
+          PreparedStatement ps = conx.prepareStatement(query);
+          ps.setString(1, "In progress");
+          ResultSet resultSet = ps.executeQuery();
+    
+          // Parcours du résultat de la requête
+          while (resultSet.next()) {
+              Fundrising funds = new Fundrising();
+              funds.setId(resultSet.getInt("id"));
+              funds.setTitre_don(resultSet.getString("titre_don"));
+              funds.setDescription_don(resultSet.getString("description_don"));
+              funds.setImage(resultSet.getString("image_don"));
+              funds.setDate_don(resultSet.getDate("date_don"));
+              funds.setDate_don_limite(resultSet.getDate("date_don_limite"));
+              funds.setEtat(resultSet.getString("etat"));
+              funds.setObjectif(resultSet.getInt("objectif"));
+              funds.setTotal(resultSet.getInt("total"));
+    
+              fundstList.add(funds);
+          }
+          ps.close();
+  
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+      
+      return fundstList;
+    
+    }
+
     public Fundrising getOneFund(int idFund) throws SQLException {
       String req = "SELECT * FROM `fundrising` where id = ?";
       PreparedStatement ps = conx.prepareStatement(req);

@@ -11,6 +11,10 @@ public interface IFundrisingService {
 
     public List<Fundrising> getAllFunds();
 
+    public List<Fundrising> getCompletedFunds();
+
+    public List<Fundrising> getInProgressFunds();
+
     public void ajouterFunds(Fundrising funds);
   
     public void supprimerFunds(int id) throws SQLException;

@@ -90,7 +90,7 @@ public class UserFundrisingCardController implements Initializable {
        add_historyBtn.setId(String.valueOf(fundrising.getId()));
 
        add_historyBtn.setOnMouseClicked(event -> {
-           System.out.println("ID du fund à donaqsdqsd : " + fundrising.getId());
+           System.out.println("ID du fund to donate : " + fundrising.getId());
            Fundrising.setIdFund(fundrising.getId());
            
            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddDonHistoryCard.fxml"));

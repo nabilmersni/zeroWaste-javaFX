@@ -1,19 +1,27 @@
 package gui.fundraisingInterfaces;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ResourceBundle;
+
+import org.apache.commons.collections4.list.NodeCachingLinkedList;
+
 import entities.DonHistory;
 import entities.Fundrising;
 import entities.User;
+import io.grpc.channelz.v1.GetSubchannelRequest;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import services.IFundrisingService;
 import services.UserService;
@@ -21,6 +29,7 @@ import utils.UserSession;
 import services.DonHistoryService;
 import services.FundrisingService;
 import services.IDonHistoryService;
+import javafx.scene.Node;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -51,6 +60,9 @@ public class AddDonHistoryCardController implements Initializable {
 
     @FXML
     private HBox commentInputErrorBox;
+
+    @FXML
+    private Pane content_area;
 
     User currentUser;
     Fundrising fund;
@@ -124,7 +136,7 @@ public class AddDonHistoryCardController implements Initializable {
         fundrising.setTotal(amountRaised);
         fundrisingService.updateTotal(fundrising);
 
-        if (amountRaised > fundrising.getObjectif()) {
+        if (amountRaised >= fundrising.getObjectif()) {
             fundrisingService.updateEtat(fundrising);
         }
 
@@ -137,6 +149,20 @@ public class AddDonHistoryCardController implements Initializable {
                     message)
                     .create();
         System.out.println("SMS envoyé : " + twilioMessage.getSid());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserFundrisingsList.fxml"));
+            try {
+                Parent root = loader.load();
+                // Accéder à la pane content_area depuis le controller de
+         
+                Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
+
+                // Vider la pane et afficher le contenu de ProductsList.fxml
+                contentArea.getChildren().clear();
+                contentArea.getChildren().add(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
     }

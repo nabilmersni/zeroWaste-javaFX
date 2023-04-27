@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -48,6 +49,22 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </HBox>
+
+            <Text fill="#97d158" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sort-text" text="Sort by:">
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Text>
+            <ComboBox fx:id="statusInput" maxHeight="-Infinity" minHeight="-Infinity" minWidth="150.0" onAction="#statusChange" prefHeight="40.0" promptText="All" styleClass="product__add-comboBox" stylesheets="@../../assets/style/aliStyle.css" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="748.0" layoutY="565.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#excelBtn" prefHeight="60.0" prefWidth="60.0" styleClass="pdfBtn" stylesheets="@../../assets/style/aliStyle.css" translateX="200.0" translateY="-430.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/excel.png" />
+               </image>
+            </ImageView>
          </children>
       </HBox>
    </children>

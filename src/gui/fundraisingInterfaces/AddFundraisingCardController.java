@@ -292,7 +292,7 @@ public class AddFundraisingCardController implements Initializable {
             try {
                 Parent root = loader.load();
                 // Accéder à la pane content_area depuis le controller de
-                // OneProductListCard.fxml
+         
                 Pane contentArea = (Pane) ((Node) event.getSource()).getScene().lookup("#content_area");
 
                 // Vider la pane et afficher le contenu de ProductsList.fxml
