@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="700.0" style="-fx-background-color: #fff;" stylesheets="@../../assets/style/aliStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.collectInterfaces.UserCommentItemController">
+   <children>
+      <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="700.0">
+         <children>
+            <ImageView fx:id="commentStar1" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="commentStar2" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="commentStar3" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="commentStar4" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/star.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fx:id="commentStar5" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/img/star.png" />
+               </image>
+            </ImageView>
+            <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="555.0">
+               <children>
+                  <HBox fx:id="deleteReview" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/trash.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="editReview" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="46.0" styleClass="product__card-btns">
+                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/edit.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="35.0" prefWidth="700.0">
+         <children>
+            <Text fx:id="title" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="addReview__btnText" text="Title Title Title" />
+         </children>
+      </HBox>
+      <HBox prefHeight="50.0" prefWidth="700.0">
+         <children>
+            <Text fx:id="comment" fill="#32594a" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="comment_desc" text="comment comment comment comment  comment comment comment comment " wrappingWidth="407.52796936035156" />
+         </children>
+      </HBox>
+      <HBox prefHeight="45.0" prefWidth="700.0">
+         <children>
+            <HBox prefHeight="45.0" prefWidth="591.0">
+               <children>
+                  <Text fx:id="date" fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="comment_dateAjout" text="10-03-2023" />
+                  <Text fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="comment_dateAjout" text="  par  " />
+                  <Text fx:id="userName" fill="#5ba890" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="comment_dateAjout" text="ALi" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="306.0">
+               <children>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/img/check-mark.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Text fill="#43882b" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="comment_dateAjout" text="Verified purchase" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <Line endX="572.0" startX="-100.0" stroke="#defee6" strokeWidth="2.0" />
+   </children>
+</VBox>

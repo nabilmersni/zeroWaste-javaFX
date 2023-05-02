@@ -344,7 +344,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private void open_collectList(MouseEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/collectInterfaces/CollectList.fxml"));
+        Parent fxml = FXMLLoader.load(getClass().getResource("/gui/collectInterfaces/ProductsList.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
