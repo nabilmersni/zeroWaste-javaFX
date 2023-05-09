@@ -3,7 +3,7 @@ package gui.productInterfaces;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import entities.Produit;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -78,7 +78,7 @@ public class OneProductListCardController {
     @FXML
     private HBox priceHbox;
 
-    public void setProductData(Produit produit) {
+    public void setProductData(Collecte produit) {
         float prixApresOffre = 0;
 
         if (produit.getRemise() == 0) {
@@ -145,9 +145,9 @@ public class OneProductListCardController {
 
         editProduit.setOnMouseClicked(event -> {
             System.out.println("ID du produit à modifier : " + produit.getId());
-            Produit.setIdProduit(produit.getId());
+            Collecte.setIdProduit(produit.getId());
 
-            Produit.actionTest = 1; // pour afficher le bouton update
+            Collecte.actionTest = 1; // pour afficher le bouton update
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/AddProduct.fxml"));
             try {
@@ -171,7 +171,7 @@ public class OneProductListCardController {
 
         qrCodeProduit.setOnMouseClicked(event -> {
             System.out.println("ID du produit à générer qr Code : " + produit.getId());
-            Produit.setIdProduit(produit.getId());
+            Collecte.setIdProduit(produit.getId());
 
             String text = "Product ID: " + produit.getId() + "\nProduct Name: " + produit.getNom_produit()
                     + "\nProduct Description: " + produit.getDescription() + "\nProduct Price: "
@@ -207,7 +207,7 @@ public class OneProductListCardController {
 
         offerProduit.setOnMouseClicked(event -> {
             System.out.println("ID du produit à créer une offre : " + produit.getId());
-            Produit.setIdProduit(produit.getId());
+            Collecte.setIdProduit(produit.getId());
 
             HBox offreModel = (HBox) ((Node) event.getSource()).getScene().lookup("#offreModel");
             offreModel.setVisible(true);

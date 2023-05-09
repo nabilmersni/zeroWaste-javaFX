@@ -3,7 +3,7 @@ package gui.productInterfaces;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import entities.Categorie_produit;
+import entities.Categorie_Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,7 +39,7 @@ public class OneCategoriesListCardController {
     @FXML
     private Text nomCategorie;
 
-    public void setCategoryData(Categorie_produit category) {
+    public void setCategoryData(Categorie_Collecte category) {
         // Instancier le service de categorie
         ICategorie_produitService categoryService = new Categorie_produitService();
 
@@ -87,9 +87,9 @@ public class OneCategoriesListCardController {
 
         editCategory.setOnMouseClicked(event -> {
             System.out.println("ID du category à modifier : " + category.getId());
-            Categorie_produit.setIdCategory(category.getId());
+            Categorie_Collecte.setIdCategory(category.getId());
 
-            Categorie_produit.actionTest = 1; // pour afficher le bouton update
+            Categorie_Collecte.actionTest = 1; // pour afficher le bouton update
             ProductsListController.setCategoryModelShow(1);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/productInterfaces/ProductsList.fxml"));

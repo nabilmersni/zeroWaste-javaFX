@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import entities.Commands;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 
 import javafx.fxml.FXML;
@@ -60,7 +60,7 @@ public class NotifItemController {
     public void setNotifData(Notification notif) {
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         try {
             produit = produitService.getOneProduct(notif.getProduct_id());
         } catch (SQLException e) {

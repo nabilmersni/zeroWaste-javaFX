@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import entities.Categorie_produit;
-import entities.Produit;
+import entities.Categorie_Collecte;
+import entities.Collecte;
 import entities.Reviews;
 import entities.User;
 import javafx.fxml.FXML;
@@ -111,8 +111,8 @@ public class UserProductDetailsController implements Initializable {
         addReviewsModel.setVisible(false);
         updateBtnContainer.setVisible(false);
 
-        value = Produit.getValueReviews();
-        Produit.setValueReviews(0);
+        value = Collecte.getValueReviews();
+        Collecte.setValueReviews(0);
 
         try {
 
@@ -385,7 +385,7 @@ public class UserProductDetailsController implements Initializable {
         Reviews review = new Reviews();
 
         review.setUser_id(user.getId());
-        review.setProduct_id(Produit.getIdProduit());
+        review.setProduct_id(Collecte.getIdProduit());
         review.setTitle(titleInput.getText());
         review.setComment(commentInput.getText());
 
@@ -447,10 +447,10 @@ public class UserProductDetailsController implements Initializable {
     void update_review(MouseEvent event) {
         Reviews review = new Reviews();
 
-        review.setId(Produit.getReviewId());
+        review.setId(Collecte.getReviewId());
         review.setTitle(titleInput.getText());
         review.setComment(commentInput.getText());
-        review.setValue(Produit.getValueReviews());
+        review.setValue(Collecte.getValueReviews());
 
         String comment = commentInput.getText();
         if (containsBadWords(comment)) {
@@ -465,7 +465,7 @@ public class UserProductDetailsController implements Initializable {
         }
 
         CollectService produitService = new CollectService();
-        if (Produit.getValueReviews() != 0) {
+        if (Collecte.getValueReviews() != 0) {
             produitService.updateReview(review);
 
             Parent fxml;

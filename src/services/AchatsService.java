@@ -2,7 +2,7 @@ package services;
 
 import entities.Achats;
 import entities.Coupon;
-import entities.Produit;
+import entities.Collecte;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -99,8 +99,8 @@ public class AchatsService implements IAchatsService {
     return achats;
   }
 
-  public List<Produit> getAllProducts(int commande_id) {
-    List<Produit> produitList = new ArrayList<>();
+  public List<Collecte> getAllProducts(int commande_id) {
+    List<Collecte> produitList = new ArrayList<>();
     try {
       String query = "SELECT * FROM produit p JOIN commands_produit c ON p.id = c.produit_id WHERE c.commande_id=? ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
@@ -109,7 +109,7 @@ public class AchatsService implements IAchatsService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
 
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));

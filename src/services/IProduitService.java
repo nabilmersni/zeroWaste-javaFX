@@ -4,35 +4,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 import entities.Notification;
-import entities.Produit;
+import entities.Collecte;
 import entities.Reviews;
 
 public interface IProduitService {
 
-  public List<Produit> getAllProducts();
+  public List<Collecte> getAllProducts();
 
-  public void ajouter(Produit produit);
+  public void ajouter(Collecte produit);
 
   public void supprimer(int idProduit) throws SQLException;
 
   public String getCategory(int idCategory);
 
-  public Produit getOneProduct(int idProduct) throws SQLException;
+  public Collecte getOneProduct(int idProduct) throws SQLException;
 
-  public void updateProduct(Produit produit);
+  public void updateProduct(Collecte produit);
 
-  public List<Produit> searchProducts(String search);
+ public List<Collecte> searchProducts(String search);
 
-  public List<Produit> sortProducts(int value, int idCategory); // 0: sort by stock *** 1: sort by category *** 2: sort
+  public List<Collecte> sortProducts(int value, int idCategory); // 0: sort by stock *** 1: sort by category *** 2: sort
                                                                 // by stock and category
 
-  public void AddProductOffer(Produit produit);
+  public void AddProductOffer(Collecte produit);
 
-  public List<Produit> sortProductsUser(String sortBy, String comboBoxData);
+  public List<Collecte> sortProductsUser(String sortBy, String comboBoxData);
 
-  public List<Produit> getPromotionalProducts();
+  public List<Collecte> getPromotionalProducts();
 
-  public List<Produit> searchProductByImage(String etiquette, double score);
+  public List<Collecte> searchProductByImage(String etiquette, double score);
 
   public void addProductToFavoriteList(int produitId, int userId);
 
@@ -42,13 +42,13 @@ public interface IProduitService {
 
   public List<Reviews> getAllComments(int produitId);
 
-  public List<Produit> getProductFavList(int userId);
+  public List<Collecte> getProductFavList(int userId);
 
   public int productInFavList(int productID, int userId) throws SQLException;
 
   public void removeProductFromFavoriteList(int idProduit, int userID) throws SQLException;
 
-  public List<Produit> getProductAchete(int userId);
+  public List<Collecte> getProductAchete(int userId);
 
   public void addReview(Reviews review);
 

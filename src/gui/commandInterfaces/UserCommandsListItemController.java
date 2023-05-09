@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 import entities.Achats;
 import entities.Commands;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,7 +78,7 @@ public class UserCommandsListItemController {
     @FXML
     private ImageView img;
 
-    public void setCommandProduit(Produit produit, int command_id) {
+    public void setCommandProduit(Collecte produit, int command_id) {
 
         nomp.setText(produit.getNom_produit());
         pointp.setText("" + produit.getPrix_point_produit());
@@ -146,7 +146,7 @@ public class UserCommandsListItemController {
             // tester si la quantite_c est inférieure à la quantite totale disponible pour
             // le produit
             ProduitService produitService = new ProduitService();
-            Produit p1 = new Produit();
+            Collecte p1 = new Collecte();
             try {
                 p1 = produitService.getOneProduct(produit.getId());
             } catch (SQLException e) {
@@ -184,7 +184,7 @@ public class UserCommandsListItemController {
         moin.setOnMouseClicked(event -> {
             // System.out.println("ID du produit a ete incrimenté : " + produit.getId());
             ProduitService produitService = new ProduitService();
-            Produit p1 = new Produit();
+            Collecte p1 = new Collecte();
             try {
                 p1 = produitService.getOneProduct(produit.getId());
             } catch (SQLException e) {

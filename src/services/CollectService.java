@@ -1,6 +1,6 @@
 package services;
 
-import entities.Produit;
+import entities.Collecte;
 import entities.Reviews;
 import entities.Notification;
 
@@ -25,23 +25,23 @@ public class CollectService implements IProduitService {
   }
 
   @Override
-  public List<Produit> getAllProducts() {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> getAllProducts() {
+    List<Collecte> productList = new ArrayList<>();
     try {
-      String query = "SELECT * FROM collect ORDER BY id DESC ";
+      String query = "SELECT * FROM collecte ORDER BY id DESC ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
       ResultSet resultSet = preparedStatement.executeQuery();
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
-        produit.setNom_produit(resultSet.getString("nom_produit"));
+        produit.setNom_produit(resultSet.getString("nom_collecte"));
         produit.setDescription(resultSet.getString("description"));
         produit.setQuantite(resultSet.getInt("quantite"));
-        produit.setPrix_produit(resultSet.getFloat("prix_produit"));
-        produit.setImage(resultSet.getString("image"));
-        produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+        produit.setPrix_produit(resultSet.getFloat("etat"));
+        produit.setImage(resultSet.getString("image_collect"));
+        produit.setCategorie_produit_id(resultSet.getInt("collecte_categorie_id"));
         produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
         produit.setRemise(resultSet.getFloat("remise"));
 
@@ -59,7 +59,7 @@ public class CollectService implements IProduitService {
 
   @Override
   public void supprimer(int idProduit) throws SQLException {
-    String sql = "DELETE FROM collect WHERE id = ?";
+    String sql = "DELETE FROM collecte WHERE id = ?";
     try (PreparedStatement pstmt = conx.prepareStatement(sql)) {
       pstmt.setInt(1, idProduit);
       pstmt.executeUpdate();
@@ -69,9 +69,9 @@ public class CollectService implements IProduitService {
   }
 
   @Override
-  public void ajouter(Produit produit) {
+  public void ajouter(Collecte produit) {
     try {
-      String req = "INSERT INTO `collect`(`nom_produit`, `description`, `quantite`, `prix_produit`, `image`, `categorie_produit_id`, `prix_point_produit`, `etiquette`, `score` ) VALUES (?,?,?,?,?,?,?,?,?)";
+      String req = "INSERT INTO `collecte`(`nom_collecte`, `description`, `quantite`, `etat`, `image_collect`, `collecte_categorie_id`, `prix_point_produit`, `etiquette`, `score` ) VALUES (?,?,?,?,?,?,?,?,?)";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setString(1, produit.getNom_produit());
       ps.setString(2, produit.getDescription());
@@ -95,12 +95,12 @@ public class CollectService implements IProduitService {
     String categoryName = "";
 
     try {
-      String req = "SELECT nom_categorie FROM `categorie_produit` where id = ?";
+      String req = "SELECT nom_collect_cat FROM `collecte_categorie` where id = ?";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setInt(1, idCategory);
       ResultSet rs = ps.executeQuery();
       rs.next();
-      categoryName = rs.getString("nom_categorie");
+      categoryName = rs.getString("nom_collect_cat");
       ps.close();
     } catch (SQLException e) {
       System.out.println("Une erreur s'est produite lors de la récupération du produit : " + e.getMessage());
@@ -109,22 +109,22 @@ public class CollectService implements IProduitService {
     return categoryName;
   }
 
-  public Produit getOneProduct(int idProduct) throws SQLException {
+  public Collecte getOneProduct(int idProduct) throws SQLException {
     String req = "SELECT * FROM `collet` where id = ?";
     PreparedStatement ps = conx.prepareStatement(req);
     ps.setInt(1, idProduct);
 
     ResultSet rs = ps.executeQuery();
-    Produit produit = new Produit();
+    Collecte produit = new Collecte();
 
     while (rs.next()) {
       produit.setId(rs.getInt("id"));
-      produit.setNom_produit(rs.getString("nom_produit"));
+      produit.setNom_produit(rs.getString("nom_collecte"));
       produit.setDescription(rs.getString("description"));
       produit.setQuantite(rs.getInt("quantite"));
-      produit.setPrix_produit(rs.getFloat("prix_produit"));
-      produit.setImage(rs.getString("image"));
-      produit.setCategorie_produit_id(rs.getInt("categorie_produit_id"));
+      produit.setPrix_produit(rs.getFloat("etat"));
+      produit.setImage(rs.getString("image_collect"));
+      produit.setCategorie_produit_id(rs.getInt("collecte_categorie_id"));
       produit.setPrix_point_produit(rs.getInt("prix_point_produit"));
       produit.setRemise(rs.getInt("remise"));
     }
@@ -133,9 +133,9 @@ public class CollectService implements IProduitService {
   }
 
   @Override
-  public void updateProduct(Produit produit) {
+  public void updateProduct(Collecte produit) {
     try {
-      String req = "UPDATE `collect` SET `nom_produit`=?,`description`=?,`quantite`=?,`prix_produit`=?,`image`=?,`categorie_produit_id`=?,`prix_point_produit`=? , `etiquette`=?, `score`=? WHERE id=?";
+      String req = "UPDATE `collecte` SET `nom_collecte`=?,`description`=?,`quantite`=?,`etat`=?,`image_collect`=?,`collecte_categorie_id`=?,`prix_point_produit`=? , `etiquette`=?, `score`=? WHERE id=?";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setString(1, produit.getNom_produit());
       ps.setString(2, produit.getDescription());
@@ -148,7 +148,7 @@ public class CollectService implements IProduitService {
       ps.setDouble(9, produit.getScore());
       ps.setInt(10, produit.getId());
       ps.executeUpdate();
-      System.out.println("Product updated successfully");
+      System.out.println("Collecte updated successfully");
       ps.close();
     } catch (SQLException e) {
       System.out.println("Une erreur s'est produite lors de la récupération du produit : " + e.getMessage());
@@ -156,10 +156,10 @@ public class CollectService implements IProduitService {
 
   }
 
-  public List<Produit> searchProducts(String search) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> searchProducts(String search) {
+    List<Collecte> productList = new ArrayList<>();
     try {
-      String query = "SELECT * FROM collect WHERE nom_produit LIKE ? OR description LIKE ? OR prix_produit LIKE ?";
+      String query = "SELECT * FROM collecte WHERE nom_produit LIKE ? OR description LIKE ? OR etat LIKE ?";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
       preparedStatement.setString(1, "%" + search + "%");
       preparedStatement.setString(2, "%" + search + "%");
@@ -168,14 +168,14 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
         produit.setQuantite(resultSet.getInt("quantite"));
-        produit.setPrix_produit(resultSet.getFloat("prix_produit"));
-        produit.setImage(resultSet.getString("image"));
-        produit.setCategorie_produit_id(resultSet.getInt("categorie_produit_id"));
+        produit.setPrix_produit(resultSet.getFloat("etat"));
+        produit.setImage(resultSet.getString("image_collect"));
+        produit.setCategorie_produit_id(resultSet.getInt("collecte_categorie_id"));
         produit.setPrix_point_produit(resultSet.getInt("prix_point_produit"));
         produit.setRemise(resultSet.getFloat("remise"));
 
@@ -190,21 +190,21 @@ public class CollectService implements IProduitService {
     return productList;
   }
 
-  public List<Produit> sortProducts(int value, int idCategory) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> sortProducts(int value, int idCategory) {
+    List<Collecte> productList = new ArrayList<>();
     try {
       String query = "";
       PreparedStatement preparedStatement;
 
       if (value == 1 && idCategory == -1) { // sort by stock
-        query = "SELECT * FROM collect ORDER BY quantite asc";
+        query = "SELECT * FROM collecte ORDER BY quantite asc";
         preparedStatement = conx.prepareStatement(query);
       } else if (value == 0 && idCategory != 0) { // filter by category
-        query = "SELECT * FROM collect where categorie_produit_id = ? ";
+        query = "SELECT * FROM collecte where categorie_produit_id = ? ";
         preparedStatement = conx.prepareStatement(query);
         preparedStatement.setInt(1, idCategory);
       } else { // sort by stock and category
-        query = "SELECT * FROM collect where categorie_produit_id = ? ORDER BY quantite asc";
+        query = "SELECT * FROM collecte where categorie_produit_id = ? ORDER BY quantite asc";
         preparedStatement = conx.prepareStatement(query);
         preparedStatement.setInt(1, idCategory);
       }
@@ -212,7 +212,7 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
@@ -233,9 +233,9 @@ public class CollectService implements IProduitService {
     return productList;
   }
 
-  public void AddProductOffer(Produit produit) {
+  public void AddProductOffer(Collecte produit) {
     try {
-      String req = "UPDATE `collect` SET `remise`=? WHERE id=? ";
+      String req = "UPDATE `collecte` SET `remise`=? WHERE id=? ";
       PreparedStatement ps = conx.prepareStatement(req);
       ps.setFloat(1, produit.getRemise());
       ps.setInt(2, produit.getId());
@@ -247,23 +247,23 @@ public class CollectService implements IProduitService {
     }
   }
 
-  public List<Produit> sortProductsUser(String sortBy, String comboBoxData) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> sortProductsUser(String sortBy, String comboBoxData) {
+    List<Collecte> productList = new ArrayList<>();
     try {
       String query = "";
       PreparedStatement preparedStatement;
 
       if (sortBy.equals("price")) {
         if (comboBoxData.equals("Price - Low To High")) {
-          query = "SELECT * FROM collect ORDER BY prix_produit asc";
+          query = "SELECT * FROM collecte ORDER BY prix_produit asc";
         } else if (comboBoxData.equals("Price - High To Low")) {
           query = "SELECT * FROM collect ORDER BY prix_produit desc";
         }
       } else if (sortBy.equals("points")) {
         if (comboBoxData.equals("Points - Low To High")) {
-          query = "SELECT * FROM collect ORDER BY prix_point_produit asc";
+          query = "SELECT * FROM collecte ORDER BY prix_point_produit asc";
         } else if (comboBoxData.equals("Points - High To Low")) {
-          query = "SELECT * FROM collect ORDER BY prix_point_produit desc";
+          query = "SELECT * FROM collecte ORDER BY prix_point_produit desc";
         }
       }
 
@@ -273,7 +273,7 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
@@ -295,16 +295,16 @@ public class CollectService implements IProduitService {
     return productList;
   }
 
-  public List<Produit> getPromotionalProducts() {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> getPromotionalProducts() {
+    List<Collecte> productList = new ArrayList<>();
     try {
-      String query = "SELECT * FROM collect WHERE remise != 0 ORDER BY id DESC  ";
+      String query = "SELECT * FROM collecte WHERE remise != 0 ORDER BY id DESC  ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
       ResultSet resultSet = preparedStatement.executeQuery();
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
@@ -327,10 +327,10 @@ public class CollectService implements IProduitService {
 
   }
 
-  public List<Produit> searchProductByImage(String etiquette, double score) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> searchProductByImage(String etiquette, double score) {
+    List<Collecte> productList = new ArrayList<>();
     try {
-      String query = "SELECT * FROM collect WHERE etiquette=? and score=? ORDER BY id DESC ";
+      String query = "SELECT * FROM collecte WHERE etiquette=? and score=? ORDER BY id DESC ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
       preparedStatement.setString(1, etiquette);
       preparedStatement.setDouble(2, score);
@@ -338,7 +338,7 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
@@ -448,8 +448,8 @@ public class CollectService implements IProduitService {
 
   }
 
-  public List<Produit> getProductFavList(int userId) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> getProductFavList(int userId) {
+    List<Collecte> productList = new ArrayList<>();
     try {
       String query = "SELECT * FROM collect p JOIN product_favoris f ON p.id = f.product_id WHERE f.user_id=? ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
@@ -458,7 +458,7 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));
@@ -507,8 +507,8 @@ public class CollectService implements IProduitService {
     }
   }
 
-  public List<Produit> getProductAchete(int userId) {
-    List<Produit> productList = new ArrayList<>();
+  public List<Collecte> getProductAchete(int userId) {
+    List<Collecte> productList = new ArrayList<>();
     try {
       String query = "SELECT DISTINCT p.* FROM produit p JOIN commands_produit cp ON p.id = cp.produit_id JOIN commands c On cp.commande_id = c.id JOIN achats a ON c.id = a.commande_id  WHERE c.user_id=? ";
       PreparedStatement preparedStatement = conx.prepareStatement(query);
@@ -517,7 +517,7 @@ public class CollectService implements IProduitService {
 
       // Parcours du résultat de la requête
       while (resultSet.next()) {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         produit.setId(resultSet.getInt("id"));
         produit.setNom_produit(resultSet.getString("nom_produit"));
         produit.setDescription(resultSet.getString("description"));

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import entities.Categorie_produit;
-import entities.Produit;
+import entities.Categorie_Collecte;
+import entities.Collecte;
 import entities.Reviews;
 import entities.User;
 import javafx.fxml.FXML;
@@ -29,8 +29,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import services.Categorie_produitService;
-import services.ICategorie_produitService;
+import services.Categorie_CollectService;
+import services.Categorie_CollectService;
 import services.IProduitService;
 import services.CollectService;
 import services.UserService;
@@ -235,9 +235,9 @@ public class UserProductDetailsCardController implements Initializable {
 
         // set product details
         CollectService produitService = new CollectService();
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         try {
-            produit = produitService.getOneProduct(Produit.getIdProduit());
+            produit = produitService.getOneProduct(Collecte.getIdProduit());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -282,7 +282,7 @@ public class UserProductDetailsCardController implements Initializable {
 
         description.setText(produit.getDescription());
 
-        int produitId = Produit.getIdProduit();
+        int produitId = Collecte.getIdProduit();
         int totalReviews = produitService.getTotalProductReviews(produitId);
         total_verif_reviews.setText("" + totalReviews);
         Image starImage = new Image(
@@ -687,7 +687,7 @@ public class UserProductDetailsCardController implements Initializable {
 
         Reviews rv = new Reviews();
         CollectService ps = new CollectService();
-        rv = ps.getOneUserReview(user.getId(), Produit.getIdProduit());
+        rv = ps.getOneUserReview(user.getId(), Collecte.getIdProduit());
         System.out.println(rv);
         if (rv != null) {
 
@@ -695,7 +695,7 @@ public class UserProductDetailsCardController implements Initializable {
         }
         produitService = new CollectService();
 
-        List<Reviews> reviewsList = produitService.getAllComments(Produit.getIdProduit());
+        List<Reviews> reviewsList = produitService.getAllComments(Collecte.getIdProduit());
 
         // Set comments List
         int CommentColumn = 0;
@@ -740,9 +740,9 @@ public class UserProductDetailsCardController implements Initializable {
 
     @FXML
     void partageFacebook(MouseEvent event) throws SQLException {
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         CollectService produitService = new CollectService();
-        produit = produitService.getOneProduct(Produit.getIdProduit());
+        produit = produitService.getOneProduct(Collecte.getIdProduit());
 
         String appId = "232528662540085";
         String appSecret = "60988e9928012f06c205e07717bb4196";
@@ -774,9 +774,9 @@ public class UserProductDetailsCardController implements Initializable {
     void addToFavoriteList(MouseEvent event) throws SQLException {
         // set product details
         CollectService produitService = new CollectService();
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
         try {
-            produit = produitService.getOneProduct(Produit.getIdProduit());
+            produit = produitService.getOneProduct(Collecte.getIdProduit());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -788,7 +788,7 @@ public class UserProductDetailsCardController implements Initializable {
         }
 
         if (found == 0) {
-            produitService.addProductToFavoriteList(Produit.getIdProduit(), user.getId());
+            produitService.addProductToFavoriteList(Collecte.getIdProduit(), user.getId());
 
             Image FavImage = new Image("/assets/img/FullFav.png");
             favBtn.setImage(FavImage);
@@ -798,7 +798,7 @@ public class UserProductDetailsCardController implements Initializable {
         }
         if (found == 1) {
 
-            produitService.removeProductFromFavoriteList(Produit.getIdProduit(), user.getId());
+            produitService.removeProductFromFavoriteList(Collecte.getIdProduit(), user.getId());
 
             Image fullFavImage = new Image("/assets/img/Fav.png");
             favBtn.setImage(fullFavImage);

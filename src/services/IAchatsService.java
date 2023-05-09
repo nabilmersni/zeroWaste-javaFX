@@ -5,7 +5,7 @@ import java.util.List;
 
 import entities.Achats;
 import entities.Coupon;
-import entities.Produit;
+import entities.Collecte;
 
 public interface IAchatsService {
 
@@ -15,7 +15,7 @@ public interface IAchatsService {
 
   public Achats getOneAchat(int idAchat) throws SQLException;
 
-  public List<Produit> getAllProducts(int commande_id);
+  public List<Collecte> getAllProducts(int commande_id);
 
   public List<Achats> searchCommands(String search);
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Achats;
-import entities.Produit;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -73,7 +73,7 @@ public class AdminCommandLivraisonCardController {
          zipcode.setText(""+achat.getZip_code());
 
          //set the total price command
-         List<Produit> produitList = achatService.getAllProducts(achat.getCommande_id());
+         List<Collecte> produitList = achatService.getAllProducts(achat.getCommande_id());
          float totalPrx = 0;
          int totalPts = 0;
          for(int i =0; i< produitList.size() ; i++){

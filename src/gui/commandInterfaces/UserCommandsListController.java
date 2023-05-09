@@ -15,7 +15,7 @@ import com.itextpdf.awt.geom.Point;
 
 import entities.Achats;
 import entities.Commands;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 import entities.Coupon;
 import javafx.fxml.FXML;
@@ -329,7 +329,7 @@ public class UserCommandsListController implements Initializable {
         command = commandsService.getOneCommand(user.getId());
         if (command != null) {
             AchatsService achatsService = new AchatsService();
-            List<Produit> listpProduits = new ArrayList<>();
+            List<Collecte> listpProduits = new ArrayList<>();
             listpProduits = achatsService.getAllProducts(command.getId());
 
             int column = 0;
@@ -364,7 +364,7 @@ public class UserCommandsListController implements Initializable {
         // ********************************************** */
         // set total price and total points
         AchatsService achatsServ = new AchatsService();
-        List<Produit> produit = new ArrayList<>();
+        List<Collecte> produit = new ArrayList<>();
         if (command != null) {
             produit = achatsServ.getAllProducts(command.getId());
             command_Id = command.getId();
@@ -1198,7 +1198,7 @@ public class UserCommandsListController implements Initializable {
 
             oneCoupon = achatsService.getOneCoupon(couponCode);
 
-            Produit p = new Produit();
+            Collecte p = new Collecte();
             ProduitService produitService = new ProduitService();
             p = produitService.getOneProduct(oneCoupon.getProduit_id());
             if (p.getRemise() == 0) {

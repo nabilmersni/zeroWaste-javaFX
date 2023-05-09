@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Notification;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 import gui.productInterfaces.NotifItemController;
 import javafx.fxml.FXML;
@@ -339,8 +339,8 @@ public class UserDashboardController implements Initializable {
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
 
-        Produit.setSortByCateg(null);
-        Produit.setSortByCategId(-1);
+        Collecte.setSortByCateg(null);
+        Collecte.setSortByCategId(-1);
 
         // set active class
         if (!productsBtn.getStyleClass().contains("activeLink")) {

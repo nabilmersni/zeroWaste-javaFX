@@ -14,9 +14,9 @@ import java.util.UUID;
 import javax.mail.MessagingException;
 
 import entities.Achats;
-import entities.Categorie_produit;
+import entities.Categorie_Collecte;
 import entities.Notification;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,10 +35,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import services.AchatsService;
-import services.Categorie_produitService;
-import services.ICategorie_produitService;
+import services.Categorie_CollectService;
+import services.Categorie_CollectService;
 import services.IProduitService;
 import services.CollectService;
+import services.ICategorie_CollectService;
 import services.UserService;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -193,10 +194,10 @@ public class ProductsListController implements Initializable {
         }
 
         // Instancier le service de categorie
-        ICategorie_produitService categoryService = new Categorie_produitService();
+        ICategorie_CollectService categoryService = new Categorie_CollectService();
 
         // Récupérer toutes les categories
-        List<Categorie_produit> categories = categoryService.getAllCategories();
+        List<Categorie_Collecte> categories = categoryService.getAllCategories();
 
         int CategColumn = 0;
         int CategRow = 2;
@@ -225,7 +226,7 @@ public class ProductsListController implements Initializable {
         // Ajouter la liste des categories au combobox-----------------
 
         Map<String, Integer> valuesMap = new HashMap<>();
-        for (Categorie_produit categorie : categories) {
+        for (Categorie_Collecte categorie : categories) {
             categoryInput.getItems().add(categorie.getNom_categorie());
             valuesMap.put(categorie.getNom_categorie(), categorie.getId());
         }
@@ -234,7 +235,7 @@ public class ProductsListController implements Initializable {
             String selectedOption = categoryInput.getValue();
             int selectedValue = valuesMap.get(selectedOption);
             categId = selectedValue;
-            Produit.setSearchValue(null);
+            Collecte.setSearchValue(null);
             // System.out.println("Selected option: " + selectedOption);
             // System.out.println("Selected value: " + categId);
             GridPane productsListContainer = (GridPane) content_area.lookup("#productsListContainer");
@@ -265,7 +266,7 @@ public class ProductsListController implements Initializable {
 
     @FXML
     private void open_addProduct(MouseEvent event) throws IOException {
-        Produit.actionTest = 0;
+        Collecte.actionTest = 0;
         Parent fxml = FXMLLoader.load(getClass().getResource("/gui/collectInterfaces/AddProduct.fxml"));
         content_area.getChildren().removeAll();
         content_area.getChildren().setAll(fxml);
@@ -285,7 +286,7 @@ public class ProductsListController implements Initializable {
 
     @FXML
     void searchProduct(KeyEvent event) throws IOException {
-        Produit.setSearchValue(((TextField) event.getSource()).getText());
+        Collecte.setSearchValue(((TextField) event.getSource()).getText());
         // System.out.println("Recherche en cours: " + Produit.getSearchValue());
         if (stockBtn.getStyleClass().contains("sort__stockBtn-active")) {
             stockBtn.getStyleClass().remove("sort__stockBtn-active");
@@ -302,9 +303,9 @@ public class ProductsListController implements Initializable {
         // Instancier le service de produit
         IProduitService produitService = new CollectService();
 
-        List<Produit> produits = null;
-        System.out.println("searchValue" + Produit.getSearchValue());
-        if (Produit.getSearchValue() == null) {
+        List<Collecte> produits = null;
+        System.out.println("searchValue" + Collecte.getSearchValue());
+        if (Collecte.getSearchValue() == null) {
             if (sortValue == -1 && categId == -1) {
                 // Récupérer tous les produits
                 produits = produitService.getAllProducts();
@@ -325,7 +326,7 @@ public class ProductsListController implements Initializable {
             System.out.println("categId : " + categId);
 
         } else {
-            produits = produitService.searchProducts(Produit.getSearchValue());
+            produits = produitService.searchProducts(Collecte.getSearchValue());
         }
 
         // product list ------------------------------------------------
@@ -357,7 +358,7 @@ public class ProductsListController implements Initializable {
 
     @FXML
     void sort__ByStock(MouseEvent event) {
-        Produit.setSearchValue(null);
+        Collecte.setSearchValue(null);
         if (!stockBtn.getStyleClass().contains("sort__stockBtn-active")) {
             stockBtn.getStyleClass().add("sort__stockBtn-active");
             // Button stock = (Button) content_area.lookup("#stockBtn");
@@ -387,8 +388,8 @@ public class ProductsListController implements Initializable {
 
     @FXML
     void submit_offer(MouseEvent event) {
-        Produit produit = new Produit();
-        produit.setId(Produit.getIdProduit());
+        Collecte produit = new Collecte();
+        produit.setId(Collecte.getIdProduit());
         produit.setRemise(Float.parseFloat(reductionInput.getText()));
 
         // Instancier le service de produit
@@ -403,7 +404,7 @@ public class ProductsListController implements Initializable {
             Notification notif = new Notification();
 
             notif.setContent("New Offer");
-            notif.setProduct_id(Produit.getIdProduit());
+            notif.setProduct_id(Collecte.getIdProduit());
 
             produitService.AddNewNotif(notif);
 
@@ -457,7 +458,7 @@ public class ProductsListController implements Initializable {
     @FXML
     void submit_coupon(MouseEvent event) throws MessagingException, SQLException {
 
-        int produit_id = Produit.getIdProduit();
+        int produit_id = Collecte.getIdProduit();
         System.out.println("produit id:" + produit_id);
         String email = selectedOption;
         System.out.println("email :" + email);
@@ -550,7 +551,7 @@ public class ProductsListController implements Initializable {
 
         // Récupérer la liste des produits
         IProduitService produitService = new CollectService();
-        List<Produit> productList = produitService.getAllProducts();
+        List<Collecte> productList = produitService.getAllProducts();
 
         // Créer la première ligne pour les en-têtes des colonnes
         Row headerRow = sheet.createRow(0);
@@ -563,7 +564,7 @@ public class ProductsListController implements Initializable {
 
         // Remplir les données des produits
         int rowNum = 1;
-        for (Produit produit : productList) {
+        for (Collecte produit : productList) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(produit.getId());
             row.createCell(1).setCellValue(produit.getNom_produit());

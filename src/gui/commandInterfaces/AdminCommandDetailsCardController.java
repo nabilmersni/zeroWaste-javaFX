@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.sql.SQLException;
 
 import entities.Achats;
-import entities.Produit;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,7 +52,7 @@ public class AdminCommandDetailsCardController  {
     @FXML
     private ImageView img;
     
-    public void setCommandDetails(Produit produit) {
+    public void setCommandDetails(Collecte produit) {
         IProduitService produitService = new ProduitService();
 
         name.setText(produit.getNom_produit());

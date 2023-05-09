@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import entities.Categorie_produit;
+import entities.Categorie_Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,8 +25,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import services.Categorie_produitService;
-import services.ICategorie_produitService;
+import services.Categorie_CollectService;
+import services.ICategorie_CollectService;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.scene.Node;
 import tray.animations.AnimationType;
@@ -78,21 +78,21 @@ public class AddCategoryCardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(Categorie_produit.actionTest);
+        System.out.println(Categorie_Collecte.actionTest);
 
         nameInputErrorHbox.setVisible(false);
         photoInputErrorHbox.setVisible(false);
-        if (Categorie_produit.actionTest == 0) { // add product
+        if (Categorie_Collecte.actionTest == 0) { // add product
             update_categoryBtn.setVisible(false);
 
         } else { // update product
             add_new_categoryBtn.setVisible(false);
 
             // Instancier le service de categorie
-            ICategorie_produitService categoryService = new Categorie_produitService();
-            Categorie_produit c = new Categorie_produit();
+            ICategorie_CollectService categoryService = new Categorie_CollectService();
+            Categorie_Collecte c = new Categorie_Collecte();
             try {
-                c = categoryService.getOneCategory(Categorie_produit.getIdCategory());
+                c = categoryService.getOneCategory(Categorie_Collecte.getIdCategory());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -110,10 +110,10 @@ public class AddCategoryCardController implements Initializable {
     @FXML
     void addNewCategory(MouseEvent event) throws SQLException {
 
-        Categorie_produit categorie = new Categorie_produit();
+        Categorie_Collecte categorie = new Categorie_Collecte();
 
         // Instancier le service de categorie
-        ICategorie_produitService categoryService = new Categorie_produitService();
+        ICategorie_CollectService categoryService = new Categorie_CollectService();
 
         if (nameInput.getText().isEmpty()) {
             nomTest = 0;
@@ -198,19 +198,19 @@ public class AddCategoryCardController implements Initializable {
     @FXML
     void updateCategory(MouseEvent event) throws SQLException {
         // Instancier le service de category
-        ICategorie_produitService categoryService = new Categorie_produitService();
+        ICategorie_CollectService categoryService = new Categorie_CollectService();
 
-        Categorie_produit category = new Categorie_produit();
-        category.setId(Categorie_produit.getIdCategory());
+        Categorie_Collecte category = new Categorie_Collecte();
+        category.setId(Categorie_Collecte.getIdCategory());
 
         if (nameInput.getText().isEmpty()) {
             nomTest = 0;
             nameInputErrorHbox.setVisible(true);
         } else {
-            if (!(categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie()
+            if (!(categoryService.getOneCategory(Categorie_Collecte.getIdCategory()).getNom_categorie()
                     .equals(nameInput.getText())) && (categoryService.categoryExists(nameInput.getText()) == 1)) {
                 System.out.println("Category name : "
-                        + categoryService.getOneCategory(Categorie_produit.getIdCategory()).getNom_categorie());
+                        + categoryService.getOneCategory(Categorie_Collecte.getIdCategory()).getNom_categorie());
                 System.out.println("Category count : " + categoryService.categoryExists(nameInput.getText()));
                 System.out.println("text name : " + nameInput.getText());
 
@@ -238,7 +238,7 @@ public class AddCategoryCardController implements Initializable {
                         NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
 
                 ProductsListController.setCategoryModelShow(1);
-                Categorie_produit.actionTest = 0; // pour afficher le bouton ajouter et cacher le bouton modifier
+                Categorie_Collecte.actionTest = 0; // pour afficher le bouton ajouter et cacher le bouton modifier
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/collectInterfaces/ProductsList.fxml"));
 

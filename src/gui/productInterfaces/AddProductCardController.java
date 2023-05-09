@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import entities.Categorie_produit;
-import entities.Produit;
+import entities.Categorie_Collecte;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -149,7 +149,7 @@ public class AddProductCardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(Produit.actionTest);
+        System.out.println(Collecte.actionTest);
         // errorsField
         nameInputErrorHbox.setVisible(false);
         descriptionInputErrorHbox.setVisible(false);
@@ -159,7 +159,7 @@ public class AddProductCardController implements Initializable {
         pointsInputErrorHbox.setVisible(false);
         photoInputErrorHbox.setVisible(false);
 
-        if (Produit.actionTest == 0) { // add product
+        if (Collecte.actionTest == 0) { // add product
             update_productBtn.setVisible(false);
 
         } else { // update product
@@ -167,9 +167,9 @@ public class AddProductCardController implements Initializable {
 
             // Instancier le service de produit
             IProduitService produitService = new ProduitService();
-            Produit p = new Produit();
+            Collecte p = new Collecte();
             try {
-                p = produitService.getOneProduct(Produit.getIdProduit());
+                p = produitService.getOneProduct(Collecte.getIdProduit());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -199,7 +199,7 @@ public class AddProductCardController implements Initializable {
         ICategorie_produitService categoryService = new Categorie_produitService();
 
         // Récupérer tous les categories
-        List<Categorie_produit> categories = categoryService.getAllCategories();
+        List<Categorie_Collecte> categories = categoryService.getAllCategories();
 
         // Afficher les categories dans la console (juste pour tester)
         /*
@@ -210,7 +210,7 @@ public class AddProductCardController implements Initializable {
          */
 
         Map<String, Integer> valuesMap = new HashMap<>();
-        for (Categorie_produit categorie : categories) {
+        for (Categorie_Collecte categorie : categories) {
             categoryInput.getItems().add(categorie.getNom_categorie());
             valuesMap.put(categorie.getNom_categorie(), categorie.getId());
         }
@@ -230,7 +230,7 @@ public class AddProductCardController implements Initializable {
     @FXML
     void addNewProduct(MouseEvent event) throws SQLException {
 
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
 
         if (nameInput.getText().isEmpty()) {
             nomTest = 0;
@@ -406,9 +406,9 @@ public class AddProductCardController implements Initializable {
     @FXML
     void updateProduct(MouseEvent event) {
 
-        Produit produit = new Produit();
+        Collecte produit = new Collecte();
 
-        produit.setId(Produit.getIdProduit());
+        produit.setId(Collecte.getIdProduit());
 
         if (nameInput.getText().isEmpty()) {
             nomTest = 0;

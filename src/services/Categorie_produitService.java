@@ -1,6 +1,6 @@
 package services;
 
-import entities.Categorie_produit;
+import entities.Categorie_Collecte;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +22,8 @@ public class Categorie_produitService implements ICategorie_produitService {
 
   
   @Override
-  public List<Categorie_produit> getAllCategories()  {
-    List<Categorie_produit> categoriesList = new ArrayList<>();
+  public List<Categorie_Collecte> getAllCategories()  {
+    List<Categorie_Collecte> categoriesList = new ArrayList<>();
     try {
         String query = "SELECT * FROM categorie_produit ";
         PreparedStatement preparedStatement = conx.prepareStatement(query);
@@ -31,7 +31,7 @@ public class Categorie_produitService implements ICategorie_produitService {
   
         // Parcours du résultat de la requête
         while (resultSet.next()) {
-          Categorie_produit category = new Categorie_produit();
+          Categorie_Collecte category = new Categorie_Collecte();
             category.setId(resultSet.getInt("id"));
             category.setNom_categorie(resultSet.getString("nom_categorie"));
             category.setImage_categorie(resultSet.getString("image_categorie"));
@@ -60,7 +60,7 @@ public class Categorie_produitService implements ICategorie_produitService {
   }
 
   @Override
-  public void ajouter(Categorie_produit category) {
+  public void ajouter(Categorie_Collecte category) {
     try {
       String req = "INSERT INTO `categorie_produit`(`nom_categorie`, `image_categorie`) VALUES (?,?)";
       PreparedStatement ps = conx.prepareStatement(req);
@@ -76,13 +76,13 @@ public class Categorie_produitService implements ICategorie_produitService {
   }
 
 
-  public Categorie_produit getOneCategory(int idCategory) throws SQLException {
+  public Categorie_Collecte getOneCategory(int idCategory) throws SQLException {
     String req = "SELECT * FROM `categorie_produit` where id = ?";
     PreparedStatement ps = conx.prepareStatement(req);
     ps.setInt(1, idCategory);
 
     ResultSet rs = ps.executeQuery();
-    Categorie_produit category = new Categorie_produit() ;
+    Categorie_Collecte category = new Categorie_Collecte() ;
     
     while (rs.next()) {
         category.setId(rs.getInt("id"));
@@ -95,7 +95,7 @@ public class Categorie_produitService implements ICategorie_produitService {
 
 
   @Override
-  public void updateCategory(Categorie_produit category) {
+  public void updateCategory(Categorie_Collecte category) {
     try {
       String req = "UPDATE `categorie_produit` SET `nom_categorie`=?,`image_categorie`=? WHERE id=?";
       PreparedStatement ps = conx.prepareStatement(req);

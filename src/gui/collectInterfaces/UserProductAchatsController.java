@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import entities.Categorie_produit;
-import entities.Produit;
+import entities.Categorie_Collecte;
+import entities.Collecte;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,8 +27,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import services.Categorie_produitService;
-import services.ICategorie_produitService;
+import services.Categorie_CollectService;
+import services.Categorie_CollectService;
 import services.IProduitService;
 import services.CollectService;
 import services.UserService;
@@ -92,7 +92,7 @@ public class UserProductAchatsController implements Initializable {
         }
 
         CollectService produitService = new CollectService();
-        List<Produit> produits = new ArrayList<>();
+        List<Collecte> produits = new ArrayList<>();
         produits = produitService.getProductAchete(user.getId());
         // for (int i = 0; i < produits.size(); i++) {
         // System.out.println("produit acheté: " + produits.get(i));

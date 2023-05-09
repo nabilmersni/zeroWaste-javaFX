@@ -17,7 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import entities.Achats;
-import entities.Produit;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -97,7 +97,7 @@ public class AdminCommandsListController implements Initializable {
         // filter by combobox values
         dateComboBox.setOnAction(event -> {
             selectedOption = dateComboBox.getValue();
-            Produit.setSearchValue(null);
+            Collecte.setSearchValue(null);
             System.out.println("Selected option: " + selectedOption);
 
             Achats.setSearchValue(null);
@@ -109,7 +109,7 @@ public class AdminCommandsListController implements Initializable {
         // END filter by combobox values
 
         IAchatsService achatService = new AchatsService();
-        List<Produit> produits = new ArrayList<>();
+        List<Collecte> produits = new ArrayList<>();
         produits = achatService.getAllProducts(Achats.getCommandeId());
 
         if (Achats.achatModelTest == 0) {

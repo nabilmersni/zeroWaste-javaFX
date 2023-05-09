@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import entities.Categorie_produit;
-import entities.Produit;
+import entities.Categorie_Collecte;
+import entities.Collecte;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -97,36 +97,36 @@ public class UserProductsListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addedCartModel.setVisible(false);
-        if (Produit.getSortByCateg() != null) {
-            if (Produit.getSortByCateg().equals("Price - Low To High")) {
+        if (Collecte.getSortByCateg() != null) {
+            if (Collecte.getSortByCateg().equals("Price - Low To High")) {
                 priceInput.setValue("Price - Low To High");
                 priceComboboxData = "Price - Low To High";
             }
-            if (Produit.getSortByCateg().equals("Price - High To Low")) {
+            if (Collecte.getSortByCateg().equals("Price - High To Low")) {
                 priceInput.setValue("Price - High To Low");
                 priceComboboxData = "Price - High To Low";
             }
 
-            if (Produit.getSortByCateg().equals("Points - Low To High")) {
+            if (Collecte.getSortByCateg().equals("Points - Low To High")) {
                 pointsInput.setValue("Points - Low To High");
                 pointsComboboxData = "Points - Low To High";
             }
-            if (Produit.getSortByCateg().equals("Points - High To Low")) {
+            if (Collecte.getSortByCateg().equals("Points - High To Low")) {
                 pointsInput.setValue("Points - High To Low");
                 pointsComboboxData = "Points - High To Low";
             }
 
-            if (Produit.getSortByCategId() != -1) {
-                categoryInput.setValue(Produit.getSortByCateg());
-                categId = Produit.getSortByCategId();
+            if (Collecte.getSortByCategId() != -1) {
+                categoryInput.setValue(Collecte.getSortByCateg());
+                categId = Collecte.getSortByCategId();
             }
 
-            if (Produit.getSortByCateg().equals("promo")) {
+            if (Collecte.getSortByCateg().equals("promo")) {
                 promotionaProductsData = "promo";
                 getPromotionalItemsBtn.getStyleClass().add("promotionalItemsBtnSelected");
             }
 
-            if (Produit.getSearchImageScore() != -1) {
+            if (Collecte.getSearchImageScore() != -1) {
 
             }
 
@@ -139,7 +139,7 @@ public class UserProductsListController implements Initializable {
         ICategorie_produitService categoryService = new Categorie_produitService();
 
         // Récupérer toutes les categories
-        List<Categorie_produit> categories = categoryService.getAllCategories();
+        List<Categorie_Collecte> categories = categoryService.getAllCategories();
         // Ajouter la liste des categories au combobox-----------------
         this.setCategoriesCombobox();
 
@@ -155,12 +155,12 @@ public class UserProductsListController implements Initializable {
         // Instancier le service de categorie
         ICategorie_produitService categoryService = new Categorie_produitService();
         // Récupérer toutes les categories
-        List<Categorie_produit> categories = categoryService.getAllCategories();
+        List<Categorie_Collecte> categories = categoryService.getAllCategories();
 
         Map<String, Integer> valuesMap = new HashMap<>();
         categoryInput.getItems().add("All");
         valuesMap.put("All", -1);
-        for (Categorie_produit categorie : categories) {
+        for (Categorie_Collecte categorie : categories) {
             categoryInput.getItems().add(categorie.getNom_categorie());
             valuesMap.put(categorie.getNom_categorie(), categorie.getId());
         }
@@ -169,10 +169,10 @@ public class UserProductsListController implements Initializable {
             String selectedOption = categoryInput.getValue();
             int selectedValue = valuesMap.get(selectedOption);
             categId = selectedValue;
-            Produit.setSortByCategId(categId);
-            Produit.setSearchValue(null);
+            Collecte.setSortByCategId(categId);
+            Collecte.setSearchValue(null);
 
-            Produit.setSortByCateg(selectedOption);
+            Collecte.setSortByCateg(selectedOption);
 
             Parent fxml;
             try {
@@ -192,8 +192,8 @@ public class UserProductsListController implements Initializable {
         priceInput.setOnAction(event -> {
             String selectedOption = priceInput.getValue();
 
-            Produit.setSortByCateg(selectedOption);
-            Produit.setSortByCategId(-1);
+            Collecte.setSortByCateg(selectedOption);
+            Collecte.setSortByCategId(-1);
 
             Parent fxml;
             try {
@@ -212,8 +212,8 @@ public class UserProductsListController implements Initializable {
         pointsInput.getItems().add("Points - High To Low");
         pointsInput.setOnAction(event -> {
             String selectedOption = pointsInput.getValue();
-            Produit.setSortByCateg(selectedOption);
-            Produit.setSortByCategId(-1);
+            Collecte.setSortByCateg(selectedOption);
+            Collecte.setSortByCategId(-1);
 
             Parent fxml;
             try {
@@ -249,41 +249,41 @@ public class UserProductsListController implements Initializable {
     private void setProductGridPaneList() {
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
-        List<Produit> produits = null;
+        List<Collecte> produits = null;
 
-        System.out.println("searchValue" + Produit.getSearchValue());
-        if (Produit.getSearchValue() == null) {
+        System.out.println("searchValue" + Collecte.getSearchValue());
+        if (Collecte.getSearchValue() == null) {
             if (categId != -1) {
                 // filter by category
                 produits = produitService.sortProducts(0, categId);
                 categId = -1;
-                Produit.setSortByCategId(-1);
+                Collecte.setSortByCategId(-1);
             } else if (priceComboboxData != null) {
                 // sort by price
                 produits = produitService.sortProductsUser("price", priceComboboxData);
                 priceComboboxData = null;
-                Produit.setSortByCateg(null);
+                Collecte.setSortByCateg(null);
             } else if (pointsComboboxData != null) {
                 // sort by points
                 produits = produitService.sortProductsUser("points", pointsComboboxData);
                 pointsComboboxData = null;
-                Produit.setSortByCateg(null);
+                Collecte.setSortByCateg(null);
             } else if (promotionaProductsData != null) {
                 // show promotional products only
                 produits = produitService.getPromotionalProducts();
                 promotionaProductsData = null;
-                Produit.setSortByCateg(null);
-            } else if (Produit.getSearchImageScore() != -1) {
+                Collecte.setSortByCateg(null);
+            } else if (Collecte.getSearchImageScore() != -1) {
                 // search by image
-                produits = produitService.searchProductByImage(Produit.getSearchImageEtiquette(),
-                        Produit.getSearchImageScore());
-                Produit.setSearchImageScore(-1);
+                produits = produitService.searchProductByImage(Collecte.getSearchImageEtiquette(),
+                        Collecte.getSearchImageScore());
+                Collecte.setSearchImageScore(-1);
             } else {
                 produits = produitService.getAllProducts();
             }
         } else {
-            produits = produitService.searchProducts(Produit.getSearchValue());
-            Produit.setSearchValue(null);
+            produits = produitService.searchProducts(Collecte.getSearchValue());
+            Collecte.setSearchValue(null);
         }
 
         // product list ------------------------------------------------
@@ -316,8 +316,8 @@ public class UserProductsListController implements Initializable {
 
     @FXML
     void searchProduct(KeyEvent event) throws IOException {
-        Produit.setSearchValue(((TextField) event.getSource()).getText());
-        System.out.println("Recherche en cours: " + Produit.getSearchValue());
+        Collecte.setSearchValue(((TextField) event.getSource()).getText());
+        System.out.println("Recherche en cours: " + Collecte.getSearchValue());
 
         // categId = -1;
 
@@ -331,13 +331,13 @@ public class UserProductsListController implements Initializable {
     void getPromotionalItems(MouseEvent event) {
         if (!getPromotionalItemsBtn.getStyleClass().contains("promotionalItemsBtnSelected")) {
 
-            Produit.setSortByCateg("promo");
+            Collecte.setSortByCateg("promo");
         } else {
             getPromotionalItemsBtn.getStyleClass().remove("promotionalItemsBtnSelected");
-            Produit.setSortByCateg(null);
+            Collecte.setSortByCateg(null);
         }
 
-        Produit.setSortByCategId(-1);
+        Collecte.setSortByCategId(-1);
 
         Parent fxml;
         try {
@@ -412,8 +412,8 @@ public class UserProductsListController implements Initializable {
                 // Extract labels and objects from the response
                 List<LocalizedObjectAnnotation> objectAnnotations = response.getResponses(0)
                         .getLocalizedObjectAnnotationsList();
-                Produit.setSearchImageEtiquette(objectAnnotations.get(0).getName());
-                Produit.setSearchImageScore(objectAnnotations.get(0).getScore());
+                Collecte.setSearchImageEtiquette(objectAnnotations.get(0).getName());
+                Collecte.setSearchImageScore(objectAnnotations.get(0).getScore());
                 System.out.println(objectAnnotations.get(0).getName() + " " + objectAnnotations.get(0).getScore());
 
                 Parent fxml;

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import entities.Commands;
-import entities.Produit;
+import entities.Collecte;
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,7 +68,7 @@ public class UserProductCardController {
     @FXML
     private HBox offerCercle;
 
-    public void setProductData(Produit produit) {
+    public void setProductData(Collecte produit) {
         // Instancier le service de produit
         IProduitService produitService = new ProduitService();
 
@@ -170,7 +170,7 @@ public class UserProductCardController {
         // Open Product Details
         open_productDetails.setOnMouseClicked(event -> {
             System.out.println("ID du produit à afficher les details : " + produit.getId());
-            Produit.setIdProduit(produit.getId());
+            Collecte.setIdProduit(produit.getId());
 
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/gui/productInterfaces/UserProductDetails.fxml"));

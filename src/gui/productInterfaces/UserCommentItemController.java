@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import entities.Commands;
-import entities.Produit;
+import entities.Collecte;
 import entities.Reviews;
 import entities.User;
 import javafx.fxml.FXML;
@@ -168,8 +168,8 @@ public class UserCommentItemController {
                 TextArea commentInput = (TextArea) ((Node) event.getSource()).getScene().lookup("#commentInput");
                 commentInput.setText(review.getComment());
 
-                Produit.setValueReviews(review.getValue());
-                Produit.setReviewId(review.getId());
+                Collecte.setValueReviews(review.getValue());
+                Collecte.setReviewId(review.getId());
 
                 HBox updateBtnContainer = (HBox) ((Node) event.getSource()).getScene().lookup("#updateBtnContainer");
                 updateBtnContainer.setVisible(true);
